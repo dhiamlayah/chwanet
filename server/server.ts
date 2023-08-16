@@ -1,7 +1,8 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const bcrypt = require ('bcrypt')
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 //dependency
 const PORT = process.env.PORT,
@@ -22,34 +23,61 @@ try {
 //import user model
 import UserModel from "./models/users";
 
-//midelwers 
-app.use(express.json())
-app.use(express.urlencoded())
+//midelwers
+app.use(express.json());
+app.use(express.urlencoded());
 
 //routers
-app.post("/register", async(req:any , res:any) => {
-    const {firstName,lastName , email,age,password} = req.body
-    const user=await UserModel.findOne({email})
-
-    if(user){
-        return res.status(400).json({ message : "User already exist !!"})
+app.post("/register", async (req: any, res: any) => {
+  const { firstName, lastName, email, age, password } = req.body;
+  try {
+    const user = await UserModel.findOne({ email });
+    if (user) {
+      return res.status(400).json({ message: "User already exist !!" });
     }
-    try{
-        const hashedPassword = await bcrypt.hash(password,10)
-        const newUser = new UserModel({
-            firstName,
-            lastName,
-            email,
-            password:hashedPassword,
-            age,
-        })
-        await newUser.save()
-        return res.status(200).json({message:"user created successfuly"})
-    }catch(error:any){
-        console.log('there is an error to add new user',error.response)
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new UserModel({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
+      age,
+    });
+    await newUser.save();
+    const token = jwt.sign(
+      { _id: newUser._id },
+      process.env.access_token_secret
+    );
+    res.header({ token: token });
+    return res
+      .status(200)
+      .json({ Headers: { token }, message: "user created successfuly" });
+  } catch (error: any) {
+    console.log("there is an error to add new user", error.response);
+    res.status(error.response.status).json({ message: error.response.data });
+  }
+});
+
+app.post("/login", async (req: any, res: any) => {
+  const { password, email } = req.body;
+  try {
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      res.status(400).json({ message: "invalid email or password" });
+    } else {
+      const validPassword = await bcrypt.compare(password, user.password);
+      !validPassword &&
+        res.status(400).json({ message: "password or email incorrect" });
+      const token = jwt.sign(
+        { _id: user._id },
+        process.env.access_token_secret
+      ); // two parameters user id and secrete
+      res.json({ message: token });
     }
-
-
+  } catch (error: any) {
+    console.log("there is a problem to login ", error);
+    res.status(error.response.status).json({ message: error.response.data });
+  }
 });
 
 app.listen(PORT, () => {
