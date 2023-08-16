@@ -4,6 +4,9 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+//middelwares 
+const auth = require('./middelwares/authorization')
+
 //dependency
 const PORT = process.env.PORT,
   userDataBase = process.env.userDataBase,
@@ -22,6 +25,7 @@ try {
 
 //import user model
 import UserModel from "./models/users";
+
 
 //midelwers
 app.use(express.json());
@@ -48,7 +52,6 @@ app.post("/register", async (req: any, res: any) => {
       { _id: newUser._id },
       process.env.access_token_secret
     );
-    res.header({ token: token });
     return res
       .status(200)
       .json({ Headers: { token }, message: "user created successfuly" });
@@ -72,13 +75,17 @@ app.post("/login", async (req: any, res: any) => {
         { _id: user._id },
         process.env.access_token_secret
       ); // two parameters user id and secrete
-      res.json({ message: token });
+      res.json({ Headers: { token }, message: "user login successfuly" });
     }
   } catch (error: any) {
     console.log("there is a problem to login ", error);
     res.status(error.response.status).json({ message: error.response.data });
   }
 });
+
+app.post("/try",auth,(req:any,res:any)=>{
+  res.json({message:' try work successfuly'})
+})
 
 app.listen(PORT, () => {
   console.log(`port is listen in ${PORT}`);
