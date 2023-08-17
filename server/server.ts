@@ -4,9 +4,9 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-//middelwares 
-const auth = require('./middelwares/authorization')
-
+//middelwares
+const auth = require("./middelwares/authorization");
+const admin = require("./middelwares/admin")
 //dependency
 const PORT = process.env.PORT,
   userDataBase = process.env.userDataBase,
@@ -25,7 +25,6 @@ try {
 
 //import user model
 import UserModel from "./models/users";
-
 
 //midelwers
 app.use(express.json());
@@ -49,15 +48,14 @@ app.post("/register", async (req: any, res: any) => {
     });
     await newUser.save();
     const token = jwt.sign(
-      { _id: newUser._id },
+      { _id: newUser._id , isAdmin: newUser.isAdmin },
       process.env.access_token_secret
     );
-    return res
-      .status(200)
-      .json({ Headers: { token }, message: "user created successfuly" });
+    res.setHeader("token", token);
+    return res.status(200).json({ message: "user created successfuly" });
   } catch (error: any) {
     console.log("there is an error to add new user", error.response);
-    res.status(error.response.status).json({ message: error.response.data });
+    res.status(400).json({ message: error.response });
   }
 });
 
@@ -72,20 +70,31 @@ app.post("/login", async (req: any, res: any) => {
       !validPassword &&
         res.status(400).json({ message: "password or email incorrect" });
       const token = jwt.sign(
-        { _id: user._id },
+        { _id: user._id, isAdmin: user.isAdmin },
         process.env.access_token_secret
       ); // two parameters user id and secrete
-      res.json({ Headers: { token }, message: "user login successfuly" });
+      res.setHeader("token", token);
+      res.status(200).json({ message: "user login successfuly" });
     }
   } catch (error: any) {
     console.log("there is a problem to login ", error);
-    res.status(error.response.status).json({ message: error.response.data });
+    res.status(400).json({ message: error });
   }
 });
 
-app.post("/try",auth,(req:any,res:any)=>{
-  res.json({message:' try work successfuly'})
-})
+//? to get the current user
+app.get("/me", auth, async (req: any, res: any) => {
+  try {
+    const user = await UserModel.findById(req.user._id).select("-password"); //select that mean exclude
+    res.json({ user: user });
+  } catch (error: any) {
+    res.status(400).json({ message: error });
+  }
+});
+
+app.post("/try", [auth,admin], (req: any, res: any) => {
+  res.json({ message: "is an admin " });
+});
 
 app.listen(PORT, () => {
   console.log(`port is listen in ${PORT}`);
