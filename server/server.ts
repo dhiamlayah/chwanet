@@ -6,22 +6,27 @@ const jwt = require("jsonwebtoken");
 
 //middelwares
 const auth = require("./middelwares/authorization");
-const admin = require("./middelwares/admin")
+const admin = require("./middelwares/admin");
+const dataBaseError = require("./middelwares/errorDataBase");
+const asyncMiddleware = require("./middelwares/asyncMiddleware");
 //dependency
 const PORT = process.env.PORT,
   userDataBase = process.env.userDataBase,
   passwordDataBase = process.env.passwordDataBase,
   projectName = process.env.projectName;
 //connect with dataBase
-try {
-  mongoose
+const connectWithDataBase =async()=>{try {
+   await mongoose
     .connect(
       `mongodb+srv://${userDataBase}:${passwordDataBase}@team.qwomjdl.mongodb.net/${projectName}?retryWrites=true&w=majority`
     )
     .then(console.log("we connect successfuly with dataBase :)"));
 } catch (error: any) {
-  console.log("can not connect with dataBase", error.response);
-}
+  console.log("can't connect with dataBase", error);
+}}
+
+
+connectWithDataBase()
 
 //import user model
 import UserModel from "./models/users";
@@ -31,13 +36,11 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 //routers
-app.post("/register", async (req: any, res: any) => {
-  const { firstName, lastName, email, age, password } = req.body;
-  try {
+app.post("/register",
+  asyncMiddleware(async (req: any, res: any) => {
+    const { firstName, lastName, email, age, password } = req.body;
     const user = await UserModel.findOne({ email });
-    if (user) {
-      return res.status(400).json({ message: "User already exist !!" });
-    }
+    if (user) return res.status(400).json({ message: "User already exist !!" });
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new UserModel({
       firstName,
@@ -48,20 +51,17 @@ app.post("/register", async (req: any, res: any) => {
     });
     await newUser.save();
     const token = jwt.sign(
-      { _id: newUser._id , isAdmin: newUser.isAdmin },
+      { _id: newUser._id, isAdmin: newUser.isAdmin },
       process.env.access_token_secret
     );
     res.setHeader("token", token);
     return res.status(200).json({ message: "user created successfuly" });
-  } catch (error: any) {
-    console.log("there is an error to add new user", error.response);
-    res.status(400).json({ message: error.response });
-  }
-});
+  })
+);
 
-app.post("/login", async (req: any, res: any) => {
-  const { password, email } = req.body;
-  try {
+app.post("/login",
+  asyncMiddleware(async (req: any, res: any) => {
+    const { password, email } = req.body;
     const user = await UserModel.findOne({ email });
     if (!user) {
       res.status(400).json({ message: "invalid email or password" });
@@ -76,11 +76,8 @@ app.post("/login", async (req: any, res: any) => {
       res.setHeader("token", token);
       res.status(200).json({ message: "user login successfuly" });
     }
-  } catch (error: any) {
-    console.log("there is a problem to login ", error);
-    res.status(400).json({ message: error });
-  }
-});
+  })
+);
 
 //? to get the current user
 app.get("/me", auth, async (req: any, res: any) => {
@@ -92,9 +89,12 @@ app.get("/me", auth, async (req: any, res: any) => {
   }
 });
 
-app.post("/try", [auth,admin], (req: any, res: any) => {
+app.post("/try", [auth, admin], (req: any, res: any) => {
   res.json({ message: "is an admin " });
 });
+
+//a middelware for catch errors from the database
+app.use(dataBaseError);
 
 app.listen(PORT, () => {
   console.log(`port is listen in ${PORT}`);
