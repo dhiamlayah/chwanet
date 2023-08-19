@@ -4,6 +4,9 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+//winston logger
+const logger = require("./Logger/winston");
+
 //middelwares
 const auth = require("./middelwares/authorization");
 const admin = require("./middelwares/admin");
@@ -11,22 +14,19 @@ const dataBaseError = require("./middelwares/errorDataBase");
 const asyncMiddleware = require("./middelwares/asyncMiddleware");
 //dependency
 const PORT = process.env.PORT,
-  userDataBase = process.env.userDataBase,
-  passwordDataBase = process.env.passwordDataBase,
-  projectName = process.env.projectName;
+  urlDataBase = process.env.urlDataBase;
 //connect with dataBase
-const connectWithDataBase =async()=>{try {
-   await mongoose
-    .connect(
-      `mongodb+srv://${userDataBase}:${passwordDataBase}@team.qwomjdl.mongodb.net/${projectName}?retryWrites=true&w=majority`
-    )
-    .then(console.log("we connect successfuly with dataBase :)"));
-} catch (error: any) {
-  console.log("can't connect with dataBase", error);
-}}
+const connectWithDataBase = async () => {
+  try {
+    await mongoose
+      .connect(urlDataBase)
+      .then(console.log("we connect successfuly with dataBase :)"));
+  } catch (error: any) {
+    logger.error("can't connect with dataBase", error);
+  }
+};
 
-
-connectWithDataBase()
+connectWithDataBase();
 
 //import user model
 import UserModel from "./models/users";
