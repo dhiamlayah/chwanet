@@ -18,5 +18,8 @@ const logger = winston.createLogger({
   ],
 });
  
+logger.exceptions.handle(
+  new winston.transports.File({ filename: 'exceptions.log' })
+);
 
-module.exports = logger;
+export default logger;
