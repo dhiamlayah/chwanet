@@ -1,8 +1,6 @@
 const express = require("express");
 const app = express();
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+ 
 
  //winston logger
 import logger from "./Logger/winston" ;
@@ -11,103 +9,53 @@ import logger from "./Logger/winston" ;
 const auth = require("./middelwares/authorization");
 const admin = require("./middelwares/admin");
 const dataBaseError = require("./middelwares/errorDataBase");
-const asyncMiddleware = require("./middelwares/asyncMiddleware");
-
+ 
 //dependency
-const PORT = process.env.PORT || 3000,
-  urlDataBase = process.env.urlDataBase;
+const PORT = process.env.PORT || 3000
+
 
 //connect with dataBase
-const connectWithDataBase = async () => {
-  try {
-    await mongoose
-      .connect(urlDataBase)
-      .then(console.log("we connect successfuly with dataBase :)"));
-  } catch (error: any) {
-    logger.error("can't connect with dataBase", error);
-  }
-};
+ 
 
-connectWithDataBase();
-
-//import user model
-import UserModel from "./models/users";
+const connectWithDataBase= require("./connectDataBase/connectWithDataBase")
+connectWithDataBase()
 
 //midelwers
 app.use(express.json());
-app.use(express.urlencoded());
-
+ 
 
 //Uncaught exceptions 
 process.on('uncaughtException',(error:any)=>{
   console.log('Uncaught Exceptions',error)
   logger.error('Uncaught Exceptions ',error)
-})
-
-
-
+ })
+ 
 //unhandled rejection 
 process.on('unhandledRejection',(error:any)=>{
   console.log('Unhandled Rejection',error)
   logger.error('Unhandled Rejection',error)
-
-})
+ })
 
 //routers
-app.post("/register",
-  asyncMiddleware(async (req: any, res: any) => {
-    const { firstName, lastName, email, age, password } = req.body;
-    const user = await UserModel.findOne({ email });
-    if (user) return res.status(400).json({ message: "User already exist !!" });
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new UserModel({
-      firstName,
-      lastName,
-      email,
-      password: hashedPassword,
-      age,
-    });
-    await newUser.save();
-    const token = jwt.sign(
-      { _id: newUser._id, isAdmin: newUser.isAdmin },
-      process.env.access_token_secret
-    );
-    res.setHeader("token", token);
-    return res.status(200).json({ message: "user created successfuly" });
-  })
-);
+ 
 
-app.post("/login",
-  asyncMiddleware(async (req: any, res: any) => {
-    const { password, email } = req.body;
-    const user = await UserModel.findOne({ email });
-    if (!user) {
-      res.status(400).json({ message: "invalid email or password" });
-    } else {
-      const validPassword = await bcrypt.compare(password, user.password);
-      !validPassword &&
-        res.status(400).json({ message: "password or email incorrect" });
-      const token = jwt.sign(
-        { _id: user._id, isAdmin: user.isAdmin },
-        process.env.access_token_secret
-      ); // two parameters user id and secrete
-      res.setHeader("token", token);
-      res.status(200).json({ message: "user login successfuly" });
-    }
-  })
-);
+const Register = require('./routes/register')
+const Login = require('./routes/login')
+const Me = require('./routes/me')
+
+app.use('/register',Register)
+app.use('/login',Login)
+app.use('/me',Me)
+ 
 
 //? to get the current user
-app.get("/me", auth, asyncMiddleware(
-  async (req: any, res: any) => {
-  try {
-    const user = await UserModel.findById(req.user._id).select("-password"); //select that mean exclude
-    res.json({ user: user });
-  } catch (error: any) {
-    res.status(400).json({ message: error });
-  }
-})
-);
+// app.get("/me", auth, asyncMiddleware(
+//   async (req: any, res: any) => {
+//      const user = await UserModel.findById(req.user._id).select("-password"); //select that mean exclude
+//     res.json({ user: user });
+ 
+// })
+// );
 
 app.post("/try", [auth, admin], (req: any, res: any) => {
   res.json({ message: "is an admin " });
@@ -118,11 +66,11 @@ app.use(dataBaseError);
 
 
 
+// throw new Error("THROW NEW ERROR") 
 
-throw new Error("THROW NEW ERROR") 
 // const p= Promise.reject(new Error("THROW AN ERROR"))
 // p.then(()=>{console.log('DONE')})
 
 app.listen(PORT, () => {
-  console.log(`port is listen in ${PORT}`);
+  logger.info(`port is listen in ${PORT}`);
 });
