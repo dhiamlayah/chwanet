@@ -17,6 +17,29 @@ const userSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  region: [
+    {
+      state: {
+        type: String,
+        require: true,
+      },
+    },
+    {
+      accreditation: {
+        type: String,
+        require: true,
+      },
+    },
+    {
+      otherAccrediations: {
+        type: [String],
+      },
+    },
+  ],
+  userType:{
+    type:String,
+    require:true,
+  },
   age: {
     type: Number,
     require: true,

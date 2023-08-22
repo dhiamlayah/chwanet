@@ -37,11 +37,13 @@ const Register = require('./routes/register')
 const Login = require('./routes/login')
 const Me = require('./routes/me')
 const Genres = require("./routes/genres")
+const Profile= require("./routes/profile")
+
 app.use('/register',Register)
 app.use('/login',Login)
 app.use('/me',Me)
 app.use('/genres',Genres)
-
+app.use('/profile',Profile)
   
 
 app.post("/try", [auth, admin], (req: any, res: any) => {

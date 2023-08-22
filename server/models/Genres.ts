@@ -12,17 +12,16 @@ const GenresSchema = new mongoose.Schema({
       url: {
         type: String,
       },
-      width:{
-        type:Number,
+      width: {
+        type: Number,
+      },
+      height: {
+        type: Number,
+      },
     },
-    height:{
-        type:Number,
-    }
-        
-},
   ],
 });
 
-const GenresModel =mongoose.model("Genres",GenresSchema)
+const GenresModel = mongoose.model("Genres", GenresSchema);
 
-export default GenresModel
+export default GenresModel;
