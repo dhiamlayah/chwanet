@@ -1,0 +1,13 @@
+ 
+img{
+  height:40rem;
+
+  }
+ 
+
+@media (max-width : 750px) {
+  img{
+    height: 20rem;
+  }
+  
+}
