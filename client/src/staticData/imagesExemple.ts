@@ -36,4 +36,10 @@ export const Images: image[] = [
     domain: "8888888888888",
     discreption: "888888",
   },
+  {
+    id: 5,
+    url: "./images/home/najar.jpg",
+    domain: "8888888888888",
+    discreption: "888888",
+  },
 ];
