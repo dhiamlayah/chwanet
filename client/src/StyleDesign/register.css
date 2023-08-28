@@ -1,0 +1,63 @@
+ 
+
+
+
+
+
+
+@media (min-width : 1020px) {
+    .background {
+        background-image: url('../../public/images/Register/wall.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100vh;
+        width: 100%;
+    }
+     
+    #register {
+         width: 40%;
+        height: 60%;
+       position: absolute;
+       left: 30%;
+       right: auto;
+       top: 20%;
+    }
+  }
+
+@media (max-width:1024px ) and (min-width : 720px) {
+    .background {
+        background-image: url('../../public/images/Register/wall.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100vh;
+        width: 100%;
+    }
+     
+    #register {
+       width: 50%;
+       height: 60%;
+       position: absolute;
+       left: 25%;
+       right: auto;
+       top: 20%;
+    
+    }
+  }
+
+
+@media (max-width : 720px) {
+    .background {
+        background-image: url('../../public/images/Register/wall2.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100vh;
+        width: 100%;
+    }
+     
+    #register {
+        margin:5px;
+        width: 100%;
+       position: absolute;
+      top: 20%;
+     }
+  }

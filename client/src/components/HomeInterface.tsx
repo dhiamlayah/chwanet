@@ -7,7 +7,7 @@ function CarouselExemples() {
     <Carousel data-bs-theme="dark">
       {Images.map((image) => {
         return (
-          <Carousel.Item>
+          <Carousel.Item key={image.id}>
             <img
               src={image.url}
               className="w-100 d-block "
