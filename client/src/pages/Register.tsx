@@ -1,4 +1,5 @@
 import "../StyleDesign/register.css";
+import ChooseStateAndDelegation from "../components/ChooseStateAndDelegation"
 
 const Register = () => {
   return (
@@ -34,8 +35,8 @@ const Register = () => {
               :اسم
             </label>
           </div>
- 
-          
+
+
           {/*----------phone number -----------------------*/}
           <div className="mb-3 text-white text-end">
             <label htmlFor="tlph" className="form-label ">
@@ -50,7 +51,7 @@ const Register = () => {
             />
           </div>
 
-          
+
           {/*----------password-------------------------- */}
           <div className="mb-3 text-end">
             <label htmlFor="password" className="form-label ">
@@ -81,9 +82,11 @@ const Register = () => {
             </label>
             <input type="radio" value="client" />
           </div>
-
-
-
+      
+          <div className="mb-3 text-end " >
+             <p >:اختر موقعك الجغرافي</p>
+             <ChooseStateAndDelegation />
+          </div>
 
           {/*----------are you sur ---------------- */}
           <div className="mb-3 form-check">
