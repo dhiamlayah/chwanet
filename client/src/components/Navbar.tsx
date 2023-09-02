@@ -1,11 +1,23 @@
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import '../StyleDesign/navbar.css'
 const NavBar = () => {
   const location = useLocation();
+
+  const navbarDesign = ()=>{
+    if(location.pathname === '/register'){
+      return 'specialNav'
+    }else{
+      return ''
+    }
+  }
+
+
    return (
     <nav
       className="navbar navbar-expand-lg border-bottom border-dark fixed-top"
       style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+      id={navbarDesign()}
     >
       <div className="container-fluid ">
         <a className="navbar-brand" href="#">

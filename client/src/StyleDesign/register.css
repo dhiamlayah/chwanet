@@ -21,7 +21,7 @@
         background-image: url('../../public/images/Register/wall.jpg');
         background-size: cover;
         background-repeat: no-repeat;
-        height: 120vh;
+        height: 140vh;
         width: 100%;
     }
      
@@ -46,7 +46,6 @@
     }
      
     #register {
-      margin:5px;
       width: 100%;
       position: absolute;
       top: 20%;
