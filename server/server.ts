@@ -1,6 +1,15 @@
 const express = require("express");
 const app = express();
 const connectWithDataBase= require("./connectDataBase/connectWithDataBase")
+const cors = require('cors')
+
+
+const corsOptions = {
+  exposedHeaders: 'Token',
+};
+
+app.use(cors())
+app.use(cors(corsOptions));
 
 //-----------------------dependency-------------------------------------------//
 const PORT = process.env.PORT || 3000

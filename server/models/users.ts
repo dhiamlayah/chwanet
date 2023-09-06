@@ -8,8 +8,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
-  email: {
-    type: String,
+  phone: {
+    type: Number,
     require: true,
     unique: true,
   },
@@ -17,32 +17,17 @@ const userSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
-  region: [
-    {
-      state: {
-        type: String,
-        require: true,
-      },
-    },
-    {
-      accreditation: {
-        type: String,
-        require: true,
-      },
-    },
-    {
-      otherAccrediations: {
-        type: [String],
-      },
-    },
-  ],
-  userType:{
+  state: {
+    type: String,
+    require: true,
+  },
+  delegation:{
+    type : String,
+    require : true
+  },
+  possition:{
     type:String,
     require:true,
-  },
-  age: {
-    type: Number,
-    require: true,
   },
   date: {
     type: Date,

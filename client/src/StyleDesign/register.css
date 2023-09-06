@@ -1,6 +1,6 @@
 @media (min-width : 1020px) {
     .background {
-        background-image: url('../../public/images/Register/wall.jpg');
+        background-image: url('../../public/images/Register/build.jpg');
         background-size: cover;
         background-repeat: no-repeat;
         height: 120vh;
@@ -18,7 +18,7 @@
 
 @media (max-width:1024px ) and (min-width : 720px) {
     .background {
-        background-image: url('../../public/images/Register/wall.jpg');
+        background-image: url('../../public/images/Register/build.jpg');
         background-size: cover;
         background-repeat: no-repeat;
         height: 140vh;
@@ -38,7 +38,7 @@
 
 @media (max-width : 720px) {
     .background {
-        background-image: url('../../public/images/Register/wall2.jpg');
+        background-image: url('../../public/images/Register/build2.jpg');
         background-size: cover;
         background-repeat: no-repeat;
         height: 140vh;

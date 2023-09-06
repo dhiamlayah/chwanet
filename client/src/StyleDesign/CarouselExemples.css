@@ -1,13 +1,13 @@
  
 img{
-  height:40rem;
+  height:90vh;
 
   }
  
 
 @media (max-width : 750px) {
   img{
-    height: 20rem;
+    height: 70vh;
   }
   
 }

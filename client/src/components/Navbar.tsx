@@ -12,7 +12,6 @@ const NavBar = () => {
     }
   }
 
-
    return (
     <nav
       className="navbar navbar-expand-lg border-bottom border-dark fixed-top"

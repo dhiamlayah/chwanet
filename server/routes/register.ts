@@ -9,16 +9,18 @@ import UserModel from "../models/users";
  
 router.post("/",
   asyncMiddleware(async (req: any, res: any) => {
-    const { firstName, lastName, email, age, password } = req.body;
-    const user = await UserModel.findOne({ email });
-    if (user) return res.status(400).json({ message: "User already exist !!" });
+    const { firstName, lastName, phone, state, password ,delegation ,possition } = req.body;
+    const user = await UserModel.findOne({ phone });
+    if (user) return res.status(400).json({ message:  "  !! المستخدم موجود بالفعل  " });
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new UserModel({
       firstName,
       lastName,
-      email,
+      state,
       password: hashedPassword,
-      age,
+      delegation,
+      possition,
+      phone,
     });
     await newUser.save();
     const token = jwt.sign(
