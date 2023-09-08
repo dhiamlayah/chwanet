@@ -1,12 +1,24 @@
 import { BrowserRouter as Router ,Routes ,Route } from 'react-router-dom';
 import {useEffect,useState} from 'react'
+import axios from 'axios';
 import NavBar from './components/Navbar';
 import Home from './pages/Home'
 import Register from './pages/Register';
-import axios from 'axios';
+import Login from './pages/Login';
+interface User {
+    date:string,
+    delegation:string,
+    _id:string,
+    state:string,
+    phone:number,
+    firstName:string,
+    lastName:string,
+    isAdmin:boolean
+  }
 
 function App() {
-  const [token,setToken]= useState<string|any>()  
+  const [user,setUser]=useState<User|null>(null)
+ 
   const getCurrentUser= async ()=>{
     try{
       await axios.get("http://localhost:8000/me",{
@@ -15,25 +27,31 @@ function App() {
       }
     }).then((res)=>{
       console.log('successfuly',res.data)
+      setUser(res.data.user)
     })
     }catch(err){
       console.log('ther is an error to get current user ', err)
     }
   }
-  useEffect( ()=>{
-    if(token !==undefined){ 
-      getCurrentUser()
-    }
-  },[token])
- console.log(token)
+ 
+  useEffect (()=>{
+  const token = localStorage.getItem('Token')
+  if(token){
+    getCurrentUser()
+  }
+  },[])
+console.log(user)
+
+
 
   return (
     <Router>
-      <NavBar/>
+      <NavBar user={user}/>
     <Routes>
-        <Route path='/' Component={()=><Home  getToken={setToken}/>} />
-        <Route path='/register' element={<Register/>}/>
-        {localStorage.getItem("Token") && <Route path='/me' element={<p>hello</p>} />} 
+        <Route path='/' Component={()=><Home/>} />
+       {!user && <Route path='/register' element={<Register/>}/>}
+       {!user && <Route path='/login' element={<Login/>}/>}
+        {user && <Route path='/me' element={<p>hello</p>} />} 
         <Route path='/*' element={<h1 className='p-5'>Not Found 404</h1>}/>
     </Routes>   
     </Router>

@@ -5,9 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import ChooseStateAndDelegation from "../components/ChooseStateAndDelegation";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 const Register = () => {
-      const navigate = useNavigate()
       const [firstName, setFirstName] = useState<string>(""),
             [lastName, setLastName] = useState<string>(""),
             [phone, setPhone] = useState<number>(),
@@ -23,7 +21,6 @@ const Register = () => {
 const handleChange = (event : any,setState :Function)=>{
       setState(event.target.value)
 }
-
 const sendUserData = async()=>{
   try{
     await axios.post('http://localhost:8000/register',{
@@ -79,7 +76,7 @@ const handleClick=async()=>{
 
 const redirectUser =()=>{
   setTimeout(() => {
-      navigate("/")
+    window.location.pathname = '/'
   }, 5000);
 }
 

@@ -6,6 +6,13 @@
         height: 120vh;
         width: 100%;
     }
+    .background2{
+      background-image: url('../../public/images/Register/painter.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      height: 100vh;
+      width: 100%;
+    }
      
     #register {
        width: 40%;
@@ -23,6 +30,13 @@
         background-repeat: no-repeat;
         height: 140vh;
         width: 100%;
+    }
+    .background2{
+      background-image: url('../../public/images/Register/painter.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      height: 100vh;
+      width: 100%;
     }
      
     #register {
@@ -44,6 +58,13 @@
         height: 140vh;
         width: 100%;
     }
+    .background2 {
+      background-image: url('../../public/images/Register/painter2.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      height: 100vh;
+      width: 100%;
+  }
      
     #register {
       width: 100%;

@@ -1,0 +1,22 @@
+#animate1{
+    animation: slideInLeft 1s ease-in-out;
+}
+#animate2{
+    animation: slideInRight 1s ease-in-out;
+}
+@keyframes slideInLeft {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  @keyframes slideInRight {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }

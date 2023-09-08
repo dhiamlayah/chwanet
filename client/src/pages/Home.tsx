@@ -4,11 +4,8 @@ import AddWorker from "../components/AddWorker";
 import OurObjectif from "../components/OurObject";
 import { useEffect,useState } from "react";
 
-const Home = ({getToken}:any) => {
-    useEffect(()=>{ if(localStorage.getItem('Token')!==null){
-        getToken(localStorage.getItem('Token'))
-     }},[])
-     
+const Home = () => {
+ 
     return ( 
         <div>
             <CarouselExemples/>
