@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import "../StyleDesign/register.css";
 import {ToastContainer,toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
@@ -6,6 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import ChooseStateAndDelegation from "../components/ChooseStateAndDelegation";
 import axios from "axios";
 const Register = () => {
+    const url : string = process.env.REACT_APP_port+"/register"
+
       const [firstName, setFirstName] = useState<string>(""),
             [lastName, setLastName] = useState<string>(""),
             [phone, setPhone] = useState<number>(),
@@ -23,7 +26,7 @@ const handleChange = (event : any,setState :Function)=>{
 }
 const sendUserData = async()=>{
   try{
-    await axios.post('http://localhost:8000/register',{
+    await axios.post(url,{
       firstName,
       lastName,
       phone,
@@ -34,7 +37,7 @@ const sendUserData = async()=>{
     }).then((res)=>{
       const headers = res.headers['token']
       localStorage.setItem('Token',headers)
-      toast.success('created successfuly')
+      toast.success('تم إنشاؤه بنجاح')
       redirectUser()
 
     })
@@ -218,6 +221,9 @@ const redirectUser =()=>{
           </button>
           {errors && <div className="alert alert-danger">{errors}</div>}
         </form>
+        <div className="text-end fw-bold">
+          <Link to="/login" className="text-light text-decoration-none "> املك حساب </Link>
+        </div>
         <ToastContainer/>
 
       </div>

@@ -1,19 +1,23 @@
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import axios from "axios";
+import { Link } from "react-router-dom";
 const Login = () => {
+  const url: string = process.env.REACT_APP_port + "/login";
   interface Input {
     phone: null | string;
     password: null | string;
   }
   const [phone, setPhone] = useState<number>(),
-        [password, setPassword] = useState<string>(""),
-        [errors, setErrors] = useState<Input>({
+    [password, setPassword] = useState<string>(""),
+    [errors, setErrors] = useState<Input>({
       phone: null,
       password: null,
-                       });
+    }),
+    [submitErrors, setSubmitErrors] = useState<string | null>();
 
 
- 
   const handleSubmit = (event: any) => {
     event.preventDefault();
   };
@@ -22,10 +26,10 @@ const Login = () => {
     const newErrors = errors;
     if (event.target.value === "" || event.target.value === null) {
       if (type === "phone") {
-        newErrors.phone = "phone required";
+        newErrors.phone = "الهاتف مطلوب";
         setErrors(newErrors);
       } else {
-        newErrors.password = "password required";
+        newErrors.password = "كلمة المرور مطلوبة ";
         setErrors(newErrors);
       }
     } else {
@@ -44,10 +48,45 @@ const Login = () => {
     setState(event.target.value);
   };
 
-  const sendUserData =()=>{
+  const sendUserData = async () => {
+    try {
+      await axios
+        .post(url, {
+          phone,
+          password,
+        })
+        .then((res) => {
+          console.log(res);
+          const headers = res.headers["token"];
+          localStorage.setItem("Token", headers);
+          toast.success("تسجيل الدخول بنجاح");
+          redirectUser();
+        });
+    } catch (err: any) {
+      toast.error(err.response.data.message);
+    }
+  };
 
-  }
-
+  const cheackInputs = (): boolean => {
+    if (phone === null || password === "") {
+      return false;
+    } else {
+      return true;
+    }
+  };
+  const handleClick = async () => {
+    const cheak = cheackInputs();
+    if (!cheak) {
+      return setSubmitErrors("يرجى استكمال البيانات ");
+    }
+    setSubmitErrors(null)
+    await sendUserData();
+  };
+  const redirectUser = () => {
+    setTimeout(() => {
+      window.location.pathname = "/";
+    }, 5000);
+  };
   return (
     <div className="background2">
       <div
@@ -69,7 +108,7 @@ const Login = () => {
               onChange={(e) => handleChange(e, setPhone, "phone")}
             />
             {errors.phone && (
-              <div className="alert alert-danger">{errors.phone}</div>
+              <div className="text-danger p-1">* {errors.phone}</div>
             )}
           </div>
 
@@ -86,15 +125,27 @@ const Login = () => {
               onChange={(e) => handleChange(e, setPassword, "password")}
             />
             {errors.password && (
-              <div className="alert alert-danger">{errors.password}</div>
+              <div className="text-danger p-1">* {errors.password}</div>
             )}
           </div>
 
-          <button type="submit" className="btn btn-outline-warning">
-            سجل
+          <button
+            type="submit"
+            className="btn btn-outline-warning mt-2"
+            onClick={handleClick}
+          >
+            إرسال
           </button>
+          {submitErrors && (
+            <div className="alert alert-danger mt-2">{submitErrors}</div>
+          )}
         </form>
+        <div className="text-end fw-bold">
+          <Link to="/register" className="text-light text-decoration-none ">لا املك حساب </Link>
+        </div>
+
       </div>
+      <ToastContainer />
     </div>
   );
 };

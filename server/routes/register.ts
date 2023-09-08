@@ -28,7 +28,7 @@ router.post("/",
       process.env.access_token_secret
     );
     res.setHeader("token", token);
-    return res.status(200).json({ message: "user created successfuly" });
+    return res.status(200).json({ message: "تم إنشاء المستخدم بنجاح" });
   })
 );
 
