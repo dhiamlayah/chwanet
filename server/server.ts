@@ -30,27 +30,29 @@ app.use(express.json());
 connectWithDataBase()
 
 
-//Uncaught exceptions -------------------------------------------//
+//--------------------Uncaught exceptions -------------------------------------------//
 process.on('uncaughtException',(error:any)=>{
   console.log('Uncaught Exceptions',error)
   logger.error('Uncaught Exceptions ',error)
  })
-//unhandled rejection -------------------------------------------//
+//-------------------unhandled rejection -------------------------------------------//
 process.on('unhandledRejection',(error:any)=>{
   console.log('Unhandled Rejection',error)
   logger.error('Unhandled Rejection',error)
  })
 
-//routers-------------------------------------------//
+//---------------------routers-------------------------------------------//
 const Register = require('./routes/register')
 const Login = require('./routes/login')
-const Me = require('./routes/me')
+const MeAsClient = require('./routes/meAsClient')
+const MeAsWorker = require('./routes/meAsWorker')
 const Genres = require("./routes/genres")
 const Profile= require("./routes/profile")
 
 app.use('/register',Register)
 app.use('/login',Login)
-app.use('/me',Me)
+app.use('/meAsClient',MeAsClient)
+app.use('/meAsWorker',MeAsWorker)
 app.use('/genres',Genres)
 app.use('/profile',Profile)
   
@@ -59,7 +61,7 @@ app.post("/try", [auth, admin], (req: any, res: any) => {
   res.json({ message: "is an admin " });
 });
 
-//a middelware for catch errors from the database-------------------------------------------//
+//----------------a middelware for catch errors from the database-------------------------------------------//
 app.use(dataBaseError);
 
 

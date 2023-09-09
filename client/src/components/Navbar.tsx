@@ -41,14 +41,10 @@ import "../StyleDesign/navbar.css";
                 to="/"
                 className="text-decoration-none text-white nav-link "
               >
-                Home
+                الصفحة الرئيسية
               </Link>
             </li>
-            <li className="nav-item">
-              <a className="nav-link  text-white" href="#">
-                Link
-              </a>
-            </li>
+          
           </ul>
           {location.pathname !== "/register"&& location.pathname !== "/login"  && !user && (
             <button className="btn btn-light me-1" type="submit">

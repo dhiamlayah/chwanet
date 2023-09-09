@@ -58,6 +58,8 @@ const Login = () => {
         .then((res) => {
           console.log(res);
           const headers = res.headers["token"];
+          const user = res.data.user
+          localStorage.setItem('User',user)
           localStorage.setItem("Token", headers);
           toast.success("تسجيل الدخول بنجاح");
           redirectUser();

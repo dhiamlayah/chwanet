@@ -18,10 +18,12 @@ interface User {
 
 function App() {
   const [user,setUser]=useState<User|null>(null)
- 
+  const url : string = process.env.REACT_APP_port+"/meAs"
+
   const getCurrentUser= async ()=>{
+    const newUrl = url + localStorage.getItem('User')
     try{
-      await axios.get("http://localhost:8000/me",{
+      await axios.get(newUrl,{
       headers:{
         'token':localStorage.getItem('Token')
       }

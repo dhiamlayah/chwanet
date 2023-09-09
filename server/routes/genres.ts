@@ -18,7 +18,6 @@ router.post("/",auth,admin,asyncMiddleware(
         })
         await newGenre.save()
         return res.status(200).json({message:'genre created successfuly'})
- 
     }
 ))
 

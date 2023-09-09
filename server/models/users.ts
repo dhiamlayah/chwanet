@@ -1,33 +1,47 @@
 import mongoose from "mongoose";
-const userSchema = new mongoose.Schema({
+export interface User {
+  firstName:String,
+  lastName:String,
+  phone:Number,
+  password:String,
+  state:String,
+  delegation:String,
+  possition:String,
+  date:Date,
+  isAdmin:Boolean,
+}
+
+
+
+const userSchema = new mongoose.Schema<User>({
   firstName: {
     type: String,
-    require: true,
+    required: true,
   },
   lastName: {
     type: String,
-    require: true,
+    required: true,
   },
   phone: {
     type: Number,
-    require: true,
+    required: true,
     unique: true,
   },
   password: {
     type: String,
-    require: true,
+    required: true,
   },
   state: {
     type: String,
-    require: true,
+    required: true,
   },
   delegation:{
     type : String,
-    require : true
+    required : true
   },
   possition:{
     type:String,
-    require:true,
+    required:true,
   },
   date: {
     type: Date,
@@ -36,6 +50,7 @@ const userSchema = new mongoose.Schema({
   isAdmin: {
     type: Boolean,
   },
+  
 });
 
 const UserModel = mongoose.model("Users", userSchema);

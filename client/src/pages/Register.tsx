@@ -36,7 +36,10 @@ const sendUserData = async()=>{
       delegation
     }).then((res)=>{
       const headers = res.headers['token']
+      const user = res.data.user
       localStorage.setItem('Token',headers)
+      localStorage.setItem('User',user)
+
       toast.success('تم إنشاؤه بنجاح')
       redirectUser()
 
