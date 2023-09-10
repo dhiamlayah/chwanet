@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "../StyleDesign/register.css";
 import {ToastContainer,toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import AnimatedPage from "../util/AnimatedPage";
 
 import ChooseStateAndDelegation from "../components/ChooseStateAndDelegation";
 import axios from "axios";
@@ -87,150 +88,144 @@ const redirectUser =()=>{
 }
 
   return (
-    <div className="background">
-      <div
-        className=" p-5"
-        style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
-        id="register"
-      >
-        <form className="text-white fw-medium" onSubmit={handleSubmit} >
-          {/* ---------full Name ------------------------- */}
-          <div className="mb-3 text-white text-end d-flex ">
+      <div className="background">
+            <AnimatedPage>
 
-            <input
-              type="text"
-              className="form-control text-white fs-5"
-              id="lastName"
-              aria-describedby="emailHelp"
-              style={{
-                backgroundColor: "#ffffff4f",
-                width: "40%",
-                marginLeft: "4%",
-              }}
-              value={lastName}
-              onChange={(e)=>handleChange(e,setLastName)}
-            />
-            <label htmlFor="lastName"  className="form-label mx-2 ">
-              :اللقب
-            </label>
-
-            <input
-              type="text"
-              className="form-control text-white fs-5"
-              id="name"
-              aria-describedby="emailHelp"
-              style={{
-                backgroundColor: "#ffffff4f",
-                width: "40%",
-                marginLeft: "4%",
-              }}
-              value={firstName}
-              onChange={(e)=>handleChange(e,setFirstName)}
-            />
-            <label htmlFor="name" className="form-label mx-2 ">
-              :اسم
-            </label>
- 
-          </div>
-
-          {/* ----------phone number ----------------------- */}
-          <div className="mb-3 text-white text-end">
-            <label htmlFor="tlph" className="form-label ">
-              رقم الهاتف
-            </label>
-            <input
-              type="tel"
-              className="form-control text-white fs-5"
-              id="tlph"
-              aria-describedby="emailHelp"
-              style={{ backgroundColor: "#ffffff4f" }}
-              onChange={(e)=>handleChange(e,setPhone)}
-            />
-          </div>
-
-          {/*----------password-------------------------- */}
-          <div className="mb-3 text-end">
-            <label htmlFor="password" className="form-label ">
-              كلمة المرور
-            </label>
-            <input
-              type="password"
-              className="form-control  text-white fs-5 "
-              id="password"
-              style={{ backgroundColor: "#ffffff4f" }}
-              value={password}
-              onChange={(e)=>handleChange(e,setPassword)}
-            />   
-           {password.length<8&&password!==''  &&   <div id="emailHelp" className="form-text text-danger">
-              يجب أن تكون كلمة المرور الخاصة بك أطول من 8 أحرف
+        <div
+          className=" p-5"
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
+          id="register"
+        >
+          <form className="text-white fw-medium" onSubmit={handleSubmit} >
+            {/* ---------full Name ------------------------- */}
+            <div className="mb-3 text-white text-end d-flex ">
+              <input
+                type="text"
+                className="form-control text-white fs-5"
+                id="lastName"
+                aria-describedby="emailHelp"
+                style={{
+                  backgroundColor: "#ffffff4f",
+                  width: "40%",
+                  marginLeft: "4%",
+                }}
+                value={lastName}
+                onChange={(e)=>handleChange(e,setLastName)}
+              />
+              <label htmlFor="lastName"  className="form-label mx-2 ">
+                :اللقب
+              </label>
+              <input
+                type="text"
+                className="form-control text-white fs-5"
+                id="name"
+                aria-describedby="emailHelp"
+                style={{
+                  backgroundColor: "#ffffff4f",
+                  width: "40%",
+                  marginLeft: "4%",
+                }}
+                value={firstName}
+                onChange={(e)=>handleChange(e,setFirstName)}
+              />
+              <label htmlFor="name" className="form-label mx-2 ">
+                :اسم
+              </label>
             </div>
-            }
+            {/* ----------phone number ----------------------- */}
+            <div className="mb-3 text-white text-end">
+              <label htmlFor="tlph" className="form-label ">
+                رقم الهاتف
+              </label>
+              <input
+                type="tel"
+                className="form-control text-white fs-5"
+                id="tlph"
+                aria-describedby="emailHelp"
+                style={{ backgroundColor: "#ffffff4f" }}
+                onChange={(e)=>handleChange(e,setPhone)}
+              />
+            </div>
+            {/*----------password-------------------------- */}
+            <div className="mb-3 text-end">
+              <label htmlFor="password" className="form-label ">
+                كلمة المرور
+              </label>
+              <input
+                type="password"
+                className="form-control  text-white fs-5 "
+                id="password"
+                style={{ backgroundColor: "#ffffff4f" }}
+                value={password}
+                onChange={(e)=>handleChange(e,setPassword)}
+              />
+             {password.length<8&&password!==''  &&   <div id="emailHelp" className="form-text text-danger">
+                يجب أن تكون كلمة المرور الخاصة بك أطول من 8 أحرف
+              </div>
+              }
+            </div>
+            {/*----------possition in the platform---------- */}
+            <div className="mb-3 text-end">
+              <p>: اختر موقعك في هذه المنصة </p>
+              <input
+                type="radio"
+                className="btn-check"
+                name="options-outlined"
+                id="success-outlined"
+                value='worker'
+                onClick={()=>{setPossition('worker')}}
+              />
+              <label
+                className="btn btn-outline-secondary px-5"
+                htmlFor="success-outlined"
+              >
+                عامل
+              </label>
+              <input
+                type="radio"
+                className="btn-check"
+                name="options-outlined"
+                id="danger-outlined"
+                value='client'
+                onClick={()=>{setPossition('client')}}
+              />
+              <label
+                className="btn btn-outline-secondary px-5"
+                htmlFor="danger-outlined"
+              >
+                زائر
+              </label>
+            </div>
+            {/*----------state and delagation---------- */}
+            <div className="mb-3 text-end ">
+              <p>:اختر موقعك الجغرافي</p>
+              <ChooseStateAndDelegation state={state} userDelegation={delegation} setState={setState} setUserDelegation={setDelegation}/>
+            </div>
+            {/*----------are you sur ---------------- */}
+            <div className="mb-3 form-check">
+              <input
+                type="checkbox"
+                className="form-check-input"
+                id="exampleCheck1"
+                onClick={()=>{setCheakBox(!cheakBox)}}
+              />
+              <label className="form-check-label" htmlFor="exampleCheck1">
+                تحقق
+              </label>
+            </div>
+            <button type="submit" className="btn btn-outline-warning" onClick={handleClick}>
+            سجل
+            </button>
+            {errors && <div className="alert alert-danger">{errors}</div>}
+          </form>
+          <div className="text-end fw-bold">
+            <Link to="/login" className="text-light text-decoration-none "> املك حساب </Link>
           </div>
- 
-          {/*----------possition in the platform---------- */}
-          <div className="mb-3 text-end">
-            <p>: اختر موقعك في هذه المنصة </p>
-            <input
-              type="radio"
-              className="btn-check"
-              name="options-outlined"
-              id="success-outlined"
-              value='worker'
-              onClick={()=>{setPossition('worker')}}
-            />
-            <label
-              className="btn btn-outline-secondary px-5"
-              htmlFor="success-outlined"
-            >
-              عامل
-            </label>
-            <input
-              type="radio"
-              className="btn-check"
-              name="options-outlined"
-              id="danger-outlined"
-              value='client'
-              onClick={()=>{setPossition('client')}}
-            />
-            <label
-              className="btn btn-outline-secondary px-5"
-              htmlFor="danger-outlined"
-            >
-              زائر 
-            </label>
-          </div>
- 
-          {/*----------state and delagation---------- */}
-          <div className="mb-3 text-end ">
-            <p>:اختر موقعك الجغرافي</p>
-            <ChooseStateAndDelegation state={state} userDelegation={delegation} setState={setState} setUserDelegation={setDelegation}/>
-          </div>
- 
-          {/*----------are you sur ---------------- */}
-          <div className="mb-3 form-check">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              id="exampleCheck1"
-              onClick={()=>{setCheakBox(!cheakBox)}}
-            />
-            <label className="form-check-label" htmlFor="exampleCheck1">
-              تحقق
-            </label>
-          </div>
- 
-          <button type="submit" className="btn btn-outline-warning" onClick={handleClick}>
-          سجل
-          </button>
-          {errors && <div className="alert alert-danger">{errors}</div>}
-        </form>
-        <div className="text-end fw-bold">
-          <Link to="/login" className="text-light text-decoration-none "> املك حساب </Link>
+          <ToastContainer/>
         </div>
-        <ToastContainer/>
+        </AnimatedPage>
 
       </div>
-    </div>
   );
 };
 

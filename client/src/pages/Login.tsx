@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-
+import AnimatedPage from "../util/AnimatedPage";
 import axios from "axios";
 import { Link } from "react-router-dom";
 const Login = () => {
@@ -90,65 +90,66 @@ const Login = () => {
     }, 5000);
   };
   return (
-    <div className="background2">
-      <div
-        className=" mt-5 p-5"
-        style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
-        id="register"
-      >
-        <form className="text-white fw-medium" onSubmit={handleSubmit}>
-          <div className="mb-3 text-white text-end">
-            <label htmlFor="tlph" className="form-label ">
-              رقم الهاتف
-            </label>
-            <input
-              type="tel"
-              className="form-control text-white fs-5"
-              id="tlph"
-              aria-describedby="emailHelp"
-              style={{ backgroundColor: "#ffffff4f" }}
-              onChange={(e) => handleChange(e, setPhone, "phone")}
-            />
-            {errors.phone && (
-              <div className="text-danger p-1">* {errors.phone}</div>
-            )}
-          </div>
+      <div className="background2">
+            <AnimatedPage>
 
-          <div className="mb-3 text-end">
-            <label htmlFor="password" className="form-label ">
-              كلمة المرور
-            </label>
-            <input
-              type="password"
-              className="form-control  text-white fs-5 "
-              id="password"
-              style={{ backgroundColor: "#ffffff4f" }}
-              value={password}
-              onChange={(e) => handleChange(e, setPassword, "password")}
-            />
-            {errors.password && (
-              <div className="text-danger p-1">* {errors.password}</div>
+        <div
+          className=" mt-5 p-5"
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
+          id="register"
+        >
+          <form className="text-white fw-medium" onSubmit={handleSubmit}>
+            <div className="mb-3 text-white text-end">
+              <label htmlFor="tlph" className="form-label ">
+                رقم الهاتف
+              </label>
+              <input
+                type="tel"
+                className="form-control text-white fs-5"
+                id="tlph"
+                aria-describedby="emailHelp"
+                style={{ backgroundColor: "#ffffff4f" }}
+                onChange={(e) => handleChange(e, setPhone, "phone")}
+              />
+              {errors.phone && (
+                <div className="text-danger p-1">* {errors.phone}</div>
+              )}
+            </div>
+            <div className="mb-3 text-end">
+              <label htmlFor="password" className="form-label ">
+                كلمة المرور
+              </label>
+              <input
+                type="password"
+                className="form-control  text-white fs-5 "
+                id="password"
+                style={{ backgroundColor: "#ffffff4f" }}
+                value={password}
+                onChange={(e) => handleChange(e, setPassword, "password")}
+              />
+              {errors.password && (
+                <div className="text-danger p-1">* {errors.password}</div>
+              )}
+            </div>
+            <button
+              type="submit"
+              className="btn btn-outline-warning mt-2"
+              onClick={handleClick}
+            >
+              إرسال
+            </button>
+            {submitErrors && (
+              <div className="alert alert-danger mt-2">{submitErrors}</div>
             )}
+          </form>
+          <div className="text-end fw-bold">
+            <Link to="/register" className="text-light text-decoration-none ">لا املك حساب </Link>
           </div>
-
-          <button
-            type="submit"
-            className="btn btn-outline-warning mt-2"
-            onClick={handleClick}
-          >
-            إرسال
-          </button>
-          {submitErrors && (
-            <div className="alert alert-danger mt-2">{submitErrors}</div>
-          )}
-        </form>
-        <div className="text-end fw-bold">
-          <Link to="/register" className="text-light text-decoration-none ">لا املك حساب </Link>
         </div>
+        <ToastContainer />
+        </AnimatedPage>
 
       </div>
-      <ToastContainer />
-    </div>
   );
 };
 
