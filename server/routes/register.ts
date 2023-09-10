@@ -3,7 +3,8 @@ const router = express.Router()
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const asyncMiddleware = require("../middelwares/asyncMiddleware");
- 
+const auth = require("../middelwares/authorization");
+
 import UserModel from "../models/users";
 import WorkerModel from "../models/worker";
 
@@ -43,6 +44,11 @@ router.post("/",
         delegation,
         possition,
         phone,
+        workName:null,
+        discreption:null,
+        photo:null,
+        team:null,
+        experience:null,
       })
       await newWorker.save()
       const token = jwt.sign(
@@ -56,5 +62,21 @@ router.post("/",
   })
 );
 
-//! we add router update hir we complet worker model and get all the information and dont forget to send worker to his profile not to route me
-module.exports = router
+router.put("/",auth,asyncMiddleware(
+  async(req:any,res:any)=>{
+    const {workName,discreption,photo,team,experience} = req.body
+    const user = await  WorkerModel.findByIdAndUpdate(req.user._id,{ 
+      workName:workName,
+      discreption:discreption,
+      photo:photo,
+      team:team,
+      experience:experience,
+     })
+  if(user) {
+    res.send("success")
+    return  await user.save()}
+  }
+))
+
+
+ module.exports = router

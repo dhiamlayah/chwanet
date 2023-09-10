@@ -15,9 +15,16 @@ interface User {
     lastName:string,
     isAdmin:boolean
   }
+interface Worker extends User {
+  workName:String,
+  discreption:String,
+  photo:String,
+  team:Boolean,
+  experience:Number
+}
 
 function App() {
-  const [user,setUser]=useState<User|null>(null)
+  const [user,setUser]=useState<User|Worker|null>(null)
   const url : string = process.env.REACT_APP_port+"/meAs"
 
   const getCurrentUser= async ()=>{
