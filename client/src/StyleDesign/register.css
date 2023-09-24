@@ -48,8 +48,6 @@
     
     }
   }
-
-
 @media (max-width : 720px) {
     .background {
         background-image: url('../../public/images/Register/build2.jpg');
@@ -72,3 +70,13 @@
       top: 20%;
      }
   }
+
+/* this part for worker Info */
+#imgUploded{
+   background-size: cover;
+  background-repeat: no-repeat;
+  border:2px white solid ;
+  border-radius:125px ;
+  width: 125px;
+  height: 125px;
+}

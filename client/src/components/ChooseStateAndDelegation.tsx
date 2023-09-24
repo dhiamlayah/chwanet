@@ -2,7 +2,12 @@ import { TunisiaStateAndDelegation } from "../staticData/stateAndDelegationsOfTu
 import { states, delegations } from "../methods/chooseStateAndDelegation";
 import { useEffect, useState } from "react";
 
-const ChooseStateAndDelegation = ({state,userDelegation,setState,setUserDelegation}:any) => {
+const ChooseStateAndDelegation = ({
+  state,
+  userDelegation,
+  setState,
+  setUserDelegation,
+}: any) => {
   const stateAndDelegation = TunisiaStateAndDelegation;
   const allStates = states(stateAndDelegation);
   // const [state, setState] = useState<string>("");

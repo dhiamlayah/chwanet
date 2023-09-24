@@ -40,10 +40,8 @@ const sendUserData = async()=>{
       const user = res.data.user
       localStorage.setItem('Token',headers)
       localStorage.setItem('User',user)
-
       toast.success('تم إنشاؤه بنجاح')
-      redirectUser()
-
+      redirectUser(user)
     })
   }catch(error:any ){
     console.log('there is an error to send data to the server',error.message)
@@ -81,10 +79,15 @@ const handleClick=async()=>{
   
 }
 
-const redirectUser =()=>{
-  setTimeout(() => {
-    window.location.pathname = '/'
+const redirectUser =(user:string)=>{
+ let path = '/'
+  if (user==="Worker") {
+    path='/register/info'
+  }
+  return setTimeout(() => {
+    window.location.pathname = path
   }, 5000);
+ 
 }
 
   return (

@@ -1,10 +1,21 @@
 import mongoose from "mongoose";
 import { User } from "./users";
 
+type MulterType = {
+  fieldname:String,
+  originalname:String,
+  encoding:String,
+  mimetype:String,
+  destination:String,
+  filename:String,
+  path:String,
+  size:Number
+}
+
 interface Worker extends User {
     workName:String,
     discreption:String,
-    photo:String,
+    photo:MulterType,
     team:Boolean,
     experience:Number
 }
@@ -54,7 +65,10 @@ const workerSchema =new mongoose.Schema<Worker>({
         type:String,
         require:true,
       },
-      photo:String,
+      photo:{
+        type:Object , 
+        require:true
+      },
       team:Boolean,
       experience:Number
 })

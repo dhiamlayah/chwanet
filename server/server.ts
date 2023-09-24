@@ -49,16 +49,20 @@ const MeAsWorker = require('./routes/meAsWorker')
 const Genres = require("./routes/genres")
 const Profile= require("./routes/profile")
 
+
+
 app.use('/register',Register)
 app.use('/login',Login)
 app.use('/meAsClient',MeAsClient)
 app.use('/meAsWorker',MeAsWorker)
 app.use('/genres',Genres)
 app.use('/profile',Profile)
-  
+app.use('/userPicture', express.static('userPicture'));
 
-app.post("/try", [auth, admin], (req: any, res: any) => {
-  res.json({ message: "is an admin " });
+app.post("/try",(req: any, res: any) => {
+  const data = req.file
+  console.log(data)
+ res.json({'url':data.path})
 });
 
 //----------------a middelware for catch errors from the database-------------------------------------------//
@@ -78,3 +82,4 @@ app.listen(PORT, () => {
 
 // const p= Promise.reject(new Error("THROW AN ERROR"))
 // p.then(()=>{console.log('DONE')})
+

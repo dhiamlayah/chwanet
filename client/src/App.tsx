@@ -5,6 +5,7 @@ import NavBar from "./components/Navbar";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import WorkerInformation from "./pages/WokerInformation";
 interface User {
   date: string;
   delegation: string;
@@ -57,6 +58,7 @@ function App() {
         <Routes>
           <Route path="/" Component={() => <Home />} />
           {!user && <Route path="/register" element={<Register />} />}
+          <Route path="/register/info" element={<WorkerInformation/>}/>
           {!user && <Route path="/login" element={<Login />} />}
           {user && <Route path="/me" element={<p>hello</p>} />}
           <Route path="/*" element={<h1 className="p-5">Not Found 404</h1>} />
