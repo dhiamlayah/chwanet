@@ -6,10 +6,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { typeWork } from "../staticData/genres";
 
 type WorkerInformations = {
-  workName:string,
-  discreption:string,
-  experience:number,
-}
+  workName: string;
+  discreption: string;
+  experience: number;
+};
 
 const WorkerInformation = () => {
   const inputImg = useRef<any>(null);
@@ -17,16 +17,19 @@ const WorkerInformation = () => {
   const [userPhoto, setUserPhoto] = useState<any>(null);
   const [userFile, setUserFile] = useState<any>();
 
-  const [workerInformations, setWorkerInformations] = useState<WorkerInformations>({
-    workName:'',
-    discreption:'',
-    experience:0,
-  });
+  const [workerInformations, setWorkerInformations] =
+    useState<WorkerInformations>({
+      workName: "",
+      discreption: "",
+      experience: 0,
+    });
 
-  const handleChange = (e:any,name:string)=>{
-    setWorkerInformations((prevWorkerInformation)=>{return{...prevWorkerInformation,[name]:e.target.value}})
-  }
- 
+  const handleChange = (e: any, name: string) => {
+    setWorkerInformations((prevWorkerInformation) => {
+      return { ...prevWorkerInformation, [name]: e.target.value };
+    });
+  };
+
   const handleSubmit = (event: any) => {
     event.preventDefault();
   };
@@ -47,20 +50,25 @@ const WorkerInformation = () => {
     );
     setUserPhoto(imagesUploded);
   };
+  console.log( 'localstprg',localStorage.getItem("Token"))
 
   const handleClick = async () => {
+    const jsonWorkerInformations = JSON.stringify(workerInformations);
     const formData = new FormData();
     formData.append("file", userFile);
-    
-
-    await axios
-      .put("http://localhost:8000/register",{Headers :{workerInformations},formData})
-      .then((res) => {
-        console.log(res.data);
+    formData.append("document", jsonWorkerInformations);
+  try{  
+    await axios.put("http://localhost:8000/register",formData,{
+        headers: {
+          token: localStorage.getItem("Token"),
+        },
       })
-      .catch((err) => {
+      .then((res) => {
+        console.log("successfuly", res.data);
+       })}
+    catch(err){
         console.log(err);
-      });
+      };
   };
   const imgUrl = `url('/images/profil.jpg')`;
 
@@ -108,15 +116,19 @@ const WorkerInformation = () => {
               <select
                 style={{ backgroundColor: "#ffffff4f" }}
                 className="text-end text-white"
-                value={ workerInformations.workName }
-                onChange={(e)=>handleChange(e,'workName')}
-           >
+                value={workerInformations.workName}
+                onChange={(e) => handleChange(e, "workName")}
+              >
                 <option className="list-group-item text-white" value="">
                   {" "}
                 </option>
                 {workType.map((work) => {
                   return (
-                    <option key={work} value={work} className="list-group-item text-dark">
+                    <option
+                      key={work}
+                      value={work}
+                      className="list-group-item text-dark"
+                    >
                       {work}
                     </option>
                   );
@@ -133,8 +145,10 @@ const WorkerInformation = () => {
                 style={{ backgroundColor: "#ffffff4f" }}
                 id="text"
                 className="form-control text-light fs-9"
-                value={ workerInformations.discreption }
-                onChange={(e)=>{handleChange(e,'discreption')}}
+                value={workerInformations.discreption}
+                onChange={(e) => {
+                  handleChange(e, "discreption");
+                }}
                 rows={5}
               ></textarea>
             </div>
@@ -148,16 +162,21 @@ const WorkerInformation = () => {
                 id="tlph"
                 aria-describedby="emailHelp"
                 style={{ backgroundColor: "#ffffff4f" }}
-                value={ workerInformations.experience }
-                onChange={(e)=>{handleChange(e,'experience')}}
-
+                value={workerInformations.experience}
+                onChange={(e) => {
+                  handleChange(e, "experience");
+                }}
               />
               <label htmlFor="tlph" className="form-label p-2 fw-bold ">
                 : سنوات الخبرة
               </label>
             </div>
-            <button type="submit" className="btn btn-outline-warning" onClick={handleClick}>
-            سجل
+            <button
+              type="submit"
+              className="btn btn-outline-warning"
+              onClick={handleClick}
+            >
+              سجل
             </button>
           </form>
 

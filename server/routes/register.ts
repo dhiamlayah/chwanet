@@ -9,16 +9,13 @@ const multer = require("multer");
 import UserModel from "../models/users";
 import WorkerModel from "../models/worker";
 
-
-
 const storage = multer.diskStorage({
   destination: "./userPicture",
-  filename(req:any,file:any,cd:any) {
+  filename(req: any, file: any, cd: any) {
     cd(null, file.originalname);
   },
 });
 const upload = multer({ storage });
-
 
 router.post(
   "/",
@@ -89,29 +86,25 @@ router.post(
   })
 );
 
-
 router.put(
   "/",
-  upload.single('file'),
+  auth,
+  upload.single("file"),
   asyncMiddleware(async (req: any, res: any) => {
-     const file = req.file
-
-        
-        
-    // console.log('workerInformation',req.body.workerInformations)
-
-
-    // const user = await WorkerModel.findByIdAndUpdate(req.user._id, {
-    //   workName: workName,
-    //   discreption: discreption,
-    //   photo: file,
-    //   team: team,
-    //   experience: experience,
-    // });
-    // if (user) {
-    //   res.send("success");
-    //   return await user.save();
-    // }
+    const file = req.file;    
+    const {workName,discreption,experience } = JSON.parse(req.body.document)
+ 
+    const user = await WorkerModel.findByIdAndUpdate(req.user._id, {
+      workName: workName,
+      discreption: discreption,
+      photo: file,
+      team: true,
+      experience: experience,
+    });
+    if (user) {
+      res.send("success");
+      return await user.save();
+    }
   })
 );
 
