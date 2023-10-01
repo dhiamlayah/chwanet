@@ -45,7 +45,7 @@ const sendUserData = async()=>{
     })
   }catch(error:any ){
     console.log('there is an error to send data to the server',error.message)
-   if(error.response.data.message)
+   if(error.response.data)
     {return toast.error(error.response.data.message)}
   }
 } 
@@ -92,8 +92,7 @@ const redirectUser =(user:string)=>{
 
   return (
       <div className="background">
-            <AnimatedPage>
-
+        <AnimatedPage>
         <div
           className=" p-5"
           style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}

@@ -1,5 +1,6 @@
 import AnimatedPage from "../util/AnimatedPage";
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,16 +13,18 @@ type WorkerInformations = {
 };
 
 const WorkerInformation = () => {
+  const url: string = process.env.REACT_APP_port + "/register";
+  const navigate = useNavigate();
   const inputImg = useRef<any>(null);
   const workType = typeWork;
   const [userPhoto, setUserPhoto] = useState<any>(null);
   const [userFile, setUserFile] = useState<any>();
-
+  const [errors, setErrors] = useState<null | string>(null);
   const [workerInformations, setWorkerInformations] =
     useState<WorkerInformations>({
       workName: "",
       discreption: "",
-      experience: 0,
+      experience: -1,
     });
 
   const handleChange = (e: any, name: string) => {
@@ -50,34 +53,64 @@ const WorkerInformation = () => {
     );
     setUserPhoto(imagesUploded);
   };
-  console.log( 'localstprg',localStorage.getItem("Token"))
 
-  const handleClick = async () => {
+  const sendWorkerInformation = async () => {
     const jsonWorkerInformations = JSON.stringify(workerInformations);
     const formData = new FormData();
     formData.append("file", userFile);
     formData.append("document", jsonWorkerInformations);
-  try{  
-    await axios.put("http://localhost:8000/register",formData,{
-        headers: {
-          token: localStorage.getItem("Token"),
-        },
-      })
-      .then((res) => {
-        console.log("successfuly", res.data);
-       })}
-    catch(err){
-        console.log(err);
-      };
+    try {
+      await axios
+        .put(url, formData, {
+          headers: {
+            token: localStorage.getItem("Token"),
+          },
+        })
+        .then((res) => {
+          toast.success("تم إنشاؤه بنجاح");
+          redirectUser();
+        });
+    } catch (err: any) {
+      if (err.response.data) {
+        return toast.error(err.response.data.message);
+      }
+    }
   };
-  const imgUrl = `url('/images/profil.jpg')`;
 
   const chooseImg = () => {
+    const imgUrl = `url('/images/profil.jpg')`;
     if (userPhoto) {
       return `url(${userPhoto})`;
     }
     return imgUrl;
   };
+
+  const cheackInputs = (): boolean => {
+    if (workerInformations.workName === "") return false;
+    if (workerInformations.experience === -1) return false;
+    if (workerInformations.discreption === "") return false;
+    return true;
+  };
+
+  const handleClick = async () => {
+    const chearkInputs = cheackInputs();
+    if (!chearkInputs) {
+      return setErrors("يرجى استكمال جميع المعلومات");
+    }
+    if (!userPhoto) {
+      return setErrors("يرجي وضع صورتك الشخصية");
+    }
+    await sendWorkerInformation();
+  };
+
+  const redirectUser = () => {
+    return setTimeout(() => {
+      navigate("/me");
+    }, 5000);
+  };
+
+  if(localStorage.getItem('User')==='Client')
+    return <h1 className="text-center pt-5">404 NOT FOUND :(</h1>
 
   return (
     <div className="background">
@@ -156,7 +189,7 @@ const WorkerInformation = () => {
             <div className="mb-3 text-white text-end">
               <input
                 type="number"
-                min={0}
+                min={-1}
                 max={35}
                 className="  text-white fs-5"
                 id="tlph"
@@ -178,6 +211,7 @@ const WorkerInformation = () => {
             >
               سجل
             </button>
+            {errors && <div className="alert alert-danger">{errors}</div>}
           </form>
 
           <ToastContainer />
