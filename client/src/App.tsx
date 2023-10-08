@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import WorkerInformation from "./pages/WokerInformation";
+import MeAsWorker from "./pages/MeAsWorker";
 interface User {
   date: string;
   delegation: string;
@@ -60,7 +61,7 @@ function App() {
           {!user && <Route path="/register" element={<Register />} />}
           <Route path="/register/info" element={<WorkerInformation/>}/>
           {!user && <Route path="/login" element={<Login />} />}
-          {user && <Route path="/me" element={<p>hello</p>} />}
+          {user && <Route path="/me" element={<MeAsWorker/>} />}
           <Route path="/*" element={<h1 className="p-5">Not Found 404</h1>} />
         </Routes>
     </Router>
