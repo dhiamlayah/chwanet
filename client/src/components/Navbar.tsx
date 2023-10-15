@@ -16,7 +16,7 @@ import "../StyleDesign/navbar.css";
   return (
     <nav
       className="navbar navbar-expand-lg border-bottom border-dark fixed-top"
-      style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+      style={{ backgroundColor: "rgba(0, 0, 0, 0.8)" }}
       id={navbarDesign()}
     >
       <div className="container-fluid ">

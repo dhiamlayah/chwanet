@@ -92,8 +92,7 @@ router.put(
   upload.single("file"),
   asyncMiddleware(async (req: any, res: any) => {
     const file = req.file;    
-    const {workName,discreption,experience } = JSON.parse(req.body.document)
- 
+    const {workName,discreption,experience}=JSON.parse(req.body.document)
     const user = await WorkerModel.findByIdAndUpdate(req.user._id, {
       workName: workName,
       discreption: discreption,
@@ -107,5 +106,20 @@ router.put(
     }
   })
 );
+
+
+router.put("/:id",auth,
+  asyncMiddleware(async(req:any,res:any)=>{
+    const id = req.params.id
+    const updatedSomthing = req.body[id]
+    const user = await WorkerModel.findByIdAndUpdate(req.user._id, {
+      id:updatedSomthing,
+    })
+    res.send("success")
+    return await user?.save()}
+
+  )
+)
+
 
 module.exports = router;

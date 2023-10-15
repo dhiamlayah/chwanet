@@ -46,7 +46,7 @@ const sendUserData = async()=>{
   }catch(error:any ){
     console.log('there is an error to send data to the server',error.message)
    if(error.response.data)
-    {return toast.error(error.response.data.message)}
+    {return toast.error(error.response.data.message,{position: "top-right"})}
   }
 } 
  

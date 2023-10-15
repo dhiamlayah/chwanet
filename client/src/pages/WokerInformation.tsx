@@ -46,12 +46,13 @@ const WorkerInformation = () => {
   /*to show the image to the client  */
   const handleChangeFile = (event: any) => {
     const file = event.target.files[0];
-    setUserFile(file);
-    console.log(file);
-    const imagesUploded = (window.URL ? URL : window.webkitURL).createObjectURL(
+    console.log('file',file)
+    if(file!==undefined){
+      setUserFile(file);
+     const imagesUploded = (window.URL ? URL : window.webkitURL).createObjectURL(
       file
     );
-    setUserPhoto(imagesUploded);
+    setUserPhoto(imagesUploded);}
   };
 
   const sendWorkerInformation = async () => {
@@ -87,7 +88,7 @@ const WorkerInformation = () => {
 
   const cheackInputs = (): boolean => {
     if (workerInformations.workName === "") return false;
-    if (workerInformations.experience === -1) return false;
+    if (workerInformations.experience === -1 || workerInformations.experience===null ) return false;
     if (workerInformations.discreption === "") return false;
     return true;
   };
@@ -96,6 +97,9 @@ const WorkerInformation = () => {
     const chearkInputs = cheackInputs();
     if (!chearkInputs) {
       return setErrors("يرجى استكمال جميع المعلومات");
+    }
+    if(workerInformations.experience<0){
+      return setErrors("يرجى وظع سنوات الخبرة ")
     }
     if (!userPhoto) {
       return setErrors("يرجي وضع صورتك الشخصية");

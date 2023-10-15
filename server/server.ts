@@ -60,9 +60,7 @@ app.use('/profile',Profile)
 app.use('/userPicture', express.static('userPicture'));
 
 app.post("/try",(req: any, res: any) => {
-  const data = req.file
-  console.log(data)
- res.json({'url':data.path})
+  
 });
 
 //----------------a middelware for catch errors from the database-------------------------------------------//
