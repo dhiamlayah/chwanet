@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { typeWork } from "../staticData/genres";
+import ChooseDomain from "../components/ChooseDomain";
 
 type WorkerInformations = {
   workName: string;
@@ -16,7 +16,6 @@ const WorkerInformation = () => {
   const url: string = process.env.REACT_APP_port + "/register";
   const navigate = useNavigate();
   const inputImg = useRef<any>(null);
-  const workType = typeWork;
   const [userPhoto, setUserPhoto] = useState<any>(null);
   const [userFile, setUserFile] = useState<any>();
   const [errors, setErrors] = useState<null | string>(null);
@@ -148,30 +147,10 @@ const WorkerInformation = () => {
               </div>
             </div>
 
-            <div className="mb-3 text-white text-end">
-              <p className="text-end">اختر نوع عملك</p>
-              <select
-                style={{ backgroundColor: "#ffffff4f" }}
-                className="text-end text-white"
-                value={workerInformations.workName}
-                onChange={(e) => handleChange(e, "workName")}
-              >
-                <option className="list-group-item text-white" value="">
-                  {" "}
-                </option>
-                {workType.map((work) => {
-                  return (
-                    <option
-                      key={work}
-                      value={work}
-                      className="list-group-item text-dark"
-                    >
-                      {work}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
+           <div>
+             <ChooseDomain workName={workerInformations.workName} handleChange={handleChange} />
+           </div>
+             
 
             <div className="mb-3 text-white text-end">
               <label htmlFor="tlph" className="form-label">

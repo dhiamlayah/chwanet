@@ -18,10 +18,14 @@ const WorkerDiscreption = ({
       <div id="photo" className="m-1 p-2">
         <div className="  p-8 ">
           <div className={isMe ? "d-flex justify-content-between" : ""}>
-            {isMe && <p className="p-2" onClick={()=>handleUpdate('workName and discreption',[workName,discreption])}>X</p>}
+            {isMe && <p className="p-2" onClick={()=>handleUpdate('workName',[workName])}>X</p>}
             <p className="fw-bold">{workName}</p>
           </div>
+          <div className={isMe ? "d-flex justify-content-between" : ""}>
+            {isMe && <p className="p-2" onClick={()=>handleUpdate('discreption',[discreption])}>X</p>}
           <p>{discreption}</p>
+          </div>
+         
          </div>
       </div>
       <div className="  m-1 " id="cartId">

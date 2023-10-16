@@ -46,7 +46,7 @@ function App() {
       console.log("ther is an error to get current user ", err);
     }
   };
-
+ 
   useEffect(() => {
     const token = localStorage.getItem("Token");
     if (token) {
@@ -59,7 +59,7 @@ function App() {
         <Routes>
           <Route path="/" Component={() => <Home />} />
           {!user && <Route path="/register" element={<Register />} />}
-          <Route path="/register/info" element={<WorkerInformation/>}/>
+          {user && <Route path="/register/info" element={<WorkerInformation/>}/>}
           {!user && <Route path="/login" element={<Login />} />}
           {user && <Route path="/me" element={<MeAsWorker/>} />}
           <Route path="/*" element={<h1 className="p-5">Not Found 404</h1>} />

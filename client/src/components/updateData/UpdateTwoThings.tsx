@@ -44,7 +44,8 @@ const UpdateTwoThings = ({updateData}:any) => {
             <ChooseStateAndDelegation state={firstData} userDelegation={secondData} setUserDelegation={setSecondData} setState={setFirstData}/>
            </div>
     }
-
+ 
+ 
      return null
 }
  
