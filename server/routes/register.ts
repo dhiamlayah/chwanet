@@ -110,14 +110,29 @@ router.put(
 
 router.put("/:id",auth,
   asyncMiddleware(async(req:any,res:any)=>{
+    let newUpdate ={}
     const id = req.params.id
-    const updatedSomthing = req.body[id]
-    const user = await WorkerModel.findByIdAndUpdate(req.user._id, {
-      id:updatedSomthing,
-    })
+    console.log('id',id)
+    console.log("data mr dhia !",req.body)
+    if(id ==='name'){
+       newUpdate ={
+        firstName:req.body.firstName,
+        lastName:req.body.lastName,
+      }
+    }else if(id==="state"){
+        newUpdate={
+          state:req.body.state,
+          delegation:req.body.delegation
+        }
+    }else{
+      newUpdate={
+        [id]:req.body[id]
+      }
+    }
+    const user = await WorkerModel.findByIdAndUpdate(req.user._id,newUpdate)
     res.send("success")
     return await user?.save()}
-
+  
   )
 )
 

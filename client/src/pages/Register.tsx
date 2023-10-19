@@ -71,8 +71,6 @@ const handleClick=async()=>{
     return setErrors("يرجى استكمال جميع المعلومات")
   }else if(cheakBox===false){ return setErrors("تحقق من فضلك")}
    const number = Number(phone)
- 
- 
    if (!number){return setErrors("رقم الهاتف خاطئ")}
     setErrors(null)
     await sendUserData()

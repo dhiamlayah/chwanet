@@ -1,16 +1,24 @@
 import { useEffect, useState } from "react";
 import ChooseDomain from "../ChooseDomain";
 
-const UpdateOneThing = ({ updateData }: any) => {
+const UpdateOneThing = ({ updateData,setNewData }: any) => {
   const [firstData, setFirstData] = useState<number | string>("");
+  
   const handleChange = (e: any, type = "") => {
     setFirstData(e.target.value);
+    if(updateData.type === "phone")setNewData((prev:any)=>({...prev, ...{'phone':e.target.value.trim()}}))
+    if(updateData.type === "workName")setNewData((prev:any)=>({...prev, ...{'workName':e.target.value.trim()}}))
+    if(updateData.type === "discreption")setNewData((prev:any)=>({...prev, ...{'discreption':e.target.value.trim()}}))
+
   };
 
-  useEffect(() => {
+
+   useEffect(() => {
     setFirstData(updateData.informations[0]);
   }, [updateData]);
-  if (updateData.type === "phone")
+
+
+  if (updateData.type === "phone"){
     return (
       <div className="text-light text-center ">
         <h2 className="text-end px-3 p-2"> : الهاتف </h2>
@@ -27,8 +35,9 @@ const UpdateOneThing = ({ updateData }: any) => {
         />
         <br />
       </div>
-    );
-  if (updateData.type === "workName ") {
+      )
+    }
+  if (updateData.type === "workName") {
     return (
       <div
         className="text-light text-center  py-5 w-75 "
@@ -38,7 +47,6 @@ const UpdateOneThing = ({ updateData }: any) => {
       </div>
     );
   }
-
   if (updateData.type === "discreption") {
     return (
       <div className="text-light text-center ">
@@ -57,6 +65,7 @@ const UpdateOneThing = ({ updateData }: any) => {
       </div>
     );
   }
+  
   return null;
 };
 

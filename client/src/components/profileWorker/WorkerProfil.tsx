@@ -3,6 +3,9 @@ import "../../StyleDesign/meAsWorker.css";
 import WorkerDiscreption from "./WorkerDiscreption";
 import axios from "axios";
 import UpdateData from "../updateData/UpdateData";
+import WorkerImages from "./WorkerImages";
+import WorkerName from "./WorkersName";
+import WorkerListGroup from "./WorkerListGroup";
 
 export type UserData = {
   type: null | string;
@@ -19,6 +22,7 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
     type: null,
     informations: [],
   });
+
   const {
     firstName,
     lastName,
@@ -46,11 +50,7 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
       console.log("ther is an error to get current user ", err);
     }
   };
-
-  const chooseImg = () => {
-    const imgUrl = `url('/images/home/builder.jpg')`;
-    return imgUrl;
-  };
+ 
   const handleClick = (numb: number) => {
     if (numb === 1) {
       setNumber(1);
@@ -60,6 +60,21 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
       setNumber(3);
     }
   };
+  const handleUpdate = (type: string, informations: Array<any>) => {
+    const ourData = {
+      type,
+      informations,
+    };
+    setUpdateData(ourData);
+    setShowUpdateDiv(true);
+  };
+  const isThisMe = () => {
+    if (user) {
+      return setIsMe(user._id === WorkerInformations._id);
+    }
+    return setIsMe(false);
+  };
+
 
   useEffect(() => {
     const token = localStorage.getItem("Token");
@@ -74,115 +89,22 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
     }
   }, [user]);
 
-  const isThisMe = () => {
-    if (user) {
-      return setIsMe(user._id === WorkerInformations._id);
-    }
-    return setIsMe(false);
-  };
+  
 
-  const handleUpdate = (type: string, informations: Array<any>) => {
-    const ourData = {
-      type,
-      informations,
-    };
-    setUpdateData(ourData);
-    setShowUpdateDiv(true);
-  };
-
+  
   return (
     <div>
       <div className={showUpdateDiv ? " " : "d-none"}>
         <UpdateData updateData={updateData} setShowUpdateDiv={setShowUpdateDiv} />
       </div>
       <div
-        className={
-          !showUpdateDiv
-            ? "Profilbackground opacity-100 "
-            : "Profilbackground opacity-25  "
-        }
+        className={!showUpdateDiv ? "Profilbackground opacity-100 "  : "Profilbackground opacity-25"}
         style={{ zIndex: "12" }}
       >
         <div id="content">
-          <div
-            className="z-8 position-absolute"
-            style={{ backgroundImage: chooseImg() }}
-            id="couvertImg"
-          ></div>
-          <div className="z-5 position-absolute">
-            <div
-              className="z-8 position-absolute"
-              style={{ backgroundImage: `url('${profilPicture}')` }}
-              id="pdp"
-            ></div>
-          </div>
-          <div id="workerName" className="d-flex">
-            {isMe && (
-              <h1
-                className="px-2"
-                onClick={() => handleUpdate("name", [firstName, lastName])}
-              >
-                X
-              </h1>
-            )}
-            <h1 className="fw-bold ">
-              {firstName} {lastName}
-            </h1>
-          </div>
-          <div className="  list-group">
-            <hr
-              className="mx-5 d-flex justify-content-center "
-              style={{ width: "80%" }}
-            />
-            <div className="d-flex  justify-content-center ">
-              <button
-                type="button"
-                className={
-                  number === 1
-                    ? "list-group-item list-group-item-action active mx-2 text-center"
-                    : "list-group-item list-group-item-action  text-center"
-                }
-                onClick={() => {
-                  handleClick(1);
-                }}
-                style={{ width: "20%" }}
-              >
-                معلومات
-              </button>
-              <button
-                type="button"
-                className={
-                  number === 2
-                    ? "list-group-item list-group-item-action active mx-2 text-center"
-                    : "list-group-item list-group-item-action text-center "
-                }
-                onClick={() => {
-                  handleClick(2);
-                }}
-                style={{ width: "20%" }}
-              >
-                الصور
-              </button>
-              <button
-                type="button"
-                className={
-                  number === 3
-                    ? "list-group-item list-group-item-action active mx-2 text-center"
-                    : "list-group-item list-group-item-action text-center "
-                }
-                onClick={() => {
-                  handleClick(3);
-                }}
-                style={{ width: "20%" }}
-              >
-                تعليقات
-              </button>
-            </div>
-          </div>
-          <hr
-            className="mx-5 d-flex justify-content-center "
-            style={{ width: "80%" }}
-          />
+          <WorkerImages profilPicture={profilPicture}/>
+          <WorkerName handleUpdate={handleUpdate} lastName={lastName} firstName={firstName} isMe={isMe}/>
+          <WorkerListGroup number={number} handleClick={handleClick}/> 
         </div>
         {number === 1 && (
           <WorkerDiscreption

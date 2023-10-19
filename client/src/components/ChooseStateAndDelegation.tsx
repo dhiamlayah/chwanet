@@ -10,10 +10,8 @@ const ChooseStateAndDelegation = ({
 }: any) => {
   const stateAndDelegation = TunisiaStateAndDelegation;
   const allStates = states(stateAndDelegation);
-  // const [state, setState] = useState<string>("");
   const [allDelegations, setAllDelegations] = useState<String[]>([]);
-  // const [userDelegation, setUserDelegation] = useState<string>("");
-
+ 
   const handleChangeState = (event: any) => {
     setState(event.target.value);
   };
