@@ -69,10 +69,10 @@ import "../StyleDesign/navbar.css";
           )}
 
           {user && (
-            <button className="btn btn-primary me-5" type="submit">
+            <button className="btn btn-light me-5 " type="submit">
               <Link
-                to="/register"
-                className="text-light text-decoration-none fw-medium"
+                to="/me"
+                className="text-dark text-decoration-none fw-medium"
               >
                 welcom {user.firstName}
               </Link>

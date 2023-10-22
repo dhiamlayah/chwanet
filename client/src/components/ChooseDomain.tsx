@@ -5,10 +5,10 @@ const ChooseDomain = ({workName ,handleChange}:any) => {
 
   return (
     <div className="mb-3 text-white text-end">
-      <p className="text-end">اختر نوع عملك</p>
+      <p className="text-end"> : اختر نوع العمل  </p>
       <select
         style={{ backgroundColor: "#ffffff4f" }}
-        className="text-end text-white"
+        className="text-end text-white w-75"
         value={workName}
         onChange={(e) => handleChange(e, "workName")}
       >

@@ -23,7 +23,7 @@ const WorkerDiscreption = ({
           </div>
           <div className={isMe ? "d-flex justify-content-between" : ""}>
             {isMe && <p className="p-2" onClick={()=>handleUpdate('discreption',[discreption])}>...</p>}
-          <p>{discreption}</p>
+          <p className="text-break">{discreption}</p>
           </div>
          
          </div>

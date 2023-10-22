@@ -48,7 +48,7 @@ const MeAsClient = require('./routes/meAsClient')
 const MeAsWorker = require('./routes/meAsWorker')
 const Genres = require("./routes/genres")
 const Profile= require("./routes/profile")
-
+const GetWorkers = require("./routes/getWorkers")
 
 
 app.use('/register',Register)
@@ -58,11 +58,9 @@ app.use('/meAsWorker',MeAsWorker)
 app.use('/genres',Genres)
 app.use('/profile',Profile)
 app.use('/userPicture', express.static('userPicture'));
+app.use('/getWorkers',GetWorkers)
 
-app.post("/try",(req: any, res: any) => {
-  
-});
-
+ 
 //----------------a middelware for catch errors from the database-------------------------------------------//
 app.use(dataBaseError);
 
