@@ -96,7 +96,7 @@ const redirectUser =(user:string)=>{
           style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
           id="register"
         >
-          <form className="text-white fw-medium" onSubmit={handleSubmit} >
+          <form className="text-white fw-medium" onSubmit={handleSubmit}  >
             {/* ---------full Name ------------------------- */}
             <div className="mb-3 text-white text-end d-flex ">
               <input

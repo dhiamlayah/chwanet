@@ -1,4 +1,10 @@
- 
+#phoneNavBar{
+  background-color:rgba(0, 0, 0, 0.5) ;
+  border-bottom: 1px grey solid;
+} 
+#phoneNavBar:hover{
+  background-color: grey;
+}
 @media (max-width : 720px)  {
       #specialNav {
         background-color: red;

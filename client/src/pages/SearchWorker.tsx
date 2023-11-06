@@ -1,20 +1,84 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChooseDomain from "../components/ChooseDomain";
 import ChooseState from "../components/ChooseState";
 import ChooseDelegation from "../components/ChooseDelegation";
 import WorkerFound from "../components/WorkerFound";
+import axios from "axios";
+
+export interface Worker {
+  _id:string ,
+  firstName :string ,
+  lastName: string ,
+  phone : number ,
+  workName : string ,
+  photo:any ,
+  picture:string
+}
 
 const SearchWorker = () => {
     const [domain,setDomain]=useState(''),
           [state,setState]=useState(''),
-          [delegation,setDelegation]=useState('')
+          [delegation,setDelegation]=useState(''),
+          [workers,setWorkers]=useState<Worker[]|null>(null),
+          [finelworkers,setFinelWorkers]=useState<Worker[]|null>([])
+          
+     const  url : any = process.env.REACT_APP_port 
 
+    const getWorkerFromDB = async()=>{
+        try{
+          const res = await axios.get(url+"/getWorkers")
+           setWorkers(res.data)
+          }catch(err){
+            console.log('erro' ,err)
+          }
+    }
+
+
+    const getWorkerPicture = async (worker: any) => { 
+      try {
+        await axios.get(url + "/userPicture/" + worker.photo.filename).then(
+          (res)=>{
+            let workerWithPicture = {...worker}
+            workerWithPicture.picture=res.config.url
+            console.log('workerWithPicture',workerWithPicture)
+            setFinelWorkers((prev:any)=>[...prev,workerWithPicture])
+          }
+        )
+      } catch (err) {
+        console.log("there is an error to get imageUrl", err);
+        let workerWithPicture = {...worker}
+        workerWithPicture.picture='null'
+        setFinelWorkers((prev:any)=>[...prev,workerWithPicture])
+
+        return "we can't get user picture" 
+      }
+    };
+
+    const allWorkersFound = async()=>{
+      const newWorkers = workers
+      if(newWorkers)
+      newWorkers.map(async(worker:any)=>{
+             await  getWorkerPicture(worker) 
+            })
+          }
+     
+
+    useEffect(()=>{
+      getWorkerFromDB() 
+      console.log('reder one time ')
+    },[]) 
+
+    useEffect(()=>{  
+      allWorkersFound() 
+     },[workers])
+    
     const handleChange=(e:any,type:string)=>{
         if(type==='workName')setDomain(e.target.value)
         if(type==="state")setState(e.target.value)
         if(type==="delegation")setDelegation(e.target.value)
 
     }
+    console.log(finelworkers)
 
   return (
     <div className="d-md-flex">
@@ -44,7 +108,7 @@ const SearchWorker = () => {
         </div>
       </div>
       <div className="mt-5">
-        <WorkerFound/>  
+        <WorkerFound workers={finelworkers}/>   
        </div>
     </div>
 
@@ -53,3 +117,9 @@ const SearchWorker = () => {
 };
 
 export default SearchWorker;
+
+
+
+
+
+ 
