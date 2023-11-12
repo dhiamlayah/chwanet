@@ -25,9 +25,7 @@ import { useState } from "react";
       id={navbarDesign()}
     >
       <div className="container-fluid  ">
-        <a className="navbar-brand" href="#">
-          LOGO
-        </a>
+          <img src="./images/logo4.png" style={{width:'7rem', height:'3rem'}} alt="logo" />
         <button
           className="navbar-toggler"
           id="phoneNavBar"
@@ -39,15 +37,36 @@ import { useState } from "react";
      
 
 
-        <div className="collapse navbar-collapse  " id="navbarScroll">
-          <ul className="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
-            <li className="nav-item">
+        <div className="collapse navbar-collapse " id="navbarScroll">
+          <ul className="navbar-nav me-auto my-2  my-lg-0 navbar-nav-scroll" id="navbarList">
+        
+               <li className="nav-item ">
+                
+              <Link
+                to="/searchWorker"
+                id="link"
+                className="text-decoration-none px-5 nav-link"
+              >
+                بحث عن عامل
+              </Link>
+            </li> 
+             <li className="nav-item ">
               <Link
                 to="/"
-                className="text-decoration-none text-white nav-link "
+                id="link"
+                className="text-decoration-none   nav-link"
               >
                 الصفحة الرئيسية
               </Link>
+            </li>    
+                   <li className="nav-item ">
+              <Link
+                to="/"
+                id="link"
+                className="text-decoration-none  px-5 nav-link"
+              > 
+                  معلومات عنا       
+             </Link>
             </li>
           
           </ul>

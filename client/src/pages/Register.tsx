@@ -90,7 +90,7 @@ const redirectUser =(user:string)=>{
 
   return (
       <div className="background">
-        <AnimatedPage>
+        {/* <AnimatedPage> */}
         <div
           className=" p-5"
           style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
@@ -223,7 +223,7 @@ const redirectUser =(user:string)=>{
           </div>
           <ToastContainer/>
         </div>
-        </AnimatedPage>
+        {/* </AnimatedPage> */}
 
       </div>
   );

@@ -103,6 +103,7 @@ const SearchWorker = () => {
               <p className="text-white"> : المعتمدية </p>
               <ChooseDelegation state={state} delegation={delegation} handleChange={handleChange}/>
             </li>
+            <button className="btn btn-outline-light p-1 w-25 m-2">ابحث</button>
           </ul>
           <hr className="my-3" />
         </div>

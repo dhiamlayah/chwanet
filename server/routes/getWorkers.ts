@@ -11,7 +11,8 @@ interface WorkerInformation {
 
 router.get("/",asyncMiddleware(
     async(req:any,res:any)=>{
-        const Workers =(await WorkerModel.find({},'photo firstName workName phone lastName',{skip:0,limit:200}))
+
+        const Workers =(await WorkerModel.find({"workName":null},'photo firstName workName phone lastName',{skip:0,limit:2}))
         res.send(Workers)
     }
 ))
