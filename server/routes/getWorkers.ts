@@ -4,15 +4,32 @@ const asyncMiddleware = require("../middelwares/asyncMiddleware");
 import WorkerModel from "../models/worker";
 
 interface WorkerInformation {
-    id:string,
-    firstName:string,
+    [key: string]: string;
 }
 
 
 router.get("/",asyncMiddleware(
     async(req:any,res:any)=>{
+        const Workers =(await WorkerModel.find({},'photo firstName workName phone lastName',{skip:0,limit:200}))
+        res.send(Workers)
+    }
+))
 
-        const Workers =(await WorkerModel.find({"workName":null},'photo firstName workName phone lastName',{skip:0,limit:2}))
+router.post("/",asyncMiddleware(
+    async(req:any,res:any)=>{
+        const filterBy=req.body
+        let sendFilter:WorkerInformation={}
+        if(filterBy.domain!==""){
+            sendFilter.workName=filterBy.domain
+        }
+        if(filterBy.state!==""){
+            sendFilter.state=filterBy.state
+            if(filterBy.delegation!==""){
+                sendFilter.delegation=filterBy.delegation
+            }
+        }
+        console.log(sendFilter)
+        const Workers =(await WorkerModel.find(sendFilter,'photo firstName workName phone lastName',{skip:0,limit:200}))
         res.send(Workers)
     }
 ))

@@ -6,6 +6,8 @@ import {Worker} from '../pages/SearchWorker'
 
 
  function WorkerFound({workers}:any) { 
+  console.log('workers to the show',workers)
+
   let size = {
     'xs':2,
     'sm':3, 
@@ -25,11 +27,11 @@ import {Worker} from '../pages/SearchWorker'
     if(workers.length===3){
       size.lg=3
     }
-  }
+  } 
  
 
   return ( 
-    <Row  xs={size.xs} sm={size.sm}  md={size.sm} lg={size.lg} xl={size.lg} className="g-4  p-5">
+    <Row  xs={size.xs} sm={size.sm}  md={size.sm} lg={size.lg} xl={size.lg} className="g-4 m-0 p-5">
       {workers && workers.map((worker:Worker) =>{   
            return (
             <Col key={worker._id}  > 

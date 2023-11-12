@@ -33,6 +33,19 @@ const SearchWorker = () => {
           }
     }
 
+    const specifecWorkersFrom= async()=>{
+        await axios.post(url+"/getWorkers",{
+          state,
+          delegation,
+          domain,
+        }).then((res)=>{
+          console.log(res.data)
+          return setWorkers(res.data)
+        }).catch((err)=>{
+          console.log('there are errors ')
+        })
+      
+    }
 
     const getWorkerPicture = async (worker: any) => { 
       try {
@@ -56,6 +69,7 @@ const SearchWorker = () => {
 
     const allWorkersFound = async()=>{
       const newWorkers = workers
+      setFinelWorkers([])
       if(newWorkers)
       newWorkers.map(async(worker:any)=>{
              await  getWorkerPicture(worker) 
@@ -70,15 +84,17 @@ const SearchWorker = () => {
 
     useEffect(()=>{  
       allWorkersFound() 
-     },[workers])
+     },[workers,setWorkers])
     
     const handleChange=(e:any,type:string)=>{
         if(type==='workName')setDomain(e.target.value)
-        if(type==="state")setState(e.target.value)
+        if(type==="state"){
+          setState(e.target.value)
+          setDelegation('')
+        }
         if(type==="delegation")setDelegation(e.target.value)
 
     }
-    console.log(finelworkers)
 
   return (
     <div className="d-md-flex">
@@ -103,7 +119,7 @@ const SearchWorker = () => {
               <p className="text-white"> : المعتمدية </p>
               <ChooseDelegation state={state} delegation={delegation} handleChange={handleChange}/>
             </li>
-            <button className="btn btn-outline-light p-1 w-25 m-2">ابحث</button>
+            <button className="btn btn-outline-light p-1 w-25 m-2" onClick={specifecWorkersFrom} >ابحث</button>
           </ul>
           <hr className="my-3" />
         </div>
