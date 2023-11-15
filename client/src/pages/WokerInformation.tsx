@@ -1,4 +1,3 @@
-import AnimatedPage from "../util/AnimatedPage";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -45,13 +44,14 @@ const WorkerInformation = () => {
   /*to show the image to the client  */
   const handleChangeFile = (event: any) => {
     const file = event.target.files[0];
-    console.log('file',file)
-    if(file!==undefined){
+    console.log("file", file);
+    if (file !== undefined) {
       setUserFile(file);
-     const imagesUploded = (window.URL ? URL : window.webkitURL).createObjectURL(
-      file
-    );
-    setUserPhoto(imagesUploded);}
+      const imagesUploded = (
+        window.URL ? URL : window.webkitURL
+      ).createObjectURL(file);
+      setUserPhoto(imagesUploded);
+    }
   };
 
   const sendWorkerInformation = async () => {
@@ -87,7 +87,11 @@ const WorkerInformation = () => {
 
   const cheackInputs = (): boolean => {
     if (workerInformations.workName === "") return false;
-    if (workerInformations.experience === -1 || workerInformations.experience===null ) return false;
+    if (
+      workerInformations.experience === -1 ||
+      workerInformations.experience === null
+    )
+      return false;
     if (workerInformations.discreption === "") return false;
     return true;
   };
@@ -97,8 +101,8 @@ const WorkerInformation = () => {
     if (!chearkInputs) {
       return setErrors("يرجى استكمال جميع المعلومات");
     }
-    if(workerInformations.experience<0){
-      return setErrors("يرجى وظع سنوات الخبرة ")
+    if (workerInformations.experience < 0) {
+      return setErrors("يرجى وظع سنوات الخبرة ");
     }
     if (!userPhoto) {
       return setErrors("يرجي وضع صورتك الشخصية");
@@ -112,94 +116,91 @@ const WorkerInformation = () => {
     }, 5000);
   };
 
-  if(localStorage.getItem('User')==='Client')
-    return <h1 className="text-center pt-5">404 NOT FOUND :(</h1>
+  if (localStorage.getItem("User") === "Client")
+    return <h1 className="text-center pt-5">404 NOT FOUND :(</h1>;
 
   return (
     <div className="background">
-      <AnimatedPage>
-        <div
-          className=" p-5"
-          style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
-          id="register"
-        >
-          <form className="text-white fw-medium" onSubmit={handleSubmit}>
-            <div
-              className="mb-3 text-white text-end"
-              style={{ display: "flex", justifyContent: "space-around" }}
-            >
-              <div
-                style={{ backgroundImage: chooseImg() }}
-                id="imgUploded"
-              ></div>
-              <div style={{ display: "inline-grid", alignContent: "center" }}>
-                <input
-                  type="file"
-                  className="d-none"
-                  accept="image/*"
-                  ref={inputImg}
-                  onChange={handleChangeFile}
-                />
-                <label className="form-label  fw-bold  ">:صورتك الشخصية</label>
-                <button className="btn btn-secondary  " onClick={onUplodeImage}>
-                  تحميل الصور
-                </button>
-              </div>
-            </div>
-
-           <div>
-             <ChooseDomain workName={workerInformations.workName} handleChange={handleChange} />
-           </div>
-             
-
-            <div className="mb-3 text-white text-end">
-              <label htmlFor="tlph" className="form-label">
-                :صف مهاراتك وخبراتك
-              </label>
-              <textarea
-                placeholder="سيتم عرض هذا النص في ملفك الشخصي لجذب العميل"
-                style={{ backgroundColor: "#ffffff4f" }}
-                id="text"
-                className="form-control text-light fs-9"
-                value={workerInformations.discreption}
-                onChange={(e) => {
-                  handleChange(e, "discreption");
-                }}
-                rows={5}
-              ></textarea>
-            </div>
-
-            <div className="mb-3 text-white text-end">
+      <div
+        className=" p-5"
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
+        id="register"
+      >
+        <form className="text-white fw-medium" onSubmit={handleSubmit}>
+          <div
+            className="mb-3 text-white text-end"
+            style={{ display: "flex", justifyContent: "space-around" }}
+          >
+            <div style={{ backgroundImage: chooseImg() }} id="imgUploded"></div>
+            <div style={{ display: "inline-grid", alignContent: "center" }}>
               <input
-                type="number"
-                min={-1}
-                max={35}
-                className="  text-white fs-5"
-                id="tlph"
-                aria-describedby="emailHelp"
-                style={{ backgroundColor: "#ffffff4f" }}
-                value={workerInformations.experience}
-                onChange={(e) => {
-                  handleChange(e, "experience");
-                }}
+                type="file"
+                className="d-none"
+                accept="image/*"
+                ref={inputImg}
+                onChange={handleChangeFile}
               />
-              <label htmlFor="tlph" className="form-label p-2 fw-bold ">
-                : سنوات الخبرة
-              </label>
+              <label className="form-label  fw-bold  ">:صورتك الشخصية</label>
+              <button className="btn btn-secondary  " onClick={onUplodeImage}>
+                تحميل الصور
+              </button>
             </div>
-            <button
-              type="submit"
-              className="btn btn-outline-warning"
-              onClick={handleClick}
-            >
-              سجل
-            </button>
-            {errors && <div className="alert alert-danger">{errors}</div>}
-          </form>
+          </div>
 
-          <ToastContainer />
-        </div>
-      </AnimatedPage>
+          <div>
+            <ChooseDomain
+              workName={workerInformations.workName}
+              handleChange={handleChange}
+            />
+          </div>
+
+          <div className="mb-3 text-white text-end">
+            <label htmlFor="tlph" className="form-label">
+              :صف مهاراتك وخبراتك
+            </label>
+            <textarea
+              placeholder="سيتم عرض هذا النص في ملفك الشخصي لجذب العميل"
+              style={{ backgroundColor: "#ffffff4f" }}
+              id="text"
+              className="form-control text-light fs-9"
+              value={workerInformations.discreption}
+              onChange={(e) => {
+                handleChange(e, "discreption");
+              }}
+              rows={5}
+            ></textarea>
+          </div>
+
+          <div className="mb-3 text-white text-end">
+            <input
+              type="number"
+              min={-1}
+              max={35}
+              className="  text-white fs-5"
+              id="tlph"
+              aria-describedby="emailHelp"
+              style={{ backgroundColor: "#ffffff4f" }}
+              value={workerInformations.experience}
+              onChange={(e) => {
+                handleChange(e, "experience");
+              }}
+            />
+            <label htmlFor="tlph" className="form-label p-2 fw-bold ">
+              : سنوات الخبرة
+            </label>
+          </div>
+          <button
+            type="submit"
+            className="btn btn-outline-warning"
+            onClick={handleClick}
+          >
+            سجل
+          </button>
+          {errors && <div className="alert alert-danger">{errors}</div>}
+        </form>
+
+        <ToastContainer />
+      </div>
     </div>
   );
 };

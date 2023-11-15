@@ -10,13 +10,22 @@ interface WorkerInformation {
 
 router.get("/",asyncMiddleware(
     async(req:any,res:any)=>{
-        const Workers =(await WorkerModel.find({},'photo firstName workName phone lastName',{skip:0,limit:200}))
-        res.send(Workers)
+        const page = req.query.page
+        const limit = req.query.limit
+        const startIndex = (page-1)*limit
+        const allWorkers = (await WorkerModel.find().countDocuments())
+        const Workers =(await WorkerModel.find({},'photo firstName workName phone lastName',{skip:startIndex,limit:limit}))
+        res.send({Workers,'numberOfWorkers':allWorkers})
     }
 ))
 
+
+
 router.post("/",asyncMiddleware(
     async(req:any,res:any)=>{
+        const page = req.query.page
+        const limit = req.query.limit
+        const startIndex = (page-1)*limit
         const filterBy=req.body
         let sendFilter:WorkerInformation={}
         if(filterBy.domain!==""){
@@ -29,8 +38,9 @@ router.post("/",asyncMiddleware(
             }
         }
         console.log(sendFilter)
-        const Workers =(await WorkerModel.find(sendFilter,'photo firstName workName phone lastName',{skip:0,limit:200}))
-        res.send(Workers)
+        const allWorkers = (await WorkerModel.find(sendFilter).countDocuments())
+        const Workers =(await WorkerModel.find(sendFilter,'photo firstName workName phone lastName',{skip:startIndex,limit:limit}))
+        res.send({Workers,'numberOfWorkers':allWorkers})
     }
 ))
 

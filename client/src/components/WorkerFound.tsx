@@ -8,30 +8,11 @@ import {Worker} from '../pages/SearchWorker'
  function WorkerFound({workers}:any) { 
   console.log('workers to the show',workers)
 
-  let size = {
-    'xs':2,
-    'sm':3, 
-    'lg':4, 
-  }
-  if(workers){
-    if(workers.length===1){
-      size.lg=1
-      size.sm=1
-      size.xs=1
-    }
-    if(workers.length===2){
-      size.lg=2
-      size.sm=2
-      size.xs=2
-    }
-    if(workers.length===3){
-      size.lg=3
-    }
-  } 
+
  
 
   return ( 
-    <Row  xs={size.xs} sm={size.sm}  md={size.sm} lg={size.lg} xl={size.lg} className="g-4 m-0 p-5">
+    <Row  xs={2} sm={3}  md={3} lg={4} xl={4} className="g-4 m-0 p-5">
       {workers && workers.map((worker:Worker) =>{   
            return (
             <Col key={worker._id}  > 

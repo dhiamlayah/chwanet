@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import AnimatedPage from "../util/AnimatedPage";
 import axios from "axios";
 import { Link } from "react-router-dom";
 const Login = () => {
@@ -91,7 +90,6 @@ const Login = () => {
   };
   return (
       <div className="background2">
-            <AnimatedPage>
 
         <div
           className=" mt-5 p-5"
@@ -147,7 +145,6 @@ const Login = () => {
           </div>
         </div>
         <ToastContainer />
-        </AnimatedPage>
 
       </div>
   );

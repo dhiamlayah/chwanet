@@ -69,38 +69,35 @@ import { useState } from "react";
              </Link>
             </li>
           
+          
           </ul>
           {location.pathname !== "/register"&& location.pathname !== "/login"  && !user && (
-            <button className="btn btn-light me-1" type="submit">
+          
               <Link
                 to="/register"
-                className="text-dark text-decoration-none fw-medium p-2"
+                className="btn btn-outline-light mx-2"
                 state={{hover:'red'}}
                >
                 حساب جديد
               </Link>
-            </button>
+      
           )}
           {location.pathname !== "/register" && location.pathname !== "/login" && !user && (
-            <button className="btn btn-light" type="submit" >
-              <Link
+               <Link
                 to="/login"
-                className="text-dark  text-decoration-none fw-medium p-2"
+                className=" btn btn-outline-light"
                >
                 دخول
               </Link>
-            </button>
-          )}
+           )}
 
           {user && (
-            <button className="btn btn-light me-5 " type="submit">
               <Link
                 to="/me"
-                className="text-dark text-decoration-none fw-medium"
+                className="btn btn-outline-light  "
               >
                 welcom {user.firstName}
               </Link>
-            </button>
           )}
         </div>
         
@@ -111,8 +108,7 @@ import { useState } from "react";
               <Link
                 to="/register"
                 className="text-white text-decoration-none fw-medium p-2"
-                state={{hover:'red'}}
-               >
+                >
                 حساب جديد
               </Link>
             </button>

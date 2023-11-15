@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import axios from "axios";
 import NavBar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import WorkerInformation from "./pages/WokerInformation";
 import MeAsWorker from "./pages/MeAsWorker";
 import SearchWorker from "./pages/SearchWorker";
+import LodingPage from "./loading";
 interface User {
   date: string;
   delegation: string;
@@ -57,6 +58,7 @@ function App() {
   return (
     <Router>
       <NavBar user={user} />
+      <Suspense fallback={<LodingPage/>}>
         <Routes>
           <Route path="/" Component={() => <Home />} />
           {!user && <Route path="/register" element={<Register />} />}
@@ -66,6 +68,7 @@ function App() {
           <Route path="/searchWorker" element={<SearchWorker/>}/>
           <Route path="/*" element={<h1 className="p-5">Not Found 404</h1>} />
         </Routes>
+      </Suspense>
     </Router>
   );
 }
