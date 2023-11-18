@@ -2,7 +2,7 @@ import "../StyleDesign/animations.css"
 const Description = () => {
     return (  
         <div className="p-5 d-sm-flex d-block"   style={{backgroundColor:'#42515545'}}>
-            <img src="./images/home/la7am.jpg" className="p-2 d-sm-block d-none "  style={{width:'35%',height:"auto"}} alt="descreptionImg" />
+            <img src="./images/home/la7am.jpg" className="p-2 d-sm-block d-none "   alt="descreptionImg" />
             <img src="./images/home/builder2.jpg" className="d-sm-none d-block w-100 "  alt="descreptionImg" />
                       
             <div className="ps-5 pt-3">

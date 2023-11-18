@@ -4,10 +4,10 @@ import { Images } from "../staticData/imagesExemple";
 
 function CarouselExemples() {
   return (
-    <Carousel data-bs-theme="dark" fade>
+    <Carousel data-bs-theme="dark"  >
       {Images.map((image) => {
         return (
-          <Carousel.Item key={image.id} interval={2500}>
+          <Carousel.Item key={image.id} interval={3000}>
             <img
               src={image.url}
               style={{height:"95vh"}}

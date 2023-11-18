@@ -141,6 +141,7 @@ const SearchWorker = () => {
       <div className="mt-5 w-100">
         <Suspense fallback={<LodingPage />}>
           <WorkerFound workers={finelworkers} />
+        </Suspense>
           {allWorkersFromDB !== 0 && (
             <Pagination
               numberPages={Math.ceil(allWorkersFromDB / 2)}
@@ -148,7 +149,6 @@ const SearchWorker = () => {
               getWorkerFromDB={getWorkerFromDB}
             />
           )}
-        </Suspense>
       </div>
     </div>
   );

@@ -15,7 +15,7 @@ router.get("/",asyncMiddleware(
         const startIndex = (page-1)*limit
         const allWorkers = (await WorkerModel.find().countDocuments())
         const Workers =(await WorkerModel.find({},'photo firstName workName phone lastName',{skip:startIndex,limit:limit}))
-        res.send({Workers,'numberOfWorkers':allWorkers})
+        res.status(200).send({Workers,'numberOfWorkers':allWorkers})
     }
 ))
 
@@ -40,7 +40,7 @@ router.post("/",asyncMiddleware(
         console.log(sendFilter)
         const allWorkers = (await WorkerModel.find(sendFilter).countDocuments())
         const Workers =(await WorkerModel.find(sendFilter,'photo firstName workName phone lastName',{skip:startIndex,limit:limit}))
-        res.send({Workers,'numberOfWorkers':allWorkers})
+        res.status(200).send({Workers,'numberOfWorkers':allWorkers})
     }
 ))
 
