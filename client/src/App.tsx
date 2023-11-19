@@ -62,7 +62,7 @@ function App() {
         <Routes>
           <Route path="/" Component={() => <Home />} />
           {!user && <Route path="/register" element={<Register />} />}
-          {user && <Route path="/register/info" element={<WorkerInformation/>}/>}
+           <Route path="/register/info" element={<WorkerInformation/>}/> 
           {!user && <Route path="/login" element={<Login />} />}
           {user && <Route path="/me" element={<MeAsWorker/>} />}
           <Route path="/searchWorker" element={<SearchWorker/>}/>

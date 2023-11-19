@@ -6,7 +6,7 @@ import { useState } from "react";
   const location = useLocation();
   const [show,setShow]=useState(false)
   const navbarDesign = () => {
-    if (location.pathname === "/register") {
+    if (location.pathname === "/register" ||location.pathname === "/register/info") {
       return "specialNav";
     } else {
       return "";
@@ -71,7 +71,7 @@ import { useState } from "react";
           
           
           </ul>
-          {location.pathname !== "/register"&& location.pathname !== "/login"  && !user && (
+          {location.pathname !== "/register"&&location.pathname !== "/register/info" && location.pathname !== "/login"  && !user && (
           
               <Link
                 to="/register"
@@ -82,7 +82,7 @@ import { useState } from "react";
               </Link>
       
           )}
-          {location.pathname !== "/register" && location.pathname !== "/login" && !user && (
+          {location.pathname !== "/register"&& location.pathname !== "/register/info"  && location.pathname !== "/login" && !user && (
                <Link
                 to="/login"
                 className=" btn btn-outline-light"
@@ -103,7 +103,7 @@ import { useState } from "react";
         
       </div>
       <div className={show ? "list-group w-100 d-lg-none pt-2 " : "d-none"}>
-       {location.pathname !== "/register"&& location.pathname !== "/login"  && !user && (
+       {location.pathname !== "/register" && location.pathname !== "/login"  && !user && (
             <button className="btn py-3 "  id="phoneNavBar" type="submit">
               <Link
                 to="/register"

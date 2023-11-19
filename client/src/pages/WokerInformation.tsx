@@ -59,6 +59,8 @@ const WorkerInformation = () => {
     const formData = new FormData();
     formData.append("file", userFile);
     formData.append("document", jsonWorkerInformations);
+    console.log('form data ',userFile)
+
     try {
       await axios
         .put(url, formData, {
@@ -131,7 +133,7 @@ const WorkerInformation = () => {
             className="mb-3 text-white text-end"
             style={{ display: "flex", justifyContent: "space-around" }}
           >
-            <div style={{ backgroundImage: chooseImg() }} id="imgUploded"></div>
+            <div style={{ backgroundImage: chooseImg() }}  id="imgUploded"></div>
             <div style={{ display: "inline-grid", alignContent: "center" }}>
               <input
                 type="file"

@@ -4,20 +4,14 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const asyncMiddleware = require("../middelwares/asyncMiddleware");
 const auth = require("../middelwares/authorization");
-const multer = require("multer");
+const resizeImages = require("../middelwares/resizeImages")
+const upload = require("../middelwares/multer")
 
 import UserModel from "../models/users";
 import WorkerModel from "../models/worker";
 
-const storage = multer.diskStorage({
-  destination: "./userPicture",
-  filename(req: any, file: any, cd: any) {
-    cd(null, file.originalname);
-  },
-});
-const upload = multer({ storage });
 
-router.post(
+ router.post(
   "/",
   asyncMiddleware(async (req: any, res: any) => {
     const {
@@ -90,13 +84,14 @@ router.put(
   "/",
   auth,
   upload.single("file"),
+  resizeImages,
   asyncMiddleware(async (req: any, res: any) => {
-    const file = req.file;    
+    const imageResized = req.imageResized
     const {workName,discreption,experience}=JSON.parse(req.body.document)
     const user = await WorkerModel.findByIdAndUpdate(req.user._id, {
       workName: workName,
       discreption: discreption,
-      photo: file,
+      photo: imageResized,
       team: true,
       experience: experience,
     });
@@ -138,3 +133,15 @@ router.put("/:id",auth,
 
 
 module.exports = router;
+
+  
+    // const metadata = await image.metadata();
+  
+    
+  
+    //     // Now that the processing is done, delete the temporary file
+    //     fs.unlinkSync(file.path);
+  
+    //     // Save the resized image back to the same path
+    //     await image.toFile('./userPicture');
+    

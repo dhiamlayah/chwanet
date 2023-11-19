@@ -1,6 +1,6 @@
 const WorkerImages = ({profilPicture}:any) => {
     const chooseImg = () => {
-        const imgUrl = `url('/images/home/builder.jpg')`;
+        const imgUrl = `url('/images/home/picture1.jpg')`;
         return imgUrl;
       };
     return ( 
