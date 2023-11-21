@@ -25,7 +25,7 @@ import { useState } from "react";
       id={navbarDesign()}
     >
       <div className="container-fluid  ">
-          <img src="./images/logo4.png" style={{width:'7rem', height:'3rem'}} alt="logo" />
+          <img src="../images/logo4.png" style={{width:'7rem', height:'3rem'}} alt="logo" />
         <button
           className="navbar-toggler"
           id="phoneNavBar"

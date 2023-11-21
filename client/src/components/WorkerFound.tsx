@@ -3,6 +3,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import {Worker} from '../pages/SearchWorker'
+import { Link } from 'react-router-dom';
 
 
  function WorkerFound({workers}:any) { 
@@ -14,6 +15,8 @@ import {Worker} from '../pages/SearchWorker'
   return ( 
     <Row  xs={2} sm={3}  md={3} lg={4} xl={4} className="g-4 m-0 p-5">
       {workers && workers.map((worker:Worker) =>{   
+              console.log(workers)
+
            return (
             <Col key={worker._id}  > 
             <Card>
@@ -24,7 +27,7 @@ import {Worker} from '../pages/SearchWorker'
                   <span className='fw-bold'>هاتف: </span> {worker.phone}  <br />
                   <span className='fw-bold'>مجال العمل: </span> {worker.workName}
                 </Card.Text>
-                <Button variant="outline-warning" className=' text-break  fw-bold'>إلق نظرة</Button>
+                <Link to={`/profile/${worker._id}`} className='btn btn-outline-warning'>Take a look</Link>
               </Card.Body>
             </Card>
           </Col>

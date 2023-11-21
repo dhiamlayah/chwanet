@@ -139,7 +139,9 @@ const SearchWorker = () => {
         </div>
       </div>
       <div className="mt-5 w-100">
+        {allWorkersFromDB===0 && <LodingPage/>}
         <Suspense fallback={<LodingPage />}>
+
           <WorkerFound workers={finelworkers} />
         </Suspense>
           {allWorkersFromDB !== 0 && (

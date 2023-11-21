@@ -87,6 +87,7 @@ router.put(
   resizeImages,
   asyncMiddleware(async (req: any, res: any) => {
     const imageResized = req.imageResized
+    console.log('imageResized',imageResized)
     const {workName,discreption,experience}=JSON.parse(req.body.document)
     const user = await WorkerModel.findByIdAndUpdate(req.user._id, {
       workName: workName,

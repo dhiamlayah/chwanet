@@ -5,6 +5,8 @@ import '../../StyleDesign/UpdateData.css'
 import axios from "axios";
 import { useState } from "react";
 import {ToastContainer,toast} from 'react-toastify'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
  
 const UpdateData = ({ updateData ,setShowUpdateDiv }: any) => {
@@ -104,7 +106,7 @@ const UpdateData = ({ updateData ,setShowUpdateDiv }: any) => {
     >
             <ToastContainer/>
 
-      <h2 className="mx-2 text-light" onClick={handleClick}>X</h2>
+      <h2 className="mx-2 text-light" onClick={handleClick}><FontAwesomeIcon icon={faCircleXmark} /></h2>
       {updateData.type === "name" && <UpdateNames updateData={updateData} setNewData={setNewData}/>}
       {updateData.type === "state" && <UpdateStateAndDelegations  state={state} delegation={delegation} setState={setState} setDelegation={setDelegation}/>}
       {updateData.type === "workName" && <UpdateOneThing updateData={updateData} setNewData={setNewData}/>}

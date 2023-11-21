@@ -9,6 +9,7 @@ import WorkerInformation from "./pages/WokerInformation";
 import MeAsWorker from "./pages/MeAsWorker";
 import SearchWorker from "./pages/SearchWorker";
 import LodingPage from "./loading";
+import Profile from "./pages/Profile";
 interface User {
   date: string;
   delegation: string;
@@ -64,6 +65,7 @@ function App() {
           {!user && <Route path="/register" element={<Register />} />}
            <Route path="/register/info" element={<WorkerInformation/>}/> 
           {!user && <Route path="/login" element={<Login />} />}
+          <Route path="/profile/:id" element={<Profile />} /> 
           {user && <Route path="/me" element={<MeAsWorker/>} />}
           <Route path="/searchWorker" element={<SearchWorker/>}/>
           <Route path="/*" element={<h1 className="p-5">Not Found 404</h1>} />

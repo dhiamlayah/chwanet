@@ -1,3 +1,6 @@
+import { faPenToSquare, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 const WorkerDiscreption = ({
   discreption,
   phone,
@@ -18,11 +21,11 @@ const WorkerDiscreption = ({
       <div id="photo" className="m-1 p-2">
         <div className="  p-8 ">
           <div className={isMe ? "d-flex justify-content-between" : ""}>
-            {isMe && <p className="p-2" onClick={()=>handleUpdate('workName',[workName])}>...</p>}
+            {isMe && <p className="p-2" onClick={()=>handleUpdate('workName',[workName])}><FontAwesomeIcon icon={faPenToSquare} /></p>}
             <p className="fw-bold">{workName}</p>
           </div>
           <div className={isMe ? "d-flex justify-content-between" : ""}>
-            {isMe && <p className="p-2" onClick={()=>handleUpdate('discreption',[discreption])}>...</p>}
+            {isMe && <p className="p-2" onClick={()=>handleUpdate('discreption',[discreption])}><FontAwesomeIcon icon={faPenToSquare} /></p>}
           <p className="text-break">{discreption}</p>
           </div>
          
@@ -30,21 +33,21 @@ const WorkerDiscreption = ({
       </div>
       <div className="  m-1 " id="cartId">
         <div className={isMe ? "d-flex justify-content-between" : ""}>
-          {isMe && <p className="" onClick={()=>handleUpdate('phone',[phone])}>...</p>}
+          {isMe && <p className="" onClick={()=>handleUpdate('phone',[phone])}><FontAwesomeIcon icon={faPenToSquare} /></p>}
           <p>
-            <span className="fw-bold">هاتف : </span>
-            {phone}
+             {phone}
+            <span className="fw-bold"> : <FontAwesomeIcon icon={faPhone} /> </span>
           </p>
         </div>
         <div className={isMe ? "d-flex justify-content-between" : ""}>
-          {isMe && <p className="" onClick={()=>handleUpdate('state',[state])}>...</p>}
+          {isMe && <p className="" onClick={()=>handleUpdate('state',[state])}><FontAwesomeIcon icon={faPenToSquare} /></p>}
           <p>
             <span className="fw-bold">ولاية : </span>
             {state}
           </p>
         </div> 
         <div className={isMe ? "d-flex justify-content-between" : ""}>
-        {isMe && <p className="">...</p>} 
+        {isMe && <p className=""><FontAwesomeIcon icon={faPenToSquare} /></p>} 
             <p>
               <span className="fw-bold">مدينة :</span>
               {delegation}

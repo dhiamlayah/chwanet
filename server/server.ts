@@ -18,8 +18,6 @@ const PORT = process.env.PORT || 3000
 import logger from "./Logger/winston" ;
 
 //-----------------------middelwares-------------------------------------------//
-const auth = require("./middelwares/authorization");
-const admin = require("./middelwares/admin");
 const dataBaseError = require("./middelwares/errorDataBase");
  
 //----------------------json form-------------------------------------------//
@@ -58,6 +56,7 @@ app.use('/meAsWorker',MeAsWorker)
 app.use('/genres',Genres)
 app.use('/profile',Profile)
 app.use('/userPicture', express.static('userPicture'));
+app.use('/userPictureBeforResizing', express.static('userPictureBeforResizing'));
 app.use('/getWorkers',GetWorkers)
 
  

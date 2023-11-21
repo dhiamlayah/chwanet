@@ -5,7 +5,7 @@ const asyncMiddelware = (handler:Function)=>{
         try{
             await handler(req,res)
         }catch(error:any){
-             next(error)
+            next(error) // next that mean we send this error to the midelware ErrorDataBase 
         }
     }
 }
