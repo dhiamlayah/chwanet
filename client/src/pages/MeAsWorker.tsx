@@ -1,7 +1,8 @@
 import axios from "axios";
 import "../StyleDesign/meAsWorker.css";
-import { useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import WorkerProfil from "../components/profileWorker/WorkerProfil";
+import LodingPage from "../loading";
 const MeAsWorker = () => {
   const url = process.env.REACT_APP_port;
   const [WorkerInformations, setWorkerInformations] = useState<any>(null);
@@ -18,18 +19,19 @@ const MeAsWorker = () => {
           setWorkerInformations(res.data.user);
         });
     } catch (err) {
-      console.log(err);
+       console.log(err)
+       
     }
   };
  
   const getWorkerPicture = async (photo: any) => {
     try {
       await axios.get(url + "/userPicture/" + photo.filename).then((res) => {
-        console.log("hello", res.config.url);
         setProfilePicture(res.config.url);
       });
     } catch (err) {
       console.log("there is an error to get imageUrl", err);
+      window.location.pathname = '/register/info'
     }
   };
 
@@ -44,20 +46,18 @@ const MeAsWorker = () => {
 
  
 
-  if (!WorkerInformations) {
-    return <p>wait</p>;
-  }
- 
-  return (
+  
+  if(profilPicture)return (
     <div>
-      {profilPicture && (
         <WorkerProfil
           profilPicture={profilPicture}
           WorkerInformations={WorkerInformations}
         />
-      )} 
     </div>  
   );
+
+  return <LodingPage />
+
 };
 
 export default MeAsWorker;

@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import WorkerProfil from "../components/profileWorker/WorkerProfil";
 import axios from "axios";
+import LodingPage from "../loading";
 const Profile = ( ) => {
     const params = useParams()
     const workerId = params.id
@@ -41,15 +42,16 @@ const Profile = ( ) => {
     
       console.log('workerInformation',WorkerInformations)
 
+  
+
    if(profilPicture)return ( 
-      
             <WorkerProfil
               profilPicture={profilPicture}
               WorkerInformations={WorkerInformations}
             />
      
      );
-     return null
+     return <LodingPage />
 }
  
 export default Profile;

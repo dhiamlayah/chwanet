@@ -10,7 +10,7 @@ interface File{
   destination: string,
   filename: string,
   path: string,
-  size: 5083754
+  size: number
 }
 
 interface ResizedImage {

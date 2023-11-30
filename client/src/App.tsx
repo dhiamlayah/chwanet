@@ -30,8 +30,8 @@ interface Worker extends User {
 
 function App() {
   const [user, setUser] = useState<User | Worker | null>(null);
-  const url: string = process.env.REACT_APP_port + "/meAs";
-
+  const url: string = process.env.REACT_APP_port + "/meAs";   //url to get current user
+  const userType = localStorage.getItem("User")
   const getCurrentUser = async () => {
     const newUrl = url + localStorage.getItem("User");
     try {
@@ -56,17 +56,19 @@ function App() {
       getCurrentUser();
     }
   }, []);
-  return (
+  
+
+   return (
     <Router>
       <NavBar user={user} />
       <Suspense fallback={<LodingPage/>}>
         <Routes>
           <Route path="/" Component={() => <Home />} />
-          {!user && <Route path="/register" element={<Register />} />}
-           <Route path="/register/info" element={<WorkerInformation/>}/> 
+          {!user &&  <Route path="/register" element={<Register />} />}
+          {userType==='Warker' && <Route path="/register/info" element={<WorkerInformation/>}/> }
           {!user && <Route path="/login" element={<Login />} />}
+          {user && userType==='Warker' && <Route path="/me" element={<MeAsWorker/>} />}
           <Route path="/profile/:id" element={<Profile />} /> 
-          {user && <Route path="/me" element={<MeAsWorker/>} />}
           <Route path="/searchWorker" element={<SearchWorker/>}/>
           <Route path="/*" element={<h1 className="p-5">Not Found 404</h1>} />
         </Routes>

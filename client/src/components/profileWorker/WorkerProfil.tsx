@@ -93,21 +93,22 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
 
   
   return (
-    <div>
+    <div >
       <div className={showUpdateDiv ? " " : "d-none"}>
         <UpdateData updateData={updateData} setShowUpdateDiv={setShowUpdateDiv} />
+        
       </div>
       <div
-        className={!showUpdateDiv ? "Profilbackground opacity-100 "  : "Profilbackground opacity-25"}
+        className={!showUpdateDiv ? " Profilbackground opacity-100  "  : "Profilbackground  opacity-25"}
         style={{ zIndex: "12" }}
       >
-        <div id="content">
+        <div id="content"  >
           <WorkerImages profilPicture={profilPicture}/>
           <WorkerName handleUpdate={handleUpdate} lastName={lastName} firstName={firstName} isMe={isMe}/>
           <WorkerListGroup number={number} handleClick={handleClick}/> 
         </div>
         {number === 1 && (
-          <WorkerDiscreption
+          <WorkerDiscreption 
             handleUpdate={handleUpdate}
             isMe={isMe}
             state={state}

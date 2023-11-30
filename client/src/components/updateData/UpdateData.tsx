@@ -99,14 +99,15 @@ const UpdateData = ({ updateData ,setShowUpdateDiv }: any) => {
        window.location.pathname = '/me'
      }, 1000);
   }
+
   return (
     <div
-      className="position-absolute top-50 start-50 translate-middle z-2  rounded-4 border border-light  "
+      className="position-absolute top-50 start-50 translate-middle z-2  rounded-1 border border-light  "
        id="updateData"
     >
             <ToastContainer/>
 
-      <h2 className="mx-2 text-light" onClick={handleClick}><FontAwesomeIcon icon={faCircleXmark} /></h2>
+      <h3 className="m-2 text-light" onClick={handleClick}><button type="button" className="btn-close bg-warning  " aria-label="Close  "></button></h3>
       {updateData.type === "name" && <UpdateNames updateData={updateData} setNewData={setNewData}/>}
       {updateData.type === "state" && <UpdateStateAndDelegations  state={state} delegation={delegation} setState={setState} setDelegation={setDelegation}/>}
       {updateData.type === "workName" && <UpdateOneThing updateData={updateData} setNewData={setNewData}/>}
