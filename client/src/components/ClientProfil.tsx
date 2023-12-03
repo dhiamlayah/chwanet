@@ -1,21 +1,12 @@
-import {
-  faLocationDot,
-  faPhone,
-  faRightFromBracket,
-  faTreeCity,
-  faUser,
-} from "@fortawesome/free-solid-svg-icons";
+import {  faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import UserInformations from "./navbarComponents/userInformation";
+import { User } from "../App";
 interface Props {
-  user: any;
+  user: User | null;
 }
 
-const logout =()=>{
-    localStorage.clear()
-    window.location.pathname = "/"
 
-}
 
 function ClientProfil({ user }: Props) {
    return (
@@ -32,42 +23,11 @@ function ClientProfil({ user }: Props) {
         />
       </button>
       <ul
-        className="dropdown-menu mt-2 p-5   "
+        className="dropdown-menu mt-2 p-5"
         style={{ position: "absolute",left: "auto", right: "0px",width: "max-content" }}
       >
-        <li>
-          <h5 className="text-center py-2">
-            {user.firstName} {user.lastName}
-          </h5>
-        </li>
-        <li className="text-end ">
-          <h5 >
-            {user.phone}
-            <span className="px-2">
-              <FontAwesomeIcon icon={faPhone} />
-            </span>
-          </h5>
-        </li>
-        <li className="text-end ">
-          <h5 >
-            {user.state}
-             <span className="px-2">
-              <FontAwesomeIcon icon={faLocationDot} />
-            </span> 
-          </h5>
-        </li>
-        <li className="text-end ">
-          <h5 >
-            {user.delegation}
-             <span className="px-2">
-             <FontAwesomeIcon icon={faTreeCity} />      
-              </span> 
-          </h5>
-        </li>
-
-        <li className="pt-5 ">
-            <button onClick={logout} className="btn btn-warning">خروج <FontAwesomeIcon icon={faRightFromBracket} /></button>
-        </li>
+        {user && <UserInformations user={user}/>}
+       
       </ul>
     </div>
   );

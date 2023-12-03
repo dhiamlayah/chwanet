@@ -10,7 +10,7 @@ import MeAsWorker from "./pages/MeAsWorker";
 import SearchWorker from "./pages/SearchWorker";
 import LodingPage from "./loading";
 import Profile from "./pages/Profile";
-interface User {
+export interface User {
   date: string;
   delegation: string;
   _id: string;
@@ -19,6 +19,7 @@ interface User {
   firstName: string;
   lastName: string;
   isAdmin: boolean;
+  possition : string ,
 }
 interface Worker extends User {
   workName: String;
