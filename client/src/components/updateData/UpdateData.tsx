@@ -10,7 +10,7 @@ import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
  
 const UpdateData = ({ updateData ,setShowUpdateDiv }: any) => {
-  const url: string = process.env.REACT_APP_port + "/register/"+updateData.type;
+  const url: string = process.env.REACT_APP_port + "/meAsWorker/"+updateData.type;
   const [state,setState]=useState<string>('')
   const [delegation,setDelegation]=useState<string>('')
   const [newData,setNewData]= useState({})

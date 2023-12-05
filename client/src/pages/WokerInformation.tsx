@@ -12,7 +12,7 @@ type WorkerInformations = {
 };
 
 const WorkerInformation = () => {
-  const url: string = process.env.REACT_APP_port + "/register";
+  const url: string = process.env.REACT_APP_port + "/meAsWorker";
   const navigate = useNavigate();
   const inputImg = useRef<any>(null);
   const [userPhoto, setUserPhoto] = useState<any>(null);

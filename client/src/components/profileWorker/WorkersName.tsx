@@ -7,6 +7,7 @@ const WorkerName = ({handleUpdate,firstName,lastName,isMe}:any) => {
             {isMe && (
               <h1
                 className="px-2"
+                style={{cursor:"pointer"}}
                 onClick={() => handleUpdate("name", [firstName, lastName])}
               >
                 <FontAwesomeIcon icon={faPenToSquare} /> 
