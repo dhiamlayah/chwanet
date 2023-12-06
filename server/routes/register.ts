@@ -49,6 +49,7 @@ import WorkerModel from "../models/worker";
       const worker = await WorkerModel.findOne({ phone });
       if (worker)
         return res.status(400).json({ message: " !! المستخدم موجود بالفعل  " });
+      
       const hashedPassword = await bcrypt.hash(password, 10);
       const newWorker = new WorkerModel({
         firstName,

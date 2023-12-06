@@ -47,7 +47,7 @@ const MeAsWorker = require('./routes/meAsWorker')
 const Genres = require("./routes/genres")
 const Profile= require("./routes/profile")
 const GetWorkers = require("./routes/getWorkers")
-
+const RateWoker = require("./routes/RateWorker")
 
 app.use('/register',Register)
 app.use('/login',Login)
@@ -58,7 +58,7 @@ app.use('/profile',Profile)
 app.use('/userPicture', express.static('userPicture'));
 app.use('/userPictureBeforResizing', express.static('userPictureBeforResizing'));
 app.use('/getWorkers',GetWorkers)
-
+app.use('/rateWorker',RateWoker)
  
 //----------------a middelware for catch errors from the database-------------------------------------------//
 app.use(dataBaseError);
