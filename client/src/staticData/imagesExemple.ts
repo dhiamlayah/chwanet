@@ -43,3 +43,43 @@ export const Images: image[] = [
     discreption: "picture4",
   },
 ];
+
+export const phoneImages: image[] = [
+  {
+    id: 0,
+    url: "./images/homeForPhone/0.png",
+    domain: "picture4",
+    discreption: "picture4",
+  },
+  {
+    id: 1,
+    url: "./images/homeForPhone/1.png",
+    domain: "picture4",
+    discreption: "picture4",
+  },
+  {
+    id: 2,
+    url: "./images/homeForPhone/2.png",
+    domain: " picture4 ",
+    discreption: " picture4 ",
+  },
+  {
+    id: 3,
+    url: "./images/homeForPhone/3.png",
+    domain: "picture4",
+    discreption: "picture4",
+  },
+  {
+    id: 4,
+    url: "./images/homeForPhone/4.png",
+    domain: "picture4",
+    discreption: "picture4",
+  },
+  {
+    id: 5,
+    url: "./images/homeForPhone/5.png",
+    domain: "picture4",
+    discreption: "picture4",
+  },
+ 
+];

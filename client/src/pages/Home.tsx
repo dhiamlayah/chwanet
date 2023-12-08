@@ -2,6 +2,7 @@ import CarouselExemples from "../components/HomeInterface";
 import Discreption from "../components/Discreption"
 import AddWorker from "../components/AddWorker";
 import OurObjectif from "../components/OurObject";
+import CarouselForPhoneScreen from "../components/CarouselForPhoneScreen";
 
 const Home = () => {
  
@@ -10,7 +11,9 @@ const Home = () => {
             <div className=" d-none d-sm-block">
                 <CarouselExemples />    
             </div>
-        
+            <div className=" d-block d-sm-none">
+                <CarouselForPhoneScreen/>
+            </div>
             <Discreption/>
             <AddWorker/>
             <OurObjectif/>
