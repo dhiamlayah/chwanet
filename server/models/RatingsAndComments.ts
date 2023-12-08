@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 type Comment ={
     text: string,
-    date: Date , 
+    date: string , 
 }
 
 type ClientRateAndComments ={
@@ -22,7 +22,7 @@ const WorkerRatingsAndComments = new mongoose.Schema <WorkerRatingsAndComments> 
         required:true, 
     },
     Clients: {
-        type:Object || null ,
+        type:Object ,
         required:false,
     }
 })

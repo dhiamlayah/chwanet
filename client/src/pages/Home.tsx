@@ -2,13 +2,15 @@ import CarouselExemples from "../components/HomeInterface";
 import Discreption from "../components/Discreption"
 import AddWorker from "../components/AddWorker";
 import OurObjectif from "../components/OurObject";
-import { useEffect,useState } from "react";
 
 const Home = () => {
  
     return ( 
         <div>
-            <CarouselExemples/>
+            <div className=" d-none d-sm-block">
+                <CarouselExemples />    
+            </div>
+        
             <Discreption/>
             <AddWorker/>
             <OurObjectif/>
