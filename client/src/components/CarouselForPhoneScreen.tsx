@@ -7,7 +7,7 @@ const CarouselForPhoneScreen = () => {
     <Carousel data-bs-theme="dark">
       {phoneImages.map((phoneImage) => {
         return (
-          <Carousel.Item key={phoneImage.id} interval={1113000}>
+          <Carousel.Item key={phoneImage.id} interval={3000}>
             <div
               className="container "
               style={{ height: "95vh", paddingTop: "32vh",backgroundColor:'beige' }}

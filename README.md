@@ -1,6 +1,6 @@
 # CHWANET ( شونط )
 
-## Problematike
+## Problematic
 
 Finding qualified professionals for construction and maintenance work can be a significant challenge, especially for individuals who have recently moved to a new city. The process of locating trustworthy workers, such as painters, builders, electricians, or plumbers, can be overwhelming and confusing.
 

@@ -3,22 +3,22 @@ import { Link } from "react-router-dom";
 import "../StyleDesign/register.css";
 import {ToastContainer,toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-import AnimatedPage from "../util/AnimatedPage";
 
 import ChooseStateAndDelegation from "../components/ChooseStateAndDelegation";
 import axios from "axios";
 const Register = () => {
     const url : string = process.env.REACT_APP_port+"/register"
 
-      const [firstName, setFirstName] = useState<string>(""),
-            [lastName, setLastName] = useState<string>(""),
-            [phone, setPhone] = useState<number>(),
-            [password, setPassword] = useState<string> (""),
-            [possition, setPossition]= useState<string> (""),
-            [state,setState]=useState<string>(""),
-            [delegation,setDelegation]=useState<string>(""),
-            [cheakBox,setCheakBox]=useState<Boolean>(false),
-            [errors,setErrors]=useState<string|null>()
+    const [firstName, setFirstName] = useState<string>(""),
+          [lastName, setLastName] = useState<string>(""),
+          [phone, setPhone] = useState<number>(),
+          [password, setPassword] = useState<string> (""),
+          [possition, setPossition]= useState<string> (""),
+          [state,setState]=useState<string>(""),
+          [delegation,setDelegation]=useState<string>(""),
+          [cheakBox,setCheakBox]=useState<Boolean>(false),
+          [errors,setErrors]=useState<string|null>()
+
 
  
 

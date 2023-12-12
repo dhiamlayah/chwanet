@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -12,7 +12,7 @@ type WorkerInformations = {
 };
 
 const WorkerInformation = () => {
-  const url: string = process.env.REACT_APP_port + "/meAsWorker";
+  const url: any = process.env.REACT_APP_port ;
   const navigate = useNavigate();
   const inputImg = useRef<any>(null);
   const [userPhoto, setUserPhoto] = useState<any>(null);
@@ -34,6 +34,20 @@ const WorkerInformation = () => {
   const handleSubmit = (event: any) => {
     event.preventDefault();
   };
+
+  // this function to create new schema in the data base for rating and comments workers  
+  const createSchemaForRatingAndComments=async()=>{
+    try{
+     await axios.get(url+'/rateWorker',{
+      headers: {
+        token: localStorage.getItem("Token"),
+      },
+    }) 
+  }catch(error:any){
+      {error&&console.log('error to create schema for rating workers',error.response.data)}
+      }
+
+  }
 
   const onUplodeImage = () => {
     if (inputImg.current) {
@@ -63,7 +77,7 @@ const WorkerInformation = () => {
 
     try {
       await axios
-        .put(url, formData, {
+        .put(url+ "/meAsWorker", formData, {
           headers: {
             token: localStorage.getItem("Token"),
           },
@@ -117,6 +131,10 @@ const WorkerInformation = () => {
       navigate("/me");
     }, 5000);
   };
+
+  useEffect(()=>{
+    createSchemaForRatingAndComments()
+  },[])
 
   if (localStorage.getItem("User") === "Client")
     return <h1 className="text-center pt-5">404 NOT FOUND :(</h1>;

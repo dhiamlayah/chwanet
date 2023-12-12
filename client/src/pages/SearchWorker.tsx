@@ -24,7 +24,8 @@ const SearchWorker = () => {
     [delegation, setDelegation] = useState(""),
     [workers, setWorkers] = useState<Worker[] | null>(null),
     [finelworkers, setFinelWorkers] = useState<Worker[] | null>([]),
-    [allWorkersFromDB, setAllWorkersFromDB] = useState<number>(0);
+    [numberOfWorkers, setNumberOfWorkers] = useState<number>(0);
+    
   const url: any = process.env.REACT_APP_port;
 
   const getWorkerFromDB = async (page: number, limit: number) => {
@@ -33,7 +34,7 @@ const SearchWorker = () => {
         url + `/getWorkers?page=${page}&limit=${limit}`
       );
       setWorkers(res.data.Workers);
-      setAllWorkersFromDB(res.data.numberOfWorkers);
+      setNumberOfWorkers(res.data.numberOfWorkers);
     } catch (err) {
       console.log("erro", err);
     }
@@ -47,11 +48,11 @@ const SearchWorker = () => {
         domain,
       })
       .then((res) => {
-        setAllWorkersFromDB(res.data.numberOfWorkers);
+        setNumberOfWorkers(res.data.numberOfWorkers);
         setWorkers(res.data.Workers);
       })
-      .catch((err) => {
-        console.log("there are errors ");
+      .catch((err:any) => {
+        console.log("there are errors to get specifec worker from dataBase ",err.response.data);
       });
   };
 
@@ -92,6 +93,8 @@ const SearchWorker = () => {
     }
     if (type === "delegation") setDelegation(e.target.value);
   };
+
+
   useEffect(() => {
     getWorkerFromDB(1, 4);
   }, []);
@@ -99,7 +102,7 @@ const SearchWorker = () => {
   useEffect(() => {
     allWorkersFound();
   }, [workers, setWorkers]);
-  console.log("allWorkersFromDB", allWorkersFromDB);
+  
   return (
     <div className="d-md-flex">
       <div className="sidebar  border border-right col-md-3 col-lg-2 mt-5">
@@ -139,14 +142,14 @@ const SearchWorker = () => {
         </div>
       </div>
       <div className="mt-5 w-100">
-        {allWorkersFromDB===0 && <LodingPage/>}
+        {numberOfWorkers===0 && <LodingPage/>}
         <Suspense fallback={<LodingPage />}>
 
           <WorkerFound workers={finelworkers} />
         </Suspense>
-          {allWorkersFromDB !== 0 && (
+          {numberOfWorkers !== 0 && (
             <Pagination
-              numberPages={Math.ceil(allWorkersFromDB / 2)}
+              numberPages={Math.ceil(numberOfWorkers / 2)}
               specifecWorkersFromDB={specifecWorkersFromDB}
               getWorkerFromDB={getWorkerFromDB}
             />

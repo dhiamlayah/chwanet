@@ -15,8 +15,7 @@ import { Link } from 'react-router-dom';
   return ( 
     <Row  xs={2} sm={3}  md={3} lg={4} xl={4} className="g-4 m-0 p-5">
       {workers && workers.map((worker:Worker) =>{   
-              console.log(workers)
-
+           if(worker.photo===null) return null
            return (
             <Col key={worker._id}  > 
             <Card>

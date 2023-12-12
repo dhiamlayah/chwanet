@@ -4,7 +4,7 @@ const asyncMiddleware = require("../middelwares/asyncMiddleware");
 import WorkerModel from "../models/worker";
 
 interface WorkerInformation {
-    [key: string]: string;
+     [key: string]: string;
 }
 
 
@@ -13,8 +13,8 @@ router.get("/",asyncMiddleware(
         const page = req.query.page
         const limit = req.query.limit
         const startIndex = (page-1)*limit
-        const allWorkers = (await WorkerModel.find().countDocuments())
-        const Workers =(await WorkerModel.find({},'photo firstName workName phone lastName',{skip:startIndex,limit:limit}))
+        const allWorkers = (await WorkerModel.find({photo:{ $ne: null }}).countDocuments())
+        const Workers =(await WorkerModel.find({photo:{ $ne: null }},'photo firstName workName phone lastName',{skip:startIndex,limit:limit}))
         res.status(200).send({Workers,'numberOfWorkers':allWorkers})
     }
 ))
@@ -38,8 +38,8 @@ router.post("/",asyncMiddleware(
             }
         }
         console.log(sendFilter)
-        const allWorkers = (await WorkerModel.find(sendFilter).countDocuments())
-        const Workers =(await WorkerModel.find(sendFilter,'photo firstName workName phone lastName',{skip:startIndex,limit:limit}))
+        const allWorkers = (await WorkerModel.find(sendFilter).where({photo:{ $ne: null }}).countDocuments())
+        const Workers =(await WorkerModel.find(sendFilter,'photo firstName workName phone lastName',{skip:startIndex,limit:limit}).where({photo:{ $ne: null }}))
         res.status(200).send({Workers,'numberOfWorkers':allWorkers})
     }
 ))
