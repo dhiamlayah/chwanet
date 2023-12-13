@@ -93,10 +93,10 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
 
   
   return (
-    <div >
+    
+    <div className="w-100" >
       <div className={showUpdateDiv ? " " : "d-none"}>
-        <UpdateData updateData={updateData} setShowUpdateDiv={setShowUpdateDiv} />
-        
+        <UpdateData updateData={updateData} setShowUpdateDiv={setShowUpdateDiv} />    
       </div>
       <div
         className={!showUpdateDiv ? " Profilbackground opacity-100  "  : "Profilbackground  opacity-25"}

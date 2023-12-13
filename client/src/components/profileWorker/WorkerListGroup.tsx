@@ -3,7 +3,6 @@ const WorkerListGroup = ({number,handleClick}:any) => {
         <div className="  list-group">
         <hr
           className="mx-5 d-flex justify-content-center "
-          style={{ width: "80%" }}
         />
         <div className="d-flex  justify-content-center ">
           <button
@@ -50,7 +49,6 @@ const WorkerListGroup = ({number,handleClick}:any) => {
         </div>
         <hr
         className="mx-5 d-flex justify-content-center "
-        style={{ width: "80%" }}
           />
       </div>
    

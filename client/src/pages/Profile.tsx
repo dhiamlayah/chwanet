@@ -45,10 +45,10 @@ const Profile = ( ) => {
   
 
    if(profilPicture)return ( 
-            <WorkerProfil
-              profilPicture={profilPicture}
-              WorkerInformations={WorkerInformations}
-            />
+              <WorkerProfil
+                profilPicture={profilPicture}
+                WorkerInformations={WorkerInformations}
+              />
      
      );
      return <LodingPage />

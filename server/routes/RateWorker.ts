@@ -34,7 +34,6 @@ router.put("/",auth,asyncMiddleware(
             const clientId : string = req.user._id
             const workerId = req.body.workerId
             const worker = await WorkerRatingsAndCommentsModel.findOne({_id:workerId})
-            const date = new Date 
             if(worker){
                 let allClients = worker?.Clients
                 const findClient = allClients?.find((e)=>{
@@ -50,12 +49,12 @@ router.put("/",auth,asyncMiddleware(
                     })
                     await worker?.updateOne({Clients:updateClients});
                     await worker?.save();
-                    res.status(200).send("successfuly update");
+                    res.status(200).send("successfuly");
                 }else{
                     allClients?.push({_id:clientId,Comments:[],Rate:clientRate})
                     await worker?.updateOne({Clients:allClients})
                     await worker?.save()
-                    res.status(200).send("successfuly added ")
+                    res.status(200).send("successfuly")
                 }
             }else{
                 res.status(400).send("faild to find worker")
@@ -68,7 +67,7 @@ router.put("/",auth,asyncMiddleware(
 
 module.exports = router
 
-
+// const date = new Date 
 // if(client._id===findClient._id){
 //     client.Comments.push({text:'new update 2',date:date.toLocaleDateString()})
 // }
