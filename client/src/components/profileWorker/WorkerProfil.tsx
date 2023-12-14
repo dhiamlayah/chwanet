@@ -14,6 +14,7 @@ export type UserData = {
 
 const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
   const url: string = process.env.REACT_APP_port + "/meAs";
+  const [WorkerRate,setWorkerRate]=useState({rate:0,length:0})
   const [number, setNumber] = useState(1);
   const [user, setUser] = useState<any>(null);
   const [isMe, setIsMe] = useState<boolean>(false);
@@ -24,6 +25,7 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
   });
 
   const {
+    _id,
     firstName,
     lastName,
     discreption,
@@ -51,6 +53,18 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
     }
   };
  
+
+  const getWorkerRate = async()=>{
+    console.log('user id ',_id)
+    const url: string = process.env.REACT_APP_port + `/rateWorker/${_id}` ;
+    await axios.get(url).then((res:any)=>{
+        console.log("we get worker rate ",res.data)
+        setWorkerRate(res.data)
+    }).catch((err:any)=>{
+      console.log("we can't get worker rate ",err.response.data)
+    })
+  }
+
   const handleClick = (numb: number) => {
     if (numb === 1) {
       setNumber(1);
@@ -78,13 +92,14 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
 
   useEffect(() => {
     const token = localStorage.getItem("Token");
+    getWorkerRate()
     if (token) {
       getCurrentUser();
     }
   }, []);
 
   useEffect(() => {
-    if (user) {
+    if (user) {    
       isThisMe();
     }
   }, [user]);
@@ -93,33 +108,35 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
 
   
   return (
-    
-    <div className="w-100" >
-      <div className={showUpdateDiv ? " " : "d-none"}>
-        <UpdateData updateData={updateData} setShowUpdateDiv={setShowUpdateDiv} />    
-      </div>
-      <div
-        className={!showUpdateDiv ? " Profilbackground opacity-100  "  : "Profilbackground  opacity-25"}
-        style={{ zIndex: "12" }}
-      >
-        <div id="content"  >
-          <WorkerImages profilPicture={profilPicture}/>
-          <WorkerName handleUpdate={handleUpdate} lastName={lastName} firstName={firstName} isMe={isMe}/>
-          <WorkerListGroup number={number} handleClick={handleClick}/> 
+   
+     <div className=" w-100 " >
+       <div className={showUpdateDiv ? " " : "d-none"}>
+         <UpdateData updateData={updateData} setShowUpdateDiv={setShowUpdateDiv} />
+       </div>
+       <div
+         className={!showUpdateDiv ? " Profilbackground opacity-100 "  : "BackProfilbackground  "}
+         style={{ zIndex: "12" }}
+       >
+         <div id="content" className={!showUpdateDiv? "": "opacity-25"}  >
+           <WorkerImages profilPicture={profilPicture}/>
+           <WorkerName userRate={WorkerRate} handleUpdate={handleUpdate} lastName={lastName} firstName={firstName} isMe={isMe}/>
+           <WorkerListGroup number={number} handleClick={handleClick}/>
+         </div>
+            {number === 1 && !showUpdateDiv && (
+               <WorkerDiscreption
+                 handleUpdate={handleUpdate}
+                 isMe={isMe}
+                 state={state}
+                 delegation={delegation}
+                 discreption={discreption}
+                 phone={phone}
+                 workName={workName}
+               />
+           )}
         </div>
-        {number === 1 && (
-          <WorkerDiscreption 
-            handleUpdate={handleUpdate}
-            isMe={isMe}
-            state={state}
-            delegation={delegation}
-            discreption={discreption}
-            phone={phone}
-            workName={workName}
-          />
-        )}
-      </div>
-    </div>
+     </div>
+  
+
   );
 };
 

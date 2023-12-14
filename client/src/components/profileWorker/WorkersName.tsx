@@ -1,9 +1,33 @@
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import {
+  faClipboard,
+  faPenToSquare,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const WorkerName = ({ handleUpdate, firstName, lastName, isMe }: any) => {
+const WorkerName = ({
+  handleUpdate,
+  firstName,
+  lastName,
+  isMe,
+  userRate,
+}: any) => {
   const user = localStorage.getItem("User");
-  const RateWorker = () => {};
+
+  const starImag = () => {
+    const imagUrl = "../../images/rateStars/";
+    if (userRate.rate < 1.25) {
+      return imagUrl + "0.png";
+    } else if (userRate.rate >= 1.25 && userRate.rate < 2.5) {
+      return imagUrl + "0.25.png";
+    } else if (userRate.rate >= 2.5 && userRate.rate < 3.75) {
+      return imagUrl + "0.5.png";
+    } else if (userRate.rate >= 3.75 && userRate.rate < 5) {
+      return imagUrl + "0.75.png";
+    } else {
+      return imagUrl + "1.png";
+    }
+  };
+
   return (
     <div
       id="workerName"
@@ -28,11 +52,14 @@ const WorkerName = ({ handleUpdate, firstName, lastName, isMe }: any) => {
       <div>
         <div className="d-flex" id="rate">
           <div>
-            <h1>4.5/5</h1>
-            <p className="">500 people</p>
+            <h1 className="text-end">{userRate.rate | 0 }/5</h1>
+            <div className="d-flex">
+              <p className="px-1" style={{width:'max-content'}}> شخص مقييم للأداء </p>
+              <p> {userRate.length}</p>
+            </div>
           </div>
           <img
-            src="../../images/rateStars/0.5.png"
+            src={starImag()}
             className="mx-3 mt-2"
             style={{ width: "48px", height: "48px" }}
             alt="star"
@@ -44,7 +71,7 @@ const WorkerName = ({ handleUpdate, firstName, lastName, isMe }: any) => {
             onClick={() => handleUpdate("rateWorker", [])}
             className="text-end pe-5 fs-5"
           >
-            قدم له تقييم
+            <FontAwesomeIcon icon={faClipboard} /> قدم له تقييم
           </p>
         )}
       </div>

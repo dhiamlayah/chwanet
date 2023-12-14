@@ -1,8 +1,7 @@
-import {Link, useLocation } from "react-router-dom";
+import {useLocation } from "react-router-dom";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faUser } from "@fortawesome/free-solid-svg-icons";
-import ClientProfil from "./ClientProfil";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import "../StyleDesign/navbar.css";
 import NavbarForBigScreen from "./navbarComponents/navbarForBigScreen";
 import NavBarForSmallScreen from "./navbarComponents/navbarForSmallScreen";
@@ -28,11 +27,17 @@ const NavBar = ({ user }: any) => {
     setShowProfile(false)
   };
 
+  const navColor = ()=>{
+    console.log('paaaaaaaaaath ',location.pathname)
+    if(/^\/profile\//.test(location.pathname))return { backgroundColor: "rgba(0, 0, 0)" }
+    return { backgroundColor: "rgba(0, 0, 0, 0.8)" }
+  
+  }
 
   return (
     <nav
       className="navbar navbar-expand-lg border-bottom border-dark fixed-top"
-      style={{ backgroundColor: "rgba(0, 0, 0, 0.8)" }}
+      style={navColor()}
       id={navbarDesign()}
     >
       <div className="container-fluid  ">

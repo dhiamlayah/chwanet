@@ -5,7 +5,7 @@ type Comment ={
     date: string , 
 }
 
-type ClientRateAndComments ={
+export type ClientRateAndComments = {
     _id:String,
     Comments:Comment[] ,
     Rate:number

@@ -9,7 +9,7 @@ const WorkerListGroup = ({number,handleClick}:any) => {
             type="button"
             className={
               number === 1
-                ? "list-group-item border w-25  bg-secondary list-group-item-action active mx-2 text-center"
+                ? "list-group-item border w-25  bg-black list-group-item-action active mx-2 text-center"
                 : "list-group-item w-25 list-group-item-action  text-center"
             }
             onClick={() => {
@@ -22,7 +22,7 @@ const WorkerListGroup = ({number,handleClick}:any) => {
             type="button"
             className={
               number === 2
-                ? "list-group-item border w-25   bg-secondary list-group-item-action active mx-2 text-center"
+                ? "list-group-item border w-25   bg-black list-group-item-action active mx-2 text-center"
                 : "list-group-item w-25  list-group-item-action text-center "
             }
             onClick={() => {
@@ -36,7 +36,7 @@ const WorkerListGroup = ({number,handleClick}:any) => {
             type="button"
             className={
               number === 3
-                ? "list-group-item border w-25   bg-secondary list-group-item-action active mx-2 text-center"
+                ? "list-group-item border w-25   bg-black list-group-item-action active mx-2 text-center"
                 : "list-group-item w-25  list-group-item-action text-center "
             }
             onClick={() => {

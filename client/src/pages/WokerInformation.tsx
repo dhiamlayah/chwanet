@@ -128,7 +128,7 @@ const WorkerInformation = () => {
 
   const redirectUser = () => {
     return setTimeout(() => {
-      navigate("/me");
+      navigate("/profile/me");
     }, 5000);
   };
 

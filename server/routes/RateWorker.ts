@@ -3,9 +3,23 @@ const router = express.Router();
 const auth = require("../middelwares/authorization");
 const asyncMiddleware = require("../middelwares/asyncMiddleware");
 
-import WorkerRatingsAndCommentsModel from "../models/RatingsAndComments";
+import WorkerRatingsAndCommentsModel, { ClientRateAndComments } from "../models/RatingsAndComments";
  
-
+const calcRate  = (Client:ClientRateAndComments[])=>{
+    const length = Client.length;
+    let numOfClientWhoRate = 0
+    let somme =0
+    if(length===0)return {sum:0,length:numOfClientWhoRate}
+    Client.map((client)=>{
+        if(client.Rate!==null){
+            console.log(client)
+            somme=somme+client.Rate
+            numOfClientWhoRate=numOfClientWhoRate+1
+        }
+    })
+ 
+    return { rate :somme/numOfClientWhoRate, length :numOfClientWhoRate}
+}
 
 // this path inisilize a schema  for the new Worker when he create a new account
 router.get ("/",auth,asyncMiddleware(
@@ -31,6 +45,7 @@ router.get ("/",auth,asyncMiddleware(
 router.put("/",auth,asyncMiddleware(
     async(req:any,res:any)=>{
             const clientRate=req.body.Rate
+            console.log('clientRate',clientRate)
             const clientId : string = req.user._id
             const workerId = req.body.workerId
             const worker = await WorkerRatingsAndCommentsModel.findOne({_id:workerId})
@@ -64,6 +79,28 @@ router.put("/",auth,asyncMiddleware(
  
         } 
 )) 
+
+
+//this path to get worker rate
+router.get("/:id",asyncMiddleware(
+    async(req:any,res:any)=>{
+        const id = req.params.id
+        const idWorker = await WorkerRatingsAndCommentsModel.findOne({_id:id})
+        if(idWorker){
+            const Clients = idWorker.Clients
+            if(Clients){
+                const rateAndLength = calcRate(Clients)
+                res.status(200).json(rateAndLength) //result {rate:number,length:number}
+            }else{
+                res.status(400).json({message:"we dont find worker"})
+            } 
+        }else{
+            res.status(400).json({message:"we dont find worker"})
+        }
+    }
+))
+
+
 
 module.exports = router
 

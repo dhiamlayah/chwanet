@@ -1,15 +1,24 @@
 .Profilbackground{
     
+    margin-top: 56px;
+    display: flex  ;
+    align-content: space-around;
+    flex-direction: column;
+    align-items: stretch;
+    flex-wrap: wrap;
+ } 
+
+.BackProfilbackground{
     padding-top: 56px;
     display: flex  ;
     align-content: space-around;
     flex-direction: column;
     align-items: stretch;
     flex-wrap: wrap;
-    contain:size;
-    
-} 
-/* darkgrey */
+    background-color:  darkgrey      ;
+    min-height: 100vh;
+
+}
  
 #giveRate{
     cursor: pointer;

@@ -68,7 +68,7 @@ function App() {
           {!user &&  <Route path="/register" element={<Register />} />}
            <Route path="/register/info" element={<WorkerInformation/>}/> 
           {!user && <Route path="/login" element={<Login />} />}
-          {user && <Route path="/me" element={<MeAsWorker/>} />}
+          {user && <Route path="/profile/me" element={<MeAsWorker/>} />}
           <Route path="/profile/:id" element={<Profile />} /> 
           <Route path="/searchWorker" element={<SearchWorker/>}/>
           <Route path="/*" element={<h1 className="p-5">Not Found 404</h1>} />

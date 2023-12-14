@@ -1,51 +1,77 @@
 import { Link } from "react-router-dom";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 interface Props {
   numberPages: number;
-  getWorkerFromDB:(page:number,limit:number)=>void
-  specifecWorkersFromDB:(page:number,limit:number)=>void
+   specifecWorkersFromDB: (page: number, limit: number) => void;
 }
 
-const Pagination = ({ numberPages,getWorkerFromDB ,specifecWorkersFromDB}: Props) => {
+const Pagination = ({
+  numberPages,
+  specifecWorkersFromDB,
+}: Props) => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-
-  let currentPage=1
-  const queryFilter = queryParams.get('filter')
-  const queryPage= queryParams.get('page')
-   if(queryPage){
-    currentPage=parseInt(queryPage)
+  let keyForRunders=0 //just a variable for put a key in the runder 
+  let currentPage = 1;
+  const queryFilter = queryParams.get("filter");
+  const queryPage = queryParams.get("page");
+  if (queryPage) {
+    currentPage = parseInt(queryPage);
   }
 
-  const ChooseBetwenFilterOrGetSimpleData =async (page:number,limit:number)=>{
-    if(queryFilter){
-        await specifecWorkersFromDB(page,limit)
-    }else{
-        await getWorkerFromDB(page,limit)
+ 
+
+  console.log("current page", currentPage);
+
+  //this function return a list contain the pages you can choose and the number 0 in the list mean space between pages
+  const paginationStyle = () => {
+    var pages: number[] = [];
+    if (numberPages <= 6) {
+      for (let i = 1; i <= numberPages; i++) {
+        pages.push(i);
+      }
+      return pages;
+    } else if (currentPage <= 2) {
+      return [1, 2, 3, 0, 0, numberPages];
+    } else if (currentPage >= numberPages - 1) {
+      return [1, 0, 0, numberPages - 2, numberPages - 1, numberPages];
+    } else {
+      return [  1, 0, currentPage - 1,currentPage,currentPage + 1,0, numberPages ];
     }
-  }
+  };
 
-    
-  console.log('current page',currentPage)
-  var pages: number[] = [];
-  for (let i = 0; i < numberPages; i++) {
-    pages.push(i);
-  }
+  const pages = paginationStyle();
   return (
     <nav>
-      <ul className="pagination   justify-content-center">
+      <ul className="pagination  justify-content-center">
         {pages.length > 0 &&
           pages.map((page) => {
-
-            return (
-              <li className="page-item" key={page}>
-                <Link to={`/searchWorker?filter=${queryFilter}&page=${page+1}&limit=3`} onClick={()=> ChooseBetwenFilterOrGetSimpleData(page+1,2)} className={currentPage==page+1?" btn btn-dark mx-1 px-4":" btn btn-outline-dark mx-1 px-4"}>
-                     {page+1}
-                </Link>
-             
-              </li>
-            );
+            keyForRunders++
+            if (page !== 0)
+              return (
+                <li className="page-item " key={keyForRunders}>
+                  <Link
+                    to={`/searchWorker?filter=${queryFilter}&page=${page}&limit=3`}
+                    onClick={() =>
+                        specifecWorkersFromDB(page, 2) 
+                    }
+                    className={
+                      currentPage == page
+                        ? " btn btn-dark mx-1 px-4"
+                        : " btn btn-outline-dark mx-1 px-4"
+                    }
+                  >
+                    {page}
+                  </Link>
+                </li>
+              );
+            else
+              return (
+                <li className="page-item" key={keyForRunders}>
+                  <p>......</p>
+                </li>
+              );
           })}
       </ul>
     </nav>

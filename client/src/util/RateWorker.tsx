@@ -20,7 +20,7 @@ const RateWorker = ({ setShowUpdateDiv }: Props) => {
     await axios
       .put(
         url,
-        { workerId: param.id },
+        { workerId: param.id ,Rate:value},
         {
           headers: {
             token: localStorage.getItem("Token"),
@@ -42,8 +42,8 @@ const RateWorker = ({ setShowUpdateDiv }: Props) => {
   };
   const redirectUser = () => {
     return setTimeout(() => {
-      setShowUpdateDiv(false);
       setError(null);
+      window.location.reload()
     }, 1000);
   };
 

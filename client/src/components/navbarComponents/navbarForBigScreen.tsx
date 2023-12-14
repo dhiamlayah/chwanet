@@ -1,5 +1,4 @@
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+ 
 import { Link } from "react-router-dom";
 import ClientProfil from "../ClientProfil";
 import { User } from "../../App";
@@ -17,7 +16,7 @@ const NavbarForBigScreen = ({user}:Props) => {
         >
           <li className="nav-item ">
             <Link
-              to="/searchWorker"
+              to="/searchWorker?filter=null&page=1"
               id="link"
               className="text-decoration-none px-5 nav-link"
             >

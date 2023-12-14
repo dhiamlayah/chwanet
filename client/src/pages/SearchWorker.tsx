@@ -20,25 +20,14 @@ export interface Worker {
 
 const SearchWorker = () => {
   const [domain, setDomain] = useState(""),
-    [state, setState] = useState(""),
-    [delegation, setDelegation] = useState(""),
-    [workers, setWorkers] = useState<Worker[] | null>(null),
-    [finelworkers, setFinelWorkers] = useState<Worker[] | null>([]),
-    [numberOfWorkers, setNumberOfWorkers] = useState<number>(0);
+        [state, setState] = useState(""),
+        [delegation, setDelegation] = useState(""),
+        [workers, setWorkers] = useState<Worker[] | null>(null),
+        [finelworkers, setFinelWorkers] = useState<Worker[] | null>([]),
+        [numberOfWorkers, setNumberOfWorkers] = useState<number>(0);
     
   const url: any = process.env.REACT_APP_port;
 
-  const getWorkerFromDB = async (page: number, limit: number) => {
-    try {
-      const res = await axios.get(
-        url + `/getWorkers?page=${page}&limit=${limit}`
-      );
-      setWorkers(res.data.Workers);
-      setNumberOfWorkers(res.data.numberOfWorkers);
-    } catch (err) {
-      console.log("erro", err);
-    }
-  };
 
   const specifecWorkersFromDB = async (page: number, limit: number) => {
     await axios
@@ -96,7 +85,7 @@ const SearchWorker = () => {
 
 
   useEffect(() => {
-    getWorkerFromDB(1, 4);
+    specifecWorkersFromDB(1, 2);
   }, []);
 
   useEffect(() => {
@@ -131,9 +120,9 @@ const SearchWorker = () => {
               />
             </li>
             <Link
-              to="/searchWorker?filter=true"
+              to="/searchWorker?filter=true&page=1"
               className="btn btn-outline-light p-1 w-25 m-2"
-              onClick={() => specifecWorkersFromDB(1, 4)}
+              onClick={() => specifecWorkersFromDB(1, 2)}
             >
               ابحث
             </Link>
@@ -144,15 +133,13 @@ const SearchWorker = () => {
       <div className="mt-5 w-100">
         {numberOfWorkers===0 && <LodingPage/>}
         <Suspense fallback={<LodingPage />}>
-
           <WorkerFound workers={finelworkers} />
         </Suspense>
           {numberOfWorkers !== 0 && (
             <Pagination
               numberPages={Math.ceil(numberOfWorkers / 2)}
               specifecWorkersFromDB={specifecWorkersFromDB}
-              getWorkerFromDB={getWorkerFromDB}
-            />
+             />
           )}
       </div>
     </div>

@@ -17,7 +17,7 @@ const UserInformations = ({user}:Props) => {
 
   if(user)  return (
         <>
-         <li>
+         <li >
           <h5 className="text-center py-2">
             {user.firstName} {user.lastName}
           </h5>

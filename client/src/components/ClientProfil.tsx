@@ -23,8 +23,8 @@ function ClientProfil({ user }: Props) {
         />
       </button>
       <ul
-        className="dropdown-menu mt-2 p-5"
-        style={{ position: "absolute",left: "auto", right: "0px",width: "max-content",backgroundColor:'dimgrey' }}
+        className="dropdown-menu ms-5 mt-2 p-5"
+        style={{ position: "absolute",left: "auto", right: "-2vh",width: "max-content",backgroundColor:'darkslategray' }}
       >
         {user && <UserInformations user={user}/>}
        

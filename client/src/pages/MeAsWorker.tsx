@@ -15,7 +15,7 @@ const MeAsWorker = () => {
             token: localStorage.getItem("Token"),
           },
         })
-        .then((res) => {
+        .then((res:any) => {
           setWorkerInformations(res.data.user);
         });
     } catch (err) {
