@@ -93,7 +93,7 @@ const SearchWorker = () => {
   }, [workers, setWorkers]);
   
   return (
-    <div className="d-md-flex">
+    <div className="d-md-flex" style={{backgroundColor:'azure'}}>
       <div className="sidebar  border border-right col-md-3 col-lg-2 mt-5">
         <div className="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto  ">
           <h6 className="sidebar-heading fw-bold text-center justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">

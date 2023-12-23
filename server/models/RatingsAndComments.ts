@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
 
-type Comment ={
+export type Comment ={
     text: string,
     date: string , 
 }
 
-export type ClientRateAndComments = {
+export interface ClientRateAndComments  {
     _id:String,
     Comments:Comment[] ,
-    Rate:number
+    Rate:number | null
 }
 
 interface WorkerRatingsAndComments {

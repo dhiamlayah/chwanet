@@ -56,7 +56,7 @@ const UpdateOneThing = ({ updateData,setNewData }: any) => {
           بك
         </p>
         <textarea
-          className="w-50 fw-bold text-center my-2 "
+          className="w-50 fw-bold text-end my-2 "
           style={{ height: "150px",  }}
           value={firstData}
           onChange={(e) => handleChange(e)}

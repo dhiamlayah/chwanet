@@ -42,7 +42,7 @@ const WorkerDiscreption = ({
                 <FontAwesomeIcon icon={faPenToSquare} />
               </p>
             )}
-            <p className="text-break">{discreption}</p>
+            <p className="text-break text-center">{discreption}</p>
           </div>
         </div>
       </div>

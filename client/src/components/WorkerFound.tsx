@@ -1,8 +1,7 @@
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
-import {Worker} from '../pages/SearchWorker'
+ import {Worker} from '../pages/SearchWorker'
 import { Link } from 'react-router-dom';
 
 

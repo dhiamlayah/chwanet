@@ -44,7 +44,7 @@ const RateWorker = ({ setShowUpdateDiv }: Props) => {
     return setTimeout(() => {
       setError(null);
       window.location.reload()
-    }, 1000);
+    }, 3000);
   };
 
   const handleClick = async () => {
@@ -77,7 +77,7 @@ const RateWorker = ({ setShowUpdateDiv }: Props) => {
         ></button>
       </h3>
 
-      <div className="d-flex justify-content-center align-items-center">
+      <div className="d-flex justify-content-center align-items-center p-5">
         <StarsRating
           value={value ? value : 0}
           onChange={(value: any) => {

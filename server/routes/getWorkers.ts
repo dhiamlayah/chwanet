@@ -6,21 +6,7 @@ import WorkerModel from "../models/worker";
 interface WorkerInformation {
      [key: string]: string;
 }
-
-
-// router.get("/",asyncMiddleware(
-//     async(req:any,res:any)=>{
-//         const page = req.query.page
-//         const limit = req.query.limit
-//         const startIndex = (page-1)*limit
-//         const allWorkers = (await WorkerModel.find({photo:{ $ne: null }}).countDocuments())
-//         const Workers =(await WorkerModel.find({photo:{ $ne: null }},'photo firstName workName phone lastName',{skip:startIndex,limit:limit}))
-//         res.status(200).send({Workers,'numberOfWorkers':allWorkers})
-//     }
-// ))
-
-
-
+ 
 router.post("/",asyncMiddleware(
     async(req:any,res:any)=>{
         const page = req.query.page
