@@ -1,0 +1,19 @@
+@media (min-width : 1024px){
+    #Comments {
+        border: #80808069 1px solid;
+        min-height: 30vh;
+        contain: inline-size;
+
+
+    }
+}
+
+@media (max-width : 1024px){
+    #Comments {
+        border: #80808069 1px solid;
+         width:auto;
+         min-height: 60vh;
+         contain: inline-size;
+
+    }
+}

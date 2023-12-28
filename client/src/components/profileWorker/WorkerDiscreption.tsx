@@ -10,7 +10,7 @@ const WorkerDiscreption = ({
   isMe,
   handleUpdate,
 }: any) => {
-  console.log(isMe);
+  console.log("is this me " ,isMe);
 
   return (
     <div

@@ -6,6 +6,7 @@ import UpdateData from "../updateData/UpdateData";
 import WorkerImages from "./WorkerImages";
 import WorkerName from "./WorkersName";
 import WorkerListGroup from "./WorkerListGroup";
+import WorkerComments from "./WorkerComments";
 
 export type UserData = {
   type: null | string;
@@ -122,17 +123,22 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
            <WorkerName userRate={WorkerRate} handleUpdate={handleUpdate} lastName={lastName} firstName={firstName} isMe={isMe}/>
            <WorkerListGroup number={number} handleClick={handleClick}/>
          </div>
-            {number === 1 && !showUpdateDiv && (
-               <WorkerDiscreption
-                 handleUpdate={handleUpdate}
-                 isMe={isMe}
-                 state={state}
-                 delegation={delegation}
-                 discreption={discreption}
-                 phone={phone}
-                 workName={workName}
-               />
-           )}
+            <div style={{minHeight:'20vh', overflow:'hidden'}}>
+              {number === 1 && !showUpdateDiv && (
+                 <WorkerDiscreption
+                   handleUpdate={handleUpdate}
+                   isMe={isMe}
+                   state={state}
+                   delegation={delegation}
+                   discreption={discreption}
+                   phone={phone}
+                   workName={workName}
+                 />
+                         )}
+                         {number === 3 && !showUpdateDiv && (
+                <WorkerComments workerId={_id}/>
+                         )}
+            </div>
         </div>
      </div>
   

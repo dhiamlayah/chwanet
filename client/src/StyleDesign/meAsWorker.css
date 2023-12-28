@@ -1,5 +1,4 @@
 .Profilbackground{
-    
     margin-top: 56px;
     display: flex  ;
     align-content: space-around;
@@ -65,8 +64,7 @@
         display: flex;
         justify-content:space-evenly;
         contain: inline-size;
-        width:60% ;
-    }
+     }
     #cartId{
         width: 30%;
         height: fit-content;

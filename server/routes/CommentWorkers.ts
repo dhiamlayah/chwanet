@@ -11,9 +11,12 @@ import WorkerRatingsAndCommentsModel, {
 import UserModel from "../models/users";
 
 interface ClientRateAndCommentsAndName extends ClientRateAndComments {
-    firstName? : string | undefined ,
-    lastName?: string | undefined
+    firstName : string | undefined  ,
+    lastName: string | undefined  
 }
+
+ 
+ 
 
 const getClients = async (Clients: ClientRateAndComments[]) => {
     return await Promise.all(Clients.map(async (client) => {
@@ -38,14 +41,16 @@ const convertToDateObject = (dateString : string) => {
   };
 
 
-const splitComments = (Clients:any )=>{
+
+  // this function have object to split each comment then order it by date 
+
+const splitComments = (Clients:any)=>{
     let allCommentsSplited :any = []
     Clients.map((client:ClientRateAndCommentsAndName)=>{
         client.Comments.map((comment:Comment)=>{
             allCommentsSplited.push({_id:client._id,text:comment.text ,name:client.firstName + " " + client.lastName , date :comment.date})
         })
     })
-    console.log("allCommentsSplited",allCommentsSplited)
     return allCommentsSplited.sort((a:any, b:any) => {
         const dateA = convertToDateObject(a.date).valueOf();
         const dateB = convertToDateObject(b.date).valueOf();
@@ -112,11 +117,12 @@ router.get(
       const Clients = idWorker.Clients;
       if (Clients) {
         const allComments = await getClients(Clients)
-        console.log(allComments)
-        // if(allComments){
-        //     const clientSplited = splitComments(allComments)
-        //     return res.status(200).json(clientSplited);
-        // }
+        const filterClients = allComments.filter((client) => client !== null);
+
+        if(filterClients.length>0){
+            const clientSplited = splitComments(filterClients)
+            return res.status(200).json(clientSplited);
+        }
         res.status(400).json({ message: "there is no comments yet " });
       } else {
         res.status(400).json({ message: "there is no comments yet " });
