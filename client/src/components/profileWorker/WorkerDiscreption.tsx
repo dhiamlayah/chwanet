@@ -1,16 +1,13 @@
+import { useContext } from "react";
+import { globalComponents } from "./WorkerProfil";
 import { faPenToSquare, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const WorkerDiscreption = ({
-  discreption,
-  phone,
-  state,
-  delegation,
-  workName,
-  isMe,
-  handleUpdate,
-}: any) => {
-  console.log("is this me " ,isMe);
+const WorkerDiscreption = () => {
+
+  const { WorkerInformations ,  handleUpdate  , isMe} = useContext(globalComponents);
+  const { discreption, phone, state, delegation, workName } = WorkerInformations;
+
 
   return (
     <div
@@ -81,8 +78,9 @@ const WorkerDiscreption = ({
         <div className={isMe ? "d-flex justify-content-between" : ""}>
           {isMe && (
             <p style={{ cursor: "pointer" }}>
-              <FontAwesomeIcon icon={faPenToSquare} 
-               onClick={() => handleUpdate("state", [state])}
+              <FontAwesomeIcon
+                icon={faPenToSquare}
+                onClick={() => handleUpdate("state", [state])}
               />
             </p>
           )}

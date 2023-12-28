@@ -63,11 +63,11 @@ const splitComments = (Clients:any)=>{
 // this path fo client to make a Comments
 router.put(
   "/",
-
+  auth,
   asyncMiddleware(async (req: any, res: any) => {
     const clientComment = req.body.Comment;
     console.log("client Comment", clientComment);
-    const clientId: string = req.body.clientId;
+    const clientId: string = req.user;
     const workerId = req.body.workerId;
     const worker = await WorkerRatingsAndCommentsModel.findOne({
       _id: workerId,

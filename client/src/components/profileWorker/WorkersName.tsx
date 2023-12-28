@@ -1,27 +1,23 @@
-import {
-  faClipboard,
-  faPenToSquare,
-} from "@fortawesome/free-solid-svg-icons";
+import { useContext } from "react";
+import { globalComponents } from "./WorkerProfil";
+import { faClipboard, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const WorkerName = ({
-  handleUpdate,
-  firstName,
-  lastName,
-  isMe,
-  userRate,
-}: any) => {
+const WorkerName = () => {
   const user = localStorage.getItem("User");
+
+  const { WorkerInformations ,  handleUpdate  , isMe ,WorkerRate} = useContext(globalComponents);
+  const { firstName, lastName } = WorkerInformations;
 
   const starImag = () => {
     const imagUrl = "../../images/rateStars/";
-    if (userRate.rate < 1.25) {
+    if (WorkerRate.rate < 1.25) {
       return imagUrl + "0.png";
-    } else if (userRate.rate >= 1.25 && userRate.rate < 2.5) {
+    } else if (WorkerRate.rate >= 1.25 && WorkerRate.rate < 2.5) {
       return imagUrl + "0.25.png";
-    } else if (userRate.rate >= 2.5 && userRate.rate < 3.75) {
+    } else if (WorkerRate.rate >= 2.5 && WorkerRate.rate < 3.75) {
       return imagUrl + "0.5.png";
-    } else if (userRate.rate >= 3.75 && userRate.rate < 5) {
+    } else if (WorkerRate.rate >= 3.75 && WorkerRate.rate < 5) {
       return imagUrl + "0.75.png";
     } else {
       return imagUrl + "1.png";
@@ -52,10 +48,13 @@ const WorkerName = ({
       <div>
         <div className="d-flex" id="rate">
           <div>
-            <h1 className="text-end">{userRate.rate | 0 }/5</h1>
+            <h1 className="text-end">{WorkerRate.rate | 0}/5</h1>
             <div className="d-flex">
-              <p className="px-1" style={{width:'max-content'}}> شخص مقييم للأداء </p>
-              <p> {userRate.length}</p>
+              <p className="px-1" style={{ width: "max-content" }}>
+                {" "}
+                شخص مقييم للأداء{" "}
+              </p>
+              <p> {WorkerRate.length}</p>
             </div>
           </div>
           <img

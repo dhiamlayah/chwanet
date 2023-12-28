@@ -1,17 +1,22 @@
-import { useState, useEffect } from "react";
-import "../../StyleDesign/meAsWorker.css";
-import WorkerDiscreption from "./WorkerDiscreption";
+import { useState, useEffect,createContext } from "react";
 import axios from "axios";
+
+import WorkerDiscreption from "./WorkerDiscreption";
 import UpdateData from "../updateData/UpdateData";
 import WorkerImages from "./WorkerImages";
 import WorkerName from "./WorkersName";
 import WorkerListGroup from "./WorkerListGroup";
 import WorkerComments from "./WorkerComments";
 
+import "../../StyleDesign/meAsWorker.css";
+
 export type UserData = {
   type: null | string;
   informations: Array<any>;
 };
+
+export const globalComponents = createContext<any | undefined>(undefined);
+
 
 const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
   const url: string = process.env.REACT_APP_port + "/meAs";
@@ -25,16 +30,7 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
     informations: [],
   });
 
-  const {
-    _id,
-    firstName,
-    lastName,
-    discreption,
-    phone,
-    state,
-    delegation,
-    workName,
-  } = WorkerInformations;
+  const {_id} = WorkerInformations;
 
   const getCurrentUser = async () => {
     const newUrl = url + localStorage.getItem("User");
@@ -109,7 +105,7 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
 
   
   return (
-   
+     <globalComponents.Provider value={{WorkerInformations,WorkerRate,handleUpdate,isMe,profilPicture}}>
      <div className=" w-100 " >
        <div className={showUpdateDiv ? " " : "d-none"}>
          <UpdateData updateData={updateData} setShowUpdateDiv={setShowUpdateDiv} />
@@ -119,30 +115,18 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
          style={{ zIndex: "12" }}
        >
          <div id="content" className={!showUpdateDiv? "": "opacity-25"}  >
-           <WorkerImages profilPicture={profilPicture}/>
-           <WorkerName userRate={WorkerRate} handleUpdate={handleUpdate} lastName={lastName} firstName={firstName} isMe={isMe}/>
+           <WorkerImages />
+           <WorkerName />
            <WorkerListGroup number={number} handleClick={handleClick}/>
          </div>
             <div style={{minHeight:'20vh', overflow:'hidden'}}>
-              {number === 1 && !showUpdateDiv && (
-                 <WorkerDiscreption
-                   handleUpdate={handleUpdate}
-                   isMe={isMe}
-                   state={state}
-                   delegation={delegation}
-                   discreption={discreption}
-                   phone={phone}
-                   workName={workName}
-                 />
-                         )}
-                         {number === 3 && !showUpdateDiv && (
-                <WorkerComments workerId={_id}/>
-                         )}
+              {number === 1 && !showUpdateDiv && (<WorkerDiscreption/> )}
+              {number === 3 && !showUpdateDiv && (<WorkerComments />)}
             </div>
         </div>
      </div>
   
-
+     </globalComponents.Provider>
   );
 };
 
