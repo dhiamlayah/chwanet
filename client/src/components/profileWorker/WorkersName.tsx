@@ -8,7 +8,7 @@ const WorkerName = () => {
 
   const { WorkerInformations ,  handleUpdate  , isMe ,WorkerRate} = useContext(globalComponents);
   const { firstName, lastName } = WorkerInformations;
-
+  console.log('worker rate .........>',WorkerRate)
   const starImag = () => {
     const imagUrl = "../../images/rateStars/";
     if (WorkerRate.rate < 1.25) {

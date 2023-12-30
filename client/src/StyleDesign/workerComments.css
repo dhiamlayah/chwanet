@@ -1,3 +1,9 @@
+
+#allClientsComments {
+    overflow: scroll;
+    height: 50vh;
+    overflow-x: hidden;
+}
 @media (min-width : 1024px){
     #Comments {
         border: #80808069 1px solid;

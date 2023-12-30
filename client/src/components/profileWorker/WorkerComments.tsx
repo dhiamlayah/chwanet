@@ -4,10 +4,8 @@ import SendComments from "../SendComment";
 
 const WorkerComments = () => {
   return (
-    <div id="Comments">
+    <div id="Comments"  >
       <ClientsComments />
-      
-
       <SendComments/>
     </div>
   );

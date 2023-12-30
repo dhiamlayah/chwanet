@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const WorkerDiscreption = () => {
 
-  const { WorkerInformations ,  handleUpdate  , isMe} = useContext(globalComponents);
+  const { WorkerInformations ,  handleUpdate  , isMe } = useContext(globalComponents);
   const { discreption, phone, state, delegation, workName } = WorkerInformations;
 
 

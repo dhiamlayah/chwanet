@@ -31,7 +31,6 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
   });
 
   const {_id} = WorkerInformations;
-
   const getCurrentUser = async () => {
     const newUrl = url + localStorage.getItem("User");
     try {
@@ -52,7 +51,6 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
  
 
   const getWorkerRate = async()=>{
-    console.log('user id ',_id)
     const url: string = process.env.REACT_APP_port + `/rateWorker/${_id}` ;
     await axios.get(url).then((res:any)=>{
         console.log("we get worker rate ",res.data)
@@ -105,8 +103,11 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
 
   
   return (
-     <globalComponents.Provider value={{WorkerInformations,WorkerRate,handleUpdate,isMe,profilPicture}}>
-     <div className=" w-100 " >
+     <globalComponents.Provider value={{WorkerInformations,WorkerRate,handleUpdate,isMe,profilPicture,user}}>
+     <div
+         className='w-100'
+         style={!showUpdateDiv ? {}  : {overflow:"hidden",maxHeight:'100vh'}}
+     >
        <div className={showUpdateDiv ? " " : "d-none"}>
          <UpdateData updateData={updateData} setShowUpdateDiv={setShowUpdateDiv} />
        </div>
@@ -118,11 +119,12 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
            <WorkerImages />
            <WorkerName />
            <WorkerListGroup number={number} handleClick={handleClick}/>
-         </div>
-            <div style={{minHeight:'20vh', overflow:'hidden'}}>
+           <div style={{minHeight:'50vh', overflow:'hidden'}} className="mb-5">
               {number === 1 && !showUpdateDiv && (<WorkerDiscreption/> )}
               {number === 3 && !showUpdateDiv && (<WorkerComments />)}
             </div>
+         </div>
+           
         </div>
      </div>
   
