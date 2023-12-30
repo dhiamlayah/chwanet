@@ -52,9 +52,9 @@ const Pagination = ({
               return (
                 <li className="page-item " key={keyForRunders}>
                   <Link
-                    to={`/searchWorker?filter=${queryFilter}&page=${page}&limit=3`}
+                    to={`/searchWorker?filter=${queryFilter}&page=${page}&limit=12`}
                     onClick={() =>
-                        specifecWorkersFromDB(page, 2) 
+                        specifecWorkersFromDB(page, 12) 
                     }
                     className={
                       currentPage == page

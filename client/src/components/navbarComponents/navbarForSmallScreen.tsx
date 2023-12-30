@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import UserInformations from "./userInformation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
+import { faCircleInfo, faHouse, faLeftLong, faMagnifyingGlass, faRightToBracket, faUser, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { User } from "../../App";
  
 interface Props {
@@ -29,7 +29,7 @@ const NavBarForSmallScreen = ({ user, show, setShow,setShowProfile,showProfile }
                 id="phoneNavBar"
                 onClick={() => setShow(false)}
               >
-                دخول
+               <FontAwesomeIcon icon={faRightToBracket} className="pe-3"/> دخول
               </Link>
               <Link
                 to="/register"
@@ -37,36 +37,36 @@ const NavBarForSmallScreen = ({ user, show, setShow,setShowProfile,showProfile }
                 id="phoneNavBar"
                 onClick={() => setShow(false)}
               >
-                حساب جديد
+                <FontAwesomeIcon icon={faUserPlus} className="pe-3" /> حساب جديد
               </Link>
             </>
           )}
 
         <Link
           to="/"
-          className=" btn py-3 text-white text-decoration-none fw-medium p-2"
+          className=" btn py-3 text-white text-decoration-none fw-medium "
           id="phoneNavBar"
           onClick={() => setShow(false)}
         >
-          الصفحة الرئيسية
+        <FontAwesomeIcon icon={faHouse} className="pe-1"/> الصفحة الرئيسية
         </Link>
 
         <Link
           to="/register"
-          className="btn py-3 text-white text-decoration-none fw-medium p-2"
+          className="btn py-3 text-white text-decoration-none fw-medium "
           id="phoneNavBar"
           onClick={() => setShow(false)}
         >
-          معلومات عنا
+          <FontAwesomeIcon icon={faCircleInfo} className="pe-3"/>معلومات عنا
         </Link>
 
         <Link
           to="/searchWorker"
-          className="btn py-3 text-white text-decoration-none fw-medium p-2"
+          className="btn py-3 text-white text-decoration-none fw-medium"
           id="phoneNavBar"
           onClick={() => setShow(false)}
         >
-          بحث عن عامل
+       <FontAwesomeIcon icon={faMagnifyingGlass}  className="pe-1" />   بحث عن عامل
         </Link>
 
         {user && (
@@ -77,7 +77,7 @@ const NavBarForSmallScreen = ({ user, show, setShow,setShowProfile,showProfile }
               setShowProfile(true);
             }}
           >
-            الملف الشخصي
+           <FontAwesomeIcon icon={faUser}  className="pe-2" /> الملف الشخصي
           </button>
         )}
       </div>

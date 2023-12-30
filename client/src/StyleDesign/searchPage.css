@@ -1,0 +1,23 @@
+.line {
+    height: 2px;
+    width: 100%;
+    margin: 15px 0;
+  }
+  
+  
+  
+  .line-dark {
+    background-color: #5a4848; /* Red color */
+  }
+  
+  .input-between-lines {
+    position: relative;
+  }
+  
+  .input-between-lines input {
+    position: relative;
+    z-index: 1;
+  }
+  
+
+ 

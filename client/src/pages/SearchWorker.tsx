@@ -1,13 +1,14 @@
-import { Suspense, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import ChooseDomain from "../components/ChooseDomain";
 import ChooseState from "../components/ChooseState";
 import ChooseDelegation from "../components/ChooseDelegation";
-import WorkerFound from "../components/WorkerFound";
-import axios from "axios";
+ import axios from "axios";
 import Pagination from "../util/Pagination";
-import LodingPage from "../loading";
-import { Link } from "react-router-dom";
-
+ import { Link } from "react-router-dom";
+import '../StyleDesign/searchPage.css'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import WorkerFound from "../components/WorkerFound";
 export interface Worker {
   _id: string;
   firstName: string;
@@ -20,14 +21,13 @@ export interface Worker {
 
 const SearchWorker = () => {
   const [domain, setDomain] = useState(""),
-        [state, setState] = useState(""),
-        [delegation, setDelegation] = useState(""),
-        [workers, setWorkers] = useState<Worker[] | null>(null),
-        [finelworkers, setFinelWorkers] = useState<Worker[] | null>([]),
-        [numberOfWorkers, setNumberOfWorkers] = useState<number>(0);
-    
-  const url: any = process.env.REACT_APP_port;
+    [state, setState] = useState(""),
+    [delegation, setDelegation] = useState(""),
+    [workers, setWorkers] = useState<Worker[] | null>(null),
+    [finelworkers, setFinelWorkers] = useState<Worker[] | null>([]),
+    [numberOfWorkers, setNumberOfWorkers] = useState<number>(0);
 
+  const url: any = process.env.REACT_APP_port;
 
   const specifecWorkersFromDB = async (page: number, limit: number) => {
     await axios
@@ -40,8 +40,11 @@ const SearchWorker = () => {
         setNumberOfWorkers(res.data.numberOfWorkers);
         setWorkers(res.data.Workers);
       })
-      .catch((err:any) => {
-        console.log("there are errors to get specifec worker from dataBase ",err.response.data);
+      .catch((err: any) => {
+        console.log(
+          "there are errors to get specifec worker from dataBase ",
+          err.response.data
+        );
       });
   };
 
@@ -83,17 +86,19 @@ const SearchWorker = () => {
     if (type === "delegation") setDelegation(e.target.value);
   };
 
-
   useEffect(() => {
-    specifecWorkersFromDB(1, 2);
+    specifecWorkersFromDB(1, 12);
   }, []);
 
   useEffect(() => {
     allWorkersFound();
   }, [workers, setWorkers]);
-  
+
   return (
-    <div className="d-md-flex" style={{backgroundColor:'beige', minHeight:'100vh'}}>
+    <div
+      className="d-md-flex"
+      style={{ backgroundColor: "beige", minHeight: "100vh" }}
+    >
       <div className="sidebar  border border-right col-md-3 col-lg-2 mt-5">
         <div className="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto  ">
           <h6 className="sidebar-heading fw-bold text-center justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
@@ -122,7 +127,7 @@ const SearchWorker = () => {
             <Link
               to="/searchWorker?filter=true&page=1"
               className="btn btn-outline-light p-1 w-25 m-2"
-              onClick={() => specifecWorkersFromDB(1, 2)}
+              onClick={() => specifecWorkersFromDB(1, 12)}
             >
               ابحث
             </Link>
@@ -131,16 +136,24 @@ const SearchWorker = () => {
         </div>
       </div>
       <div className="mt-5 w-100">
-        {numberOfWorkers===0 && <LodingPage/>}
-        <Suspense fallback={<LodingPage />}>
-          <WorkerFound workers={finelworkers} />
-        </Suspense>
-          {numberOfWorkers !== 0 && (
-            <Pagination
-              numberPages={Math.ceil(numberOfWorkers / 2)}
-              specifecWorkersFromDB={specifecWorkersFromDB}
-             />
-          )}
+      <div className="container mt-5 text-center d-flex w-100">
+        <div className="line line-dark w-25 mt-3"></div>
+        <div className="input-group flex-nowrap">
+
+        <input type="text" className="w-100  p-2 rounded-start border border-dark  text-end" placeholder="ابحث عن عامل" />
+        <span  className="input-group-text border border-dark  bg-warning" id="addon-wrapping"> <FontAwesomeIcon icon={faMagnifyingGlass} /></span>
+        </div>
+        <div className="line line-dark w-25 mt-3"></div>
+       
+      </div>
+
+        <WorkerFound workers={finelworkers} />
+        {numberOfWorkers !== 0 && (
+          <Pagination
+            numberPages={Math.ceil(numberOfWorkers / 12)}
+            specifecWorkersFromDB={specifecWorkersFromDB}
+          />
+        )}
       </div>
     </div>
   );

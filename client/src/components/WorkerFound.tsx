@@ -3,6 +3,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
  import {Worker} from '../pages/SearchWorker'
 import { Link } from 'react-router-dom';
+import { Placeholder } from 'react-bootstrap';
 
 
  function WorkerFound({workers}:any) { 
@@ -12,7 +13,7 @@ import { Link } from 'react-router-dom';
  
 
   return ( 
-    <Row  xs={2} sm={3}  md={3} lg={4} xl={4} className="g-4 m-0 p-5">
+    <Row  xs={2} sm={3}  md={3} lg={4} xl={4} className="g-4 m-0 ">
       {workers && workers.map((worker:Worker) =>{   
            if(worker.photo===null) return null
            return (
@@ -30,6 +31,47 @@ import { Link } from 'react-router-dom';
             </Card>
           </Col>
       )})}
+    {workers.length ===0  && 
+    <>
+     <Card style={{ width: '18rem' ,height:"18rem",margin:"10px" }}>
+        <Card.Body>
+          <Placeholder as={Card.Title} animation="glow">
+            <Placeholder xs={6} />
+          </Placeholder>
+          <Placeholder as={Card.Text} animation="glow">
+            <Placeholder xs={7} /> <Placeholder xs={4} /> <Placeholder xs={4} />{' '}
+            <Placeholder xs={6} /> <Placeholder xs={8} />
+          </Placeholder>
+          <Placeholder.Button variant="warning" xs={6} />
+        </Card.Body>
+      </Card>
+      <Card style={{ width: '18rem' ,height:"18rem",margin:"10px" }}>
+        <Card.Body>
+          <Placeholder as={Card.Title} animation="glow">
+            <Placeholder xs={6} />
+          </Placeholder>
+          <Placeholder as={Card.Text} animation="glow">
+            <Placeholder xs={7} /> <Placeholder xs={4} /> <Placeholder xs={4} />{' '}
+            <Placeholder xs={6} /> <Placeholder xs={8} />
+          </Placeholder>
+          <Placeholder.Button variant="warning" xs={6} />
+        </Card.Body>
+      </Card>
+      <Card style={{ width: '18rem' ,height:"18rem",margin:"10px" }}>
+        <Card.Body>
+          <Placeholder as={Card.Title} animation="glow">
+            <Placeholder xs={6} />
+          </Placeholder>
+          <Placeholder as={Card.Text} animation="glow">
+            <Placeholder xs={7} /> <Placeholder xs={4} /> <Placeholder xs={4} />{' '}
+            <Placeholder xs={6} /> <Placeholder xs={8} />
+          </Placeholder>
+          <Placeholder.Button variant="warning" xs={6} />
+        </Card.Body>
+      </Card>
+      </>
+      }
+    
     </Row>
   );
 }

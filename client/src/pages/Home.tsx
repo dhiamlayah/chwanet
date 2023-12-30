@@ -3,6 +3,7 @@ import Discreption from "../components/Discreption"
 import AddWorker from "../components/AddWorker";
 import OurObjectif from "../components/OurObject";
 import CarouselForPhoneScreen from "../components/CarouselForPhoneScreen";
+import Footer from "../components/Footer";
  
 const Home = () => {
  
@@ -17,6 +18,7 @@ const Home = () => {
             <Discreption/>
             <AddWorker/>
             <OurObjectif/>
+            <Footer/>
         </div>
      );
 }
