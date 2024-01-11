@@ -33,23 +33,28 @@ const asyncMiddleware = (fn : Function ) => (req:any, res:any, next:any) => {
 
 const resizeImages = asyncMiddleware( async( req:any,res:any,next:any)=>{
     const file : File = req.file;    
-    console.log('file ===>',file)
+    console.log('idd',req.user)
+    // Assuming req.user._id is the user's ID
+    const userFolder = `./userPicture/${req.user._id}/`;
 
+    // Create the user folder if it doesn't exist
+    if (!fs.existsSync(userFolder)) {
+     fs.mkdirSync(userFolder, { recursive: true });
+    }
     // Use Sharp for image processing
     const image = sharp(file.path) //path to the stored image 
     try{
        await image.metadata().   // get image metadata for size 
         then((metadata:any)=>{
           if (metadata.width > 450) {
-            return image.resize({ width: 450 }).toFile(`./userPicture/${file.originalname}`) ; // resize if too big
+            return image.resize({ width: 450 }).toFile(`${userFolder}${file.originalname}`) ; // resize if too big
           } else {
-            return image.toFile(`./userPicture/${file.originalname}`);
+            return image.toFile(`${userFolder}${file.originalname}`);
           }
         }).then((data:ResizedImage)=>{
             fs.rmSync(req.file.path, { force: true }); // delete the tmp file as now have buffer
-            console.log('data',data)
             data.filename = file.originalname
-            data.destination=`./userPicture`
+            data.destination=`./userPicture/${req.user._id}`
             req.imageResized = data
             next()
         });  

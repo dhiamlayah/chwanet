@@ -26,7 +26,7 @@ const MeAsWorker = () => {
  
   const getWorkerPicture = async (photo: any) => {
     try {
-      await axios.get(url + "/userPicture/" + photo.filename).then((res) => {
+      await axios.get(url + `/userPicture/${WorkerInformations._id}/` + photo.filename).then((res) => {
         setProfilePicture(res.config.url);
       });
     } catch (err) {

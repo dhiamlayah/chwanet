@@ -23,7 +23,7 @@ const Profile = ( ) => {
       };
       const getWorkerPicture = async (photo: any) => {
         try {
-          await axios.get(url + "/userPicture/" + photo.filename).then((res) => {
+          await axios.get(url + `/userPicture/${workerId}/` + photo.filename).then((res) => {
             console.log("hello", res.config.url);
             setProfilePicture(res.config.url);
           });

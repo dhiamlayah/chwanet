@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { User } from "./users";
 
-type MulterType = {
+export type MulterType = {
   fieldname:String,
   originalname:String,
   encoding:String,

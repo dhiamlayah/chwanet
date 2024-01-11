@@ -1,69 +1,29 @@
 import mongoose from "mongoose";
 
-const Publication = {
-  images: [
-    {
-      uri: String,
-      alt: String,
-     },
-  ],
-  videos: [
-    {
-      alt: String,
-      url: String,
-     },
-  ],
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-};
-const Comment ={
-    _id:{
-        type:String,
-     },
-    text:{
-        type:String,
-     },
-    date: {
-        type: Date,
-        default: Date.now,
-      },
+import { MulterType } from "./worker";
+type picture = {
+    descreption:string ,
+    picture :MulterType,
+    date: string 
 }
 
-const ProfilesSchema = new mongoose.Schema({
-  _id: {
-    type: String,
-   },
-  discreption:String ,
-  pictures: [
-    {
-      profilePhoto: {
-        uri: String,
-        alt: String,
-       },
+ interface ProfilePictures {
+  _id: string,
+  pictuers:picture[] | null
+ }
+
+
+const ProfilesSchema = new mongoose.Schema<ProfilePictures>({
+   _id :{
+      type:String,
+      require: true,
     },
-    {
-      coverPicture: [
-        {
-          uri: String,
-          alt: String,
-         },
-      ],
-    },
-  ],
-  bio: String,
-  publications: {
-    type: [Publication],
-  },
-  note:{
-    type:Number,
-   },
-  comments:{
-   type: [Comment] 
-  }
+   pictuers:{
+      type:Object,
+      require:false
+   }
 });
 
-const ProfilesModels = mongoose.model('Profiles',ProfilesSchema)
+const ProfilesModels = mongoose.model('ProfilesPictures',ProfilesSchema)
 
  export default ProfilesModels

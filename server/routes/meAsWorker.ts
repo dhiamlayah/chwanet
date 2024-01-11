@@ -3,10 +3,10 @@ const router = express.Router()
 const asyncMiddleware = require("../middelwares/asyncMiddleware");
 const resizeImages = require("../middelwares/resizeImages")
 const upload = require("../middelwares/multer")
+const auth = require("../middelwares/authorization")
 
 import WorkerModel from "../models/worker";
 
-const auth = require("../middelwares/authorization")
 
 router.get("/", auth, asyncMiddleware(
     async (req: any, res: any) => {
@@ -51,7 +51,6 @@ router.put(
   resizeImages,
   asyncMiddleware(async (req: any, res: any) => {
     const imageResized = req.imageResized
-    console.log('imageResized',imageResized)
     const {workName,discreption,experience}=JSON.parse(req.body.document)
     const user = await WorkerModel.findByIdAndUpdate(req.user._id, {
       workName: workName,

@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const connectWithDataBase= require("./connectDataBase/connectWithDataBase")
 const cors = require('cors')
+const path = require('path')
 
 
 const corsOptions = {
@@ -49,18 +50,29 @@ const Profile= require("./routes/profile")
 const GetWorkers = require("./routes/getWorkers")
 const RateWoker = require("./routes/RateWorker")
 const CommentWorker = require ("./routes/CommentWorkers")
+const WorkerPictures = require("./routes/workerPictures")
 
 app.use('/register',Register)
 app.use('/login',Login)
 app.use('/meAsClient',MeAsClient)
 app.use('/meAsWorker',MeAsWorker)
 app.use('/genres',Genres)
-app.use('/profile',Profile)
-app.use('/userPicture', express.static('userPicture'));
+app.use('/profile',Profile) 
 app.use('/userPictureBeforResizing', express.static('userPictureBeforResizing'));
 app.use('/getWorkers',GetWorkers)
 app.use('/rateWorker',RateWoker)
 app.use('/commentWorker',CommentWorker)
+app.use('/workerPictures',WorkerPictures)
+
+//----------------static file containe all workers pictures -------------------------------------------//
+app.use('/userPicture/:id', (req:any, res:any, next:any) => {
+  const userId = req.params.id;
+  // Construct the path to the user-specific directory
+  const userDirectory = path.join(__dirname, 'userPicture', userId);
+  // Use express.static middleware to serve files from the user-specific directory
+  express.static(userDirectory)(req, res, next);
+})
+
 //----------------a middelware for catch errors from the database-------------------------------------------//
 app.use(dataBaseError);
 
