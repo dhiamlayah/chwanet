@@ -48,7 +48,7 @@ const UserInformations = ({user}:Props) => {
         </li>
         {user.possition==="worker"&& 
              <li className="text-center py-2">
-                <Link to="/me" className="btn btn-outline-warning  w-50">
+                <Link to="/profile/me" className="btn btn-outline-warning  w-50">
              قم بزيارة ملفك الشخصي        
                 </Link>    
             </li>

@@ -10,7 +10,7 @@ function CarouselExemples() {
           <Carousel.Item key={image.id} interval={3000}>
             <img
               src={image.url}
-              style={{height:"95vh"}}
+              style={{height:"98vh"}}
               className="w-100 d-block "
               alt={image.domain}
             />

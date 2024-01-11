@@ -59,6 +59,8 @@ function App() {
   }, []);
   
 
+  console.log('user',user)
+
    return (
     <Router>
       <NavBar user={user} />

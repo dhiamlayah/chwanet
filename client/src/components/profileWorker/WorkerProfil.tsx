@@ -9,6 +9,7 @@ import WorkerListGroup from "./WorkerListGroup";
 import WorkerComments from "./WorkerComments";
 
 import "../../StyleDesign/meAsWorker.css";
+import PicturesLife from "./WorkerPicturesLife";
 
 export type UserData = {
   type: null | string;
@@ -121,6 +122,7 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
            <WorkerListGroup number={number} handleClick={handleClick}/>
            <div style={{minHeight:'50vh', overflow:'hidden'}} className="mb-5">
               {number === 1 && !showUpdateDiv && (<WorkerDiscreption/> )}
+              {number === 2 && !showUpdateDiv && (<PicturesLife/>)}
               {number === 3 && !showUpdateDiv && (<WorkerComments />)}
             </div>
          </div>

@@ -10,6 +10,7 @@ import RateWorker from "../../util/RateWorker";
 import "../../StyleDesign/UpdateData.css";
 
 const UpdateData = ({ updateData, setShowUpdateDiv }: any) => {
+  
   const url: string = process.env.REACT_APP_port + "/meAsWorker/" + updateData.type;
   const [state, setState] = useState<string>("");
   const [delegation, setDelegation] = useState<string>("");
@@ -141,7 +142,6 @@ const UpdateData = ({ updateData, setShowUpdateDiv }: any) => {
       {updateData.type === "rateWorker" && (
         <RateWorker setShowUpdateDiv={setShowUpdateDiv} />
       )}
-
       {updateData.type !== "rateWorker" && (
         <button
           type="button"
