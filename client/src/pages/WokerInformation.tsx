@@ -12,7 +12,7 @@ type WorkerInformations = {
 };
 
 const WorkerInformation = () => {
-  const url: any = process.env.REACT_APP_port ;
+  const url: string | undefined = process.env.REACT_APP_port ;
   const navigate = useNavigate();
   const inputImg = useRef<any>(null);
   const [userPhoto, setUserPhoto] = useState<any>(null);

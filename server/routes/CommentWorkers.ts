@@ -35,11 +35,9 @@ const getClients = async (Clients: ClientRateAndComments[]) => {
       }))
 };
 
-const convertToDateObject = (dateString : string) => {
-    const [day, month, year] = dateString.split('/').map(Number);
-    return new Date(year, month - 1, day); // Month is 0-indexed
-  };
-
+const convertToDateObject = (dateTimeString: string) => {
+  return new Date(dateTimeString);
+};
 
 
   // this function have object to split each comment then order it by date 
@@ -83,7 +81,7 @@ router.put(
           if (client._id === findClient._id) {
             client.Comments.push({
               text: clientComment,
-              date: date.toLocaleDateString(),
+              date: date.toUTCString(),
             });
           }
           return client;
@@ -94,7 +92,7 @@ router.put(
       } else {
         allClients?.push({
           _id: clientId,
-          Comments: [{ text: clientComment, date: date.toLocaleDateString() }],
+          Comments: [{ text: clientComment, date: date.toUTCString() }],
           Rate: null,
         });
         await worker?.updateOne({ Clients: allClients });

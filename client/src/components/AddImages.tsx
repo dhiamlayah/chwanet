@@ -1,16 +1,20 @@
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState, useRef, useEffect, FC } from "react";
+import { useState, useRef } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import AnimatedPage from "../util/AnimatedPage";
+import axios from "axios";
 
 const AddImages = ({ back }: any) => {
   const [userPhoto, setUserPhoto] = useState<any>(null);
   const [userFile, setUserFile] = useState<any>();
   const [pictureStatue,setPictureStatue]=useState<null|string>(null)
+  const url: string | undefined = process.env.REACT_APP_port ;
   const inputImg = useRef<any>(null);
+  
   const handleChangeFile = (event: any) => {
     const file = event.target.files[0];
-    console.log("file", file);
     if (file !== undefined) {
       setUserFile(file);
       const imagesUploded = (
@@ -25,16 +29,48 @@ const AddImages = ({ back }: any) => {
     }
   };
 
-  console.log("userFile", userFile);
-  console.log("userPhoto", userPhoto);
+  const sendPictureToServer = async () => {
+    const formData = new FormData();
+    formData.append("file", userFile);
+    console.log('form data ',userFile)
+
+    try {
+      await axios
+        .post(url+ "/workerPictures", formData, {
+          headers: {
+            token: localStorage.getItem("Token"),
+          },
+        })
+        .then((res) => {
+          toast.success("تم إنشاؤه بنجاح");
+          redirectUser();
+        });
+    } catch (err: any) {
+      console.log('err to send image',err)
+      if (err.response.data) {
+        return toast.error(err.response.data.message);
+      }
+    }
+  };
+
+  const redirectUser = () => {
+    return setTimeout(() => {
+      back(false)
+     }, 5000);
+  };
+
+  const handleClick = ()=>{
+     sendPictureToServer()
+  }
+
   return (
     <div className="position-relative" style={{ minHeight: "35vh" }}>
+      <ToastContainer/>
       <div
         className="position-absolute top-0 start-0 m-1"
         onClick={() => back(false)}
       >
-        {" "}
-        <FontAwesomeIcon icon={faArrowLeft} className="fs-5" />
+         <FontAwesomeIcon icon={faArrowLeft} className="fs-5" />
       </div>
       <AnimatedPage>
         <div className=" d-flex justify-content-center align-items-center pt-5">
@@ -72,7 +108,7 @@ const AddImages = ({ back }: any) => {
                   />
                 </div>
                 <div>
-                  <button className="btn btn-outline-success mb-4 ">
+                  <button className="btn btn-outline-success mb-4 " onClick={handleClick}>
                   حفظ
                   </button>
                 </div>

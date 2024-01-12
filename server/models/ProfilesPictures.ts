@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
 
-import { MulterType } from "./worker";
 type picture = {
     descreption:string ,
-    picture :MulterType,
+    picture :{
+      filename:string,
+      destination:string
+    },
     date: string 
 }
 

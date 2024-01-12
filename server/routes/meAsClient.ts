@@ -3,7 +3,7 @@ const router = express.Router()
 const asyncMiddleware = require("../middelwares/asyncMiddleware");
 
 import UserModel from "../models/users";
-import ProfilesModels from "../models/Profiles";
+import ProfilesModels from "../models/ProfilesPictures";
 const auth = require("../middelwares/authorization");
 
 router.get("/", auth, asyncMiddleware(
