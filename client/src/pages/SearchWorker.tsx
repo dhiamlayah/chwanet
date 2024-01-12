@@ -97,7 +97,7 @@ const SearchWorker = () => {
   return (
     <div
       className="d-md-flex"
-      style={{ backgroundColor: "beige", minHeight: "100vh" }}
+      style={{ backgroundColor: "#eeeeee", minHeight: "100vh" }}
     >
       <div className="sidebar  border border-right col-md-3 col-lg-2 mt-5">
         <div className="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto  ">

@@ -1,4 +1,4 @@
-import { faLocationDot, faPhone, faRightFromBracket, faTreeCity } from "@fortawesome/free-solid-svg-icons";
+import { faLocationDot, faPhone, faRightFromBracket, faTreeCity, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { User } from "../../App";
 import { Link } from "react-router-dom";
@@ -17,8 +17,11 @@ const UserInformations = ({user}:Props) => {
 
   if(user)  return (
         <>
+          <div className="position-relative d-lg-none my-2 mb-4">
+          <FontAwesomeIcon icon={faUser} style={{width:"30px",backgroundColor:"silver"}} className=" fs-1 position-absolute p-3 top-0 start-50 translate-middle rounded rounded-5  border border-white" />      
+          </div>
          <li >
-          <h5 className="text-center py-2">
+          <h5 className="text-center py-3">
             {user.firstName} {user.lastName}
           </h5>
         </li>

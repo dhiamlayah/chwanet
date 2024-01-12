@@ -68,6 +68,7 @@ const AddImages = ({ back }: any) => {
       <ToastContainer/>
       <div
         className="position-absolute top-0 start-0 m-1"
+        style={{cursor:"pointer"}}
         onClick={() => back(false)}
       >
          <FontAwesomeIcon icon={faArrowLeft} className="fs-5" />

@@ -69,18 +69,20 @@ asyncMiddelware(
     }
 ))
 
-
 router.get('/:id',asyncMiddelware(
     async(req:any,res:any)=>{
         const workerId=req.params.id
+        const startFrom = req.query.startFrom | 0
+        const endIn = req.query.endIn | 0
+            
         const worker = await ProfilesModels.findById({ _id:workerId });
         if(!worker){
             res.status(400).json({message:'no picture yet'})
         }
        else{
         const sortPictuers=sortPicturesByDate(worker.pictuers)
-        res.status(200).json({pictures:sortPictuers})
-    } }
+        res.status(200).json({pictures:sortPictuers.slice(startFrom,endIn),length:sortPictuers.length})
+    }}
 ))
 
 module.exports= router
