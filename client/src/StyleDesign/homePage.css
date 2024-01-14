@@ -1,6 +1,8 @@
-
+@import url(https://fonts.googleapis.com/earlyaccess/droidarabickufi.css);
 @media (min-width : 1024px){
     .descreption{
         width: 50%;
+        font-family: 'Droid Arabic Kufi', serif;
     }
 }
+

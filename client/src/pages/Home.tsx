@@ -4,6 +4,7 @@ import AddWorker from "../components/AddWorker";
 import OurObjectif from "../components/OurObject";
 import CarouselForPhoneScreen from "../components/CarouselForPhoneScreen";
 import Footer from "../components/Footer";
+import NumberUser from "../components/numberUser";
  
 const Home = () => {
  
@@ -17,6 +18,7 @@ const Home = () => {
             </div>
             <Discreption/>
             <AddWorker/>
+            <NumberUser/>
             <OurObjectif/>
             <Footer/>
         </div>
