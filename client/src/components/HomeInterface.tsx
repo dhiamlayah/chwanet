@@ -16,8 +16,8 @@ function CarouselExemples() {
             />
             
             <Carousel.Caption>
-              <h3>{image.domain}</h3>
-              <p>{image.discreption}</p>
+              <h1 className="fw-bold text-secondary">{image.domain}</h1>
+              <p className="fw-bold  fs-4">{image.discreption}</p>
             </Carousel.Caption>
           </Carousel.Item>
         );

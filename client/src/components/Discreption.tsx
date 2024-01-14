@@ -1,5 +1,5 @@
 import "../StyleDesign/homePage.css";
-const  Description = () => {
+const Description = () => {
   return (
     <div
       className="p-5 d-flex  justify-content-around "
@@ -12,23 +12,27 @@ const  Description = () => {
           style={{ width: "90%", height: "auto" }}
           alt="descreptionImg"
         />
-      </div> 
+      </div>
       <div className="descreption pt-5">
-        <h1 className="pt-5   text-center fw-bold " style={{color:'cadetblue'}}>
-        إنظم إلى الفريق مجانا 
+        <h1
+          className="pt-5   text-center fw-bold "
+          style={{ color: "cadetblue" }}
+        >
+          إنظم إلى موقعنا مجانا
         </h1>
         <p className="  text-center pt-3 fw-bold fs-5">
           مرحبًا بكم في موقعنا، حيث يجتمع كل ما يتعلق بأعمال المنزل! إذا كنت
-          تتطلع إلى الانضمام إلى هذه الجماعة وتحسين هذا الموقع، يكفي أن تقوم
-          بإنشاء حساب هنا. سيتم إضافة اسمك بفخر إلى قائمة المشاركين، وستساهم
+          تتطلع إلى الانضمام إلى هذه المجموعة وتحسين هذا الموقع، يكفي أن تقوم
+          بإنشاء حساب هنا. سيتم إضافة اسمك بفخر إلى قائمة الحرفيين ، وستساهم
           مشاركاتك في تثريت هذا الفضاء المفيد. نتطلع إلى مشاركتك وتألقك في جعل
           هذا الموقع أفضل وأكثر تنوعًا
         </p>
+        <p className='text-end text-secondary'>!إذا كانت وظيفتك غير  موجودة في قائمة المهن, يمكنك إضافتهة بكل بساطة*</p>
         <div className="d-flex justify-content-center my-5">
-              <button className="btn  "   style={{backgroundColor:"cadetblue"}}>
-                + تحميل صور
-              </button>
-            </div>
+          <button className="btn  " style={{ backgroundColor: "cadetblue" }}>
+            إنشاء حساب{" "}
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,25 +1,39 @@
 const OurObjectif = () => {
-    return (
-        <div className=" p-5" style={{backgroundColor:'#a2717170'}}>
-            <h1 className="text-center text-secondary">Our Servece </h1>
-            <hr />
-            <div className="d-block p-5 text-center d-sm-flex">
-                <div className="bg-secondary m-3">
-                    <h1>plan A</h1>
-                    <p className="text-light p-3">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi minima libero soluta sed impedit, laborum dolorem quis? Vitae quidem tempore odit corporis magnam ea alias, suscipit optio asperiores placeat facilis.</p>
-                </div>
-                <span className="bg-dark"></span>
-                <div className="bg-secondary m-3">
-                    <h1>plan B</h1>
-                    <p className="text-light p-3">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi minima libero soluta sed impedit, laborum dolorem quis? Vitae quidem tempore odit corporis magnam ea alias, suscipit optio asperiores placeat facilis.</p>
-                </div>
-                <div className="bg-secondary m-3 " >
-                    <h1>plan C</h1>
-                    <p className="text-light p-3">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi minima libero soluta sed impedit, laborum dolorem quis? Vitae quidem tempore odit corporis magnam ea alias, suscipit optio asperiores placeat facilis.</p>
-                </div>
-            </div>
+  return (
+    <div className=" p-5" style={{ backgroundColor: "#a2717170" }}>
+      <h1 className="text-center text-secondary">أهدافنا </h1>
+      <hr />
+      <div className="d-block p-5 text-center d-lg-flex">
+        <div className="bg-secondary m-3 rounded-3" style={{minHeight:"30vh" ,minWidth:"30%"}}>
+          <h3 className="mt-3 fw-bold">منصة شاملة لخدمات المنزل</h3>
+          <p className="text-light fs-5 p-3">
+              نحن نهدف إلى تقديم مكان واحد يضم
+            جميع الخدمات المنزلية، بدءًا من البناء والكهرباء وصولاً إلى الدهانات
+            والخدمات الأخرى ذات الصلة، لتلبية احتياجات مالكي المنازل بشكل شامل.
+          </p>
         </div>
-      );
-}
- 
+         <div className="bg-secondary m-3 rounded-3" style={{minHeight:"30vh" ,minWidth:"30%"}}>
+          <h3 className="mt-3 fw-bold">تعزيز الفرص للمتخصصين</h3>
+          <p className="text-light fs-5 p-3">
+            نسعى إلى توفير فرص عمل للحرفيين والمحترفين في
+            مختلف المجالات المنزلية، مما يعزز فرص العمل ويسهم في تحسين جودة
+            الخدمات المقدمة.
+          </p>
+        </div>
+        <div className="bg-secondary m-3 rounded-3" style={{minHeight:"30vh" ,minWidth:"30%"}}>
+          <h3 className="mt-3 fw-bold">تسهيل عملية الاختيار والتقييم</h3>
+          <p className="text-light fs-5 p-3">
+              نحن نسعى لتيسير عملية اختيار مقدمي
+            الخدمات عبر منصة توفر معلومات شاملة وتقييمات من المستخدمين السابقين،
+            مما يساعد المستهلكين في اتخاذ قرارات مستنيرة عند اختيار مقدمي
+            الخدمات لديهم.
+          </p>
+        </div>
+      </div>
+      <hr />
+
+    </div>
+  );
+};
+
 export default OurObjectif;
