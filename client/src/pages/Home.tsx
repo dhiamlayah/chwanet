@@ -6,6 +6,7 @@ import CarouselForPhoneScreen from "../components/CarouselForPhoneScreen";
 import Footer from "../components/Footer";
 import NumberUser from "../components/numberUser";
  
+//try*********/
 const Home = () => {
  
     return ( 
@@ -19,7 +20,7 @@ const Home = () => {
             <Discreption/>
             <AddWorker/>
             <NumberUser/>
-            <OurObjectif/>
+            <OurObjectif/> 
             <Footer/>
         </div>
      );
