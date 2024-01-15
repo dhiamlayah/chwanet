@@ -2,6 +2,12 @@ import { useEffect, useContext, useState } from "react";
 import AnimatedPage from "../util/AnimatedPage";
 import axios from "axios";
 import { globalComponents } from "./profileWorker/WorkerProfil";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faAnglesLeft,
+  faAnglesRight,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 type Picture = {
   descreption: string;
   picture: {
@@ -15,10 +21,6 @@ const AllWorkerPictures = () => {
   const { WorkerInformations } = useContext(globalComponents);
   const [pictures, setPictures] = useState<Picture[]>([]);
   const [picturesLength, setPicturesLength] = useState<number>(0);
-<<<<<<< HEAD
-  const [show, setShow] = useState<string | null>(null);
-  const getPicturesFromServer = async () => {
-=======
   const [show, setShow] = useState<Picture | null>(null);
   const [curseur,setCurseur]=useState({
     left:'pointer',
@@ -26,22 +28,23 @@ const AllWorkerPictures = () => {
   })
   const [addMoreNb,setAddMoreNb]=useState<number>(1) //how many we click to add more to call server for more pictures
   const getPicturesFromServer = async (startFrom: number, endIn: number) => {
->>>>>>> 3594901 (design the home page)
     await axios
       .get(
-        url + `/workerPictures/${WorkerInformations._id}?startFrom=0&endIn=10`
+        url +
+          `/workerPictures/${WorkerInformations._id}?startFrom=${startFrom}&endIn=${endIn}`
       )
       .then((res) => {
         console.log("response", res.data);
         setPicturesLength(res.data.length);
-        setPictures(res.data.pictures);
+        setPictures((prev) => {
+          return [...prev, ...res.data.pictures];
+        });
+        console.log("picture", pictures);
       })
       .catch((err: any) => {
         console.log("can't get pictures :", err);
       });
   };
-<<<<<<< HEAD
-=======
   const nextShow = (picture: Picture) => {
     const index = pictures.indexOf(picture);
     if (index === pictures.length - 1) return setCurseur({left:'pointer',right:'no-drop'});
@@ -61,15 +64,12 @@ const AllWorkerPictures = () => {
     getPicturesFromServer(startFrom, endIn)
     setAddMoreNb(endIn/10)
   }
->>>>>>> 3594901 (design the home page)
   useEffect(() => {
-    getPicturesFromServer();
-  });
+    getPicturesFromServer(0, 10);
+  }, []);
+
   return (
     <AnimatedPage>
-<<<<<<< HEAD
-      <div className="d-flex justify-content-center align-items-center">
-=======
       <div className="d-block">
         {show && (
           <div className="mb-3 d-flex align-items-lg-end align-items-center  ">
@@ -121,26 +121,15 @@ const AllWorkerPictures = () => {
           </div>
         )}
 
->>>>>>> 3594901 (design the home page)
         <picture
           className=" d-flex justify-content-center pt-2 "
-          style={{ minHeight: "50vh", flexWrap: "wrap" }}
+          style={{ flexWrap: "wrap" }}
         >
           {pictures &&
             pictures.map((picture) => {
               return (
-                <div className="d-grid">
+                <div className="" key={picture.picture.filename}>
                   <img
-<<<<<<< HEAD
-                    src={`http://localhost:8000/userPicture/${WorkerInformations._id}/${picture.picture.filename}`}
-                    style={{
-                      maxWidth: "32vh",
-                      maxHeight: "32vh",
-                      boxShadow: " 5px 5px 10px rgba(0, 0, 0, 0.3)",
-                    }}
-                    onClick={() => setShow(picture.picture.filename)}
-                    className={show===picture.picture.filename ?"d-none": "rounded float-start m-2 border border-secondary"}
-=======
                     src={`${url}/userPicture/${WorkerInformations._id}/${picture.picture.filename}`}
                     style={
                       show
@@ -164,33 +153,22 @@ const AllWorkerPictures = () => {
                         ? "rounded float-start m-2 border border-secondary border border-danger"
                         : "rounded float-start m-2 border border-secondary"
                     }
->>>>>>> 3594901 (design the home page)
                     alt={`${picture.picture.filename} photo`}
                   />
-                  {show && show === picture.picture.filename && (
-                    <div className="d-flex justify-content-center align-items-center mx-5 border border-primary ">
-                      <hr className="mx-5 d-flex justify-content-center mt-2  d-lg-none" />
-                      <div>
-                        <hr className="mx-5 d-flex justify-content-center " />
-                        <p>maùlze ùmlaùzeml aùmleùam lzeùmaleùmlazùemlazùelù</p>
-                        <img
-                          src={`http://localhost:8000/userPicture/${WorkerInformations._id}/${picture.picture.filename}`}
-                          style={{
-                            width: "450px",
-                            height: "300px",
-                            boxShadow: " 5px 5px 10px rgba(0, 0, 0, 0.3)",
-                          }}
-                          className="rounded float-start  border border-secondary "
-                          alt={`${picture.picture.filename} photo`}
-                        />
-                      </div>
-                      <hr className="mx-5 d-flex justify-content-center mt-2 d-lg-none " />
-                    </div>
-                  )}
                 </div>
               );
             })}
         </picture>
+       {picturesLength && addMoreNb*10<picturesLength &&
+        <div className=" d-flex justify-content-center align-items-center my-2">
+          <button
+            className="btn btn-info "
+            onClick={() => callServerForMore()}
+          >
+            {" "}
+            see more{" "}
+          </button>
+        </div>}
       </div>
     </AnimatedPage>
   );

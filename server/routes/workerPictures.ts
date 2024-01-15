@@ -7,7 +7,7 @@ const auth = require('../middelwares/authorization')
 const upload = require('../middelwares/multer')
 const resizeImages = require('../middelwares/resizeImages')
 
-import ProfilesModels from "../models/ProfilesPictures";
+import ProfilesModels, { picture } from "../models/ProfilesPictures";
 
 
 const convertToDateObject = (dateTimeString: string) => {
@@ -21,6 +21,18 @@ const sortPicturesByDate = (allPictures:any)=>{
         return (dateB - dateA);
       })
 }
+
+const searchImageIfExist=(picturesList:picture[],picture:string)=>{
+    const searchPicture=  picturesList.filter((p)=>{
+            if(p.picture.filename===picture){
+                return p
+            }
+    })
+    if(searchPicture.length>0){
+        return picturesList.indexOf(searchPicture[0])
+    }
+    return -1
+ }
 
 
 router.post("/",
@@ -52,6 +64,11 @@ asyncMiddelware(
         }
        else{
         const workerPictures = worker.pictuers
+        if(workerPictures){
+          const pictureExist = searchImageIfExist(workerPictures,imageResized.filename)
+          if( pictureExist !== -1 ){
+                workerPictures.splice(pictureExist,1)
+          }
         workerPictures?.push(
             {
                 descreption : req.body.descreption,
@@ -67,7 +84,7 @@ asyncMiddelware(
         res.status(200).json({message : "added successfuly"})
        }
     }
-))
+}))
 
 router.get('/:id',asyncMiddelware(
     async(req:any,res:any)=>{

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-type picture = {
+export type picture = {
     descreption:string ,
     picture :{
       filename:string,
