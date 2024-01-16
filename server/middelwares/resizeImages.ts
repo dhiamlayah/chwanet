@@ -46,8 +46,8 @@ const resizeImages = asyncMiddleware( async( req:any,res:any,next:any)=>{
     try{
        await image.metadata().   // get image metadata for size 
         then((metadata:any)=>{
-          if (metadata.width > 450) {
-            return image.resize({ width: 450 }).toFile(`${userFolder}${file.originalname}`) ; // resize if too big
+          if (metadata.width > 750) {
+            return image.resize({ width: 750 }).toFile(`${userFolder}${file.originalname}`) ; // resize if too big
           } else {
             return image.toFile(`${userFolder}${file.originalname}`);
           }
