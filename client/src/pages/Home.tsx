@@ -5,8 +5,7 @@ import OurObjectif from "../components/OurObject";
 import CarouselForPhoneScreen from "../components/CarouselForPhoneScreen";
 import Footer from "../components/Footer";
 import NumberUser from "../components/numberUser";
- 
-//try*********/
+  
 const Home = () => {
  
     return ( 
@@ -22,7 +21,7 @@ const Home = () => {
             <NumberUser/>
             <OurObjectif/> 
             <Footer/>
-        </div>
+         </div>
      );
 }
  

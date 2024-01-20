@@ -10,7 +10,7 @@ import WorkerComments from "./WorkerComments";
 
 import "../../StyleDesign/meAsWorker.css";
 import PicturesLife from "./WorkerPicturesLife";
-
+ 
 export type UserData = {
   type: null | string;
   informations: Array<any>;
@@ -125,7 +125,7 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
               {number === 2 && !showUpdateDiv && (<PicturesLife/>)}
               {number === 3 && !showUpdateDiv && (<WorkerComments />)}
             </div>
-         </div>
+          </div>
            
         </div>
      </div>

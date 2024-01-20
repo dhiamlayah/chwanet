@@ -43,7 +43,7 @@ const NumberUser = () => {
             <h2 className="text-center fw-bold " style={{marginBottom:'-12px',color:'#333333'}}>زائر  </h2>
             <div className="  text-center">
                 {isVisible && (
-                  <CountUp start={0} end={1000000} duration={5} className="fw-bold"  style={{fontSize:"40px",color:'#333333',fontVariantNumeric: 'oldstyle-nums' }} />
+                  <CountUp start={0} end={10623} duration={5} className="fw-bold"  style={{fontSize:"40px",color:'#333333',fontVariantNumeric: 'oldstyle-nums' }} />
                   )}
             </div>
           </div>
@@ -65,7 +65,7 @@ const NumberUser = () => {
             <h2 className="text-center fw-bold " style={{marginBottom:'-12px',color:'#333333'}}>عامل  </h2>
             <div className="  text-center">
                 {isVisible && (
-                  <CountUp start={0} end={123} duration={10} className="fw-bold"  style={{fontSize:"40px",color:'#333333',fontVariantNumeric: 'oldstyle-nums' }} />
+                  <CountUp start={0} end={4623} duration={10} className="fw-bold"  style={{fontSize:"40px",color:'#333333',fontVariantNumeric: 'oldstyle-nums' }} />
                   )}
             </div>
           </div>
@@ -87,7 +87,7 @@ const NumberUser = () => {
             <h2 className="text-center fw-bold " style={{marginBottom:'-12px',color:'#333333'}}>وظيفة </h2>
             <div className="  text-center">
                 {isVisible && (
-                  <CountUp start={0} end={123} duration={10} className="fw-bold"  style={{fontSize:"40px",color:'#333333',fontVariantNumeric: 'oldstyle-nums' }} />
+                  <CountUp start={0} end={43} duration={10} className="fw-bold"  style={{fontSize:"40px",color:'#333333',fontVariantNumeric: 'oldstyle-nums' }} />
                   )}
             </div>
           </div>
