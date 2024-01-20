@@ -3,7 +3,7 @@
         background-image: url('../../public/images/Register/build.jpg');
         background-size: cover;
         background-repeat: no-repeat;
-        height: 120vh;
+        min-height: 120vh;
         width: 100%;
     }
     .background2{

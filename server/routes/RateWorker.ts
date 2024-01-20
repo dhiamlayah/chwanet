@@ -72,7 +72,7 @@ router.put("/",auth,asyncMiddleware(
                     res.status(200).send("successfuly")
                 }
             }else{
-                res.status(400).send("faild to find worker")
+                res.status(400).send({message:"faild to find worker"})
             }
 
 

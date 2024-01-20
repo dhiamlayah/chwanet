@@ -3,8 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 
 import UpdateOneThing from "./UpdateOneThing";
-import UpdateNames from "./UpdateNames";
-import UpdateStateAndDelegations from "./UpdateStateAndDelegations";
+ import UpdateStateAndDelegations from "./UpdateStateAndDelegations";
 import RateWorker from "../../util/RateWorker";
 
 import "../../StyleDesign/UpdateData.css";
@@ -119,9 +118,7 @@ const UpdateData = ({ updateData, setShowUpdateDiv }: any) => {
           ></button>
         </h3>
       )}
-      {updateData.type === "name" && (
-        <UpdateNames updateData={updateData} setNewData={setNewData} />
-      )}
+       
       {updateData.type === "state" && (
         <UpdateStateAndDelegations
           state={state}
