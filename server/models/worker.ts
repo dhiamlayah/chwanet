@@ -22,7 +22,7 @@ interface Worker extends User {
 
 
 const workerSchema =new mongoose.Schema<Worker>({
-    firstName: {
+      firstName: {
         type: String,
         require: true,
       },

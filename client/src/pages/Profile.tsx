@@ -9,6 +9,7 @@ const Profile = ( ) => {
     const url = process.env.REACT_APP_port;
     const [WorkerInformations, setWorkerInformations] = useState<any>(null);
     const [profilPicture, setProfilePicture] = useState<any>(null);
+    const [update,setUpdate]=useState<boolean>(false)
 
       const getWorkerInformation = async () => {
         try {
@@ -41,14 +42,16 @@ const Profile = ( ) => {
         }
       }, [WorkerInformations]);
     
-      console.log('workerInformation',WorkerInformations)
-
-  
+      useEffect(() => {
+        getWorkerInformation();
+     }, [update]);
+   
 
    if(profilPicture)return ( 
               <WorkerProfil
                 profilPicture={profilPicture}
                 WorkerInformations={WorkerInformations}
+                setUpdate={setUpdate}
               />
      
      );

@@ -6,50 +6,32 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { sendUpdate } from "../../methods/updateData";
 
 type Props = {
-  firstName: string;
-  lastName: string;
+    discreption: string;
 };
 
-const UpdateNames = ({ firstName, lastName }: Props) => {
-  // when we update somthing refresh the profile with new data
+const UpdateDiscreption = ({ discreption }: Props) => {
   const { setUpdate } = useContext(globalComponents);
-
   const [show, setShow] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [wait, setWait] = useState(false);
-
-  const [newName, setNewName] = useState({
-    firstName: firstName,
-    lastName: lastName,
+  const [newDiscreption, setNewDiscreption] = useState({
+    discreption: discreption,
   });
 
-  const handleChange = (
-    type: string,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setNewName((prev) => {
-      return { ...prev, [type]: e.target.value };
-    });
-  };
-
-  const closeBoxShow = () => {
-    setError(null);
-    setSuccess(null);
-    setShow(false);
-  };
+  const closeBoxShow =()=>{
+    setError(null)
+    setSuccess(null)
+    setShow(false)
+  }
 
   const checkUpdate = async () => {
-    const first = newName.firstName.trim();
-    const last = newName.lastName.trim();
-    if (first === "" || last === "") {
-      return setError("complete names");
-    } else {
+    const disc = newDiscreption.discreption.trim() 
+    if ( disc === "" ){
+      return setError("discreption vide");
+     } else {
       setWait(true);
-      const messageRecive = await sendUpdate(
-        { firstName: first.trim(), lastName: last.trim() },
-        setError
-      );
+      const messageRecive = await sendUpdate( {discreption:disc}, setError);
       if (!messageRecive) {
         return setWait(false);
       } else {
@@ -70,38 +52,32 @@ const UpdateNames = ({ firstName, lastName }: Props) => {
 
   return (
     <div>
-      <h3
+      <p
         className="px-2"
         style={{ cursor: "pointer" }}
         onClick={() => setShow(true)}
       >
         <FontAwesomeIcon icon={faPenToSquare} />
-      </h3>
+      </p>
       <Modal show={show} onHide={closeBoxShow}>
         <Modal.Header closeButton>
-          <Modal.Title>تحديث الأسماء </Modal.Title>
+          <Modal.Title>تحديث الهاتف </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="  text-center ">
-            <h2 className="text-end px-3 p-2"> : الاسم </h2>
-            <input
-              type="text"
-              className=" fw-bold text-center my-2 "
-              style={{ height: "50px", fontSize: "20px" }}
-              value={newName.firstName}
-              onChange={(e) => handleChange("firstName", e)}
+            <div className=" text-center ">
+            <h2 className="text-end    "> : صف حياتك المهنية </h2>
+            <p className="text-end  ">
+            تذكر أن رقمك مطلوب لتسجيل الدخول وتأكد من أنه يعمل لسهولة اتصال العميل
+            بك
+            </p>
+            <textarea
+            className=" fw-bold text-center   w-100 "
+            style={{ height: "150px",  }}
+            value={newDiscreption.discreption}
+            onChange={(e) => setNewDiscreption({discreption:e.target.value})}
             />
             <br />
-            <h2 className="text-end px-3"> : اللقب</h2>
-            <input
-              type="text"
-              className="fw-bold text-center my-2 "
-              style={{ height: "50px", fontSize: "20px" }}
-              value={newName.lastName}
-              onChange={(e) => handleChange("lastName", e)}
-            />
-          </div>
-
+        </div>
           {success && <div className="alert alert-success mt-2">{success}</div>}
           {error && <div className="alert alert-danger mt-2">{error}</div>}
         </Modal.Body>
@@ -128,4 +104,4 @@ const UpdateNames = ({ firstName, lastName }: Props) => {
   );
 };
 
-export default UpdateNames;
+export default UpdateDiscreption;

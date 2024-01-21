@@ -17,31 +17,18 @@ router.get(
 );
 
 // update informations
-
 router.put(
-  "/name",
+  "/update",
   auth,
   asyncMiddleware(async (req: any, res: any) => {
-    const newUpdate = {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-    };
-    const user = await WorkerModel.findByIdAndUpdate(req.user._id, newUpdate);
-    await user?.save();
-    res.send("success");
-  })
-);
-
-// this route for updating phone , workeDomaine , discreptions
-router.put(
-  "/:id",
-  auth,
-  asyncMiddleware(async (req: any, res: any) => {
-    const id = req.params.id;
-    const newUpdate = {
-      [id]: req.body.id,
-    };
-    const user = await WorkerModel.findByIdAndUpdate(req.user._id, newUpdate);
+    console.log('req body :',req.body)
+    if(req.body.phone){
+      const phoneExist = await WorkerModel.findOne({ phone:req.body.phone });
+      if(phoneExist){
+        res.status(400).json({message:'user exist'})
+      }
+    }
+    const user = await WorkerModel.findByIdAndUpdate(req.user._id, req.body);
     await user?.save();
     res.send("success");
   })
@@ -71,7 +58,7 @@ router.put(
     const { workName, discreption, experience } = JSON.parse(req.body.document);
     const user = await WorkerModel.findByIdAndUpdate(req.user._id, {
       workName: workName,
-      discreption: discreption,
+      discreption: discreption.trim(),
       photo: imageResized,
       team: true,
       experience: experience,

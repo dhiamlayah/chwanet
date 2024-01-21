@@ -2,6 +2,8 @@ import { useContext } from "react";
 import { globalComponents } from "./WorkerProfil";
 import { faPenToSquare, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import UpdatePhone from "../boxUpdate/updatePhone";
+import UpdateDiscreption from "../boxUpdate/updateDiscreption";
 
 const WorkerDiscreption = () => {
 
@@ -29,30 +31,15 @@ const WorkerDiscreption = () => {
             )}
             <p className="fw-bold">{workName}</p>
           </div>
-          <div className={isMe ? "d-flex justify-content-between" : ""}>
-            {isMe && (
-              <p
-                className="p-2"
-                style={{ cursor: "pointer" }}
-                onClick={() => handleUpdate("discreption", [discreption])}
-              >
-                <FontAwesomeIcon icon={faPenToSquare} />
-              </p>
-            )}
-            <p className="text-break text-center">{discreption}</p>
-          </div>
+          <div className={isMe ? "d-flex justify-content-start" : ""}>
+            {isMe && <UpdateDiscreption discreption={discreption} />}
+             <p className="text-break text-center w-100"  style={{whiteSpace: "pre-line"}}>{discreption}</p>
+           </div>
         </div>
       </div>
       <div className="  m-1 " id="cartId" style={{boxShadow:' 5px 5px 10px rgba(0, 0, 0, 0.3)'}}>
         <div className={isMe ? "d-flex justify-content-between" : ""}>
-          {isMe && (
-            <p
-              style={{ cursor: "pointer" }}
-              onClick={() => handleUpdate("phone", [phone])}
-            >
-              <FontAwesomeIcon icon={faPenToSquare} />
-            </p>
-          )}
+        {isMe && <UpdatePhone phone={phone} />}
           <p>
             {phone}
             <span className="fw-bold">

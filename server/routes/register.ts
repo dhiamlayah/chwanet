@@ -23,13 +23,11 @@ import WorkerModel from "../models/worker";
     if (possition === "client") {
       const user = await UserModel.findOne({ phone });
       if (user)
-        return res
-          .status(400)
-          .json({ message: "  !! المستخدم موجود بالفعل  " });
+        return res.status(400).json({ message: "  !! المستخدم موجود بالفعل  " });
       const hashedPassword = await bcrypt.hash(password, 10);
       const newUser = new UserModel({
-        firstName,
-        lastName,
+        firstName:firstName.trim(),
+        lastName:lastName.trim(),
         state,
         password: hashedPassword,
         delegation,
@@ -52,8 +50,8 @@ import WorkerModel from "../models/worker";
       
       const hashedPassword = await bcrypt.hash(password, 10);
       const newWorker = new WorkerModel({
-        firstName,
-        lastName,
+        firstName:firstName.trim(),
+        lastName:lastName.trim(),
         state,
         password: hashedPassword,
         delegation,
