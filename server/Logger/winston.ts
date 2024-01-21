@@ -9,17 +9,17 @@ const urlDataBase = process.env.urlDataBase;
 const logger = winston.createLogger({
 
     transports: [
-    new winston.transports.File({ filename: 'loggerFileMessages/info.log' ,level:'info'}),
-    new winston.transports.File({ filename: 'loggerFileMessages/error.log' ,level:'error'}),
-    new winston.transports.MongoDB({
-      db:  urlDataBase ,
-      level:'error',
-      collection:'logging',
-      options: {
-        useUnifiedTopology: true,
-    }
-    }),
-  ],
+    // new winston.transports.File({ filename: 'loggerFileMessages/info.log' ,level:'info'}),
+    // new winston.transports.File({ filename: 'loggerFileMessages/error.log' ,level:'error'}),
+  //   new winston.transports.MongoDB({
+  //     db:  urlDataBase ,
+  //     level:'error',
+  //     collection:'logging',
+  //     options: {
+  //       useUnifiedTopology: true,
+  //   }
+  //   }),
+  // ],
  
 });
 
