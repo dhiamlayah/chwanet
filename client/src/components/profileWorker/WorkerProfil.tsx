@@ -19,7 +19,7 @@ export type UserData = {
 export const globalComponents = createContext<any | undefined>(undefined);
 
 
-const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
+const WorkerProfil = ({ profilPicture, WorkerInformations,setUpdate }: any) => {
   const url: string = process.env.REACT_APP_port + "/meAs";
   const [WorkerRate,setWorkerRate]=useState({rate:0,length:0})
   const [number, setNumber] = useState(1);
@@ -31,7 +31,10 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
     informations: [],
   });
 
+  // id of worker visited profile
   const {_id} = WorkerInformations;
+
+  // get current visiter (client or worker)
   const getCurrentUser = async () => {
     const newUrl = url + localStorage.getItem("User");
     try {
@@ -50,7 +53,7 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
     }
   };
  
-
+  // get the rate of worker profile
   const getWorkerRate = async()=>{
     const url: string = process.env.REACT_APP_port + `/rateWorker/${_id}` ;
     await axios.get(url).then((res:any)=>{
@@ -70,6 +73,8 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
       setNumber(3);
     }
   };
+
+
   const handleUpdate = (type: string, informations: Array<any>) => {
     const ourData = {
       type,
@@ -78,12 +83,15 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
     setUpdateData(ourData);
     setShowUpdateDiv(true);
   };
+
+  // sheck the visiter is the same worker profile or not 
   const isThisMe = () => {
     if (user) {
       return setIsMe(user._id === WorkerInformations._id);
     }
     return setIsMe(false);
   };
+
 
 
   useEffect(() => {
@@ -104,7 +112,7 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
 
   
   return (
-     <globalComponents.Provider value={{WorkerInformations,WorkerRate,handleUpdate,isMe,profilPicture,user}}>
+     <globalComponents.Provider value={{WorkerInformations,WorkerRate,handleUpdate,isMe,profilPicture,user,setUpdate}}>
      <div
          className='w-100'
          style={!showUpdateDiv ? {}  : {overflow:"hidden",maxHeight:'100vh'}}
@@ -116,10 +124,12 @@ const WorkerProfil = ({ profilPicture, WorkerInformations }: any) => {
          className={!showUpdateDiv ? " Profilbackground opacity-100 "  : "BackProfilbackground  "}
          style={{ zIndex: "12" }}
        >
-         <div id="content" className={!showUpdateDiv? "": "opacity-25"}  >
+         <div id="content" className={!showUpdateDiv? "": "opacity-25"}>
+
            <WorkerImages />
            <WorkerName />
            <WorkerListGroup number={number} handleClick={handleClick}/>
+
            <div style={{minHeight:'50vh', overflow:'hidden'}} className="mb-5">
               {number === 1 && !showUpdateDiv && (<WorkerDiscreption/> )}
               {number === 2 && !showUpdateDiv && (<PicturesLife/>)}

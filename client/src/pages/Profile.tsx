@@ -10,7 +10,7 @@ const Profile = ( ) => {
     const [WorkerInformations, setWorkerInformations] = useState<any>(null);
     const [profilPicture, setProfilePicture] = useState<any>(null);
 
-    const getWorkerInformation = async () => {
+      const getWorkerInformation = async () => {
         try {
           await axios
             .get(url + `/profile/${workerId}`)
@@ -34,6 +34,7 @@ const Profile = ( ) => {
       useEffect(() => {
         getWorkerInformation();
       }, []);
+
       useEffect(() => {
         if (WorkerInformations) {
           getWorkerPicture(WorkerInformations.photo);

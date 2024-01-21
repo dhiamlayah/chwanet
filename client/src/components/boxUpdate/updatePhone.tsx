@@ -8,12 +8,11 @@ type Props = {
   phone: string;
 };
 
-const UpdateNames = ({ lastName }: Props) => {
+const UpdateNames = ({ phone }: Props) => {
   const [show, setShow] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [newName, setNewName] = useState({
-    firstName: firstName,
-    lastName: lastName,
+     phone: phone,
   });
   const handleChange = (type: string, e: any) => {
     setNewName((prev) => {
@@ -22,7 +21,7 @@ const UpdateNames = ({ lastName }: Props) => {
   };
 
   const checkUpdate = () => {
-    if (newName.firstName === "" || newName.lastName === "") {
+    if (newName.phone === "") {
       return setError("complete names");
     } else sendUpdate(newName, "name", setError);
   };
@@ -47,8 +46,8 @@ const UpdateNames = ({ lastName }: Props) => {
               type="text"
               className="w-50 fw-bold text-center my-2 "
               style={{ height: "50px", fontSize: "20px" }}
-              value={newName.firstName}
-              onChange={(e) => handleChange("firstName", e)}
+              value={newName.phone}
+              onChange={(e) => handleChange("phone", e)}
             />
           </div>
 
