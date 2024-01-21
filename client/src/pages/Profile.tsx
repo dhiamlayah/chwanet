@@ -9,8 +9,9 @@ const Profile = ( ) => {
     const url = process.env.REACT_APP_port;
     const [WorkerInformations, setWorkerInformations] = useState<any>(null);
     const [profilPicture, setProfilePicture] = useState<any>(null);
+    const [update,setUpdate]=useState<boolean>(false)
 
-    const getWorkerInformation = async () => {
+      const getWorkerInformation = async () => {
         try {
           await axios
             .get(url + `/profile/${workerId}`)
@@ -34,20 +35,23 @@ const Profile = ( ) => {
       useEffect(() => {
         getWorkerInformation();
       }, []);
+
       useEffect(() => {
         if (WorkerInformations) {
           getWorkerPicture(WorkerInformations.photo);
         }
       }, [WorkerInformations]);
     
-      console.log('workerInformation',WorkerInformations)
-
-  
+      useEffect(() => {
+        getWorkerInformation();
+     }, [update]);
+   
 
    if(profilPicture)return ( 
               <WorkerProfil
                 profilPicture={profilPicture}
                 WorkerInformations={WorkerInformations}
+                setUpdate={setUpdate}
               />
      
      );

@@ -2,13 +2,15 @@ import { useContext } from "react";
 import { globalComponents } from "./WorkerProfil";
 import { faClipboard, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import UpdateNames from "../boxUpdate/updateNames";
 
 const WorkerName = () => {
   const user = localStorage.getItem("User");
 
-  const { WorkerInformations ,  handleUpdate  , isMe ,WorkerRate} = useContext(globalComponents);
+  const { WorkerInformations, handleUpdate, isMe, WorkerRate } =
+    useContext(globalComponents);
   const { firstName, lastName } = WorkerInformations;
-  console.log('worker rate .........>',WorkerRate)
+  console.log("worker rate .........>", WorkerRate);
   const starImag = () => {
     const imagUrl = "../../images/rateStars/";
     if (WorkerRate.rate < 1.25) {
@@ -31,15 +33,7 @@ const WorkerName = () => {
       style={{ justifyContent: "space-between" }}
     >
       <div>
-        {isMe && (
-          <h1
-            className="px-2"
-            style={{ cursor: "pointer" }}
-            onClick={() => handleUpdate("name", [firstName, lastName])}
-          >
-            <FontAwesomeIcon icon={faPenToSquare} />
-          </h1>
-        )}
+        {isMe && <UpdateNames firstName={firstName} lastName={lastName} />}
         <h1 className="fw-bold ">
           {firstName} {lastName}
         </h1>

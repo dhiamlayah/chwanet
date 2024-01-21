@@ -4,60 +4,61 @@ const auth = require("../middelwares/authorization");
 const asyncMiddleware = require("../middelwares/asyncMiddleware");
 
 import WorkerRatingsAndCommentsModel, {
-    Comment,
+  Comment,
   ClientRateAndComments,
 } from "../models/RatingsAndComments";
 
 import UserModel from "../models/users";
 
 interface ClientRateAndCommentsAndName extends ClientRateAndComments {
-    firstName : string | undefined  ,
-    lastName: string | undefined  
+  firstName: string | undefined;
+  lastName: string | undefined;
 }
 
- 
- 
-
 const getClients = async (Clients: ClientRateAndComments[]) => {
-    return await Promise.all(Clients.map(async (client) => {
-        if (client.Comments.length > 0) {
-          const clientName = await UserModel.findOne({ _id: client._id });
-          if (clientName)
-            return {
-              _id: client._id,
-              Comments: client.Comments,
-              firstName: clientName.firstName,
-              lastName: clientName.lastName,
-            };
-          return { _id: client._id, Comments: client.Comments };
-        }
-        return null
-      }))
+  return await Promise.all(
+    Clients.map(async (client) => {
+      if (client.Comments.length > 0) {
+        const clientName = await UserModel.findOne({ _id: client._id });
+        if (clientName)
+          return {
+            _id: client._id,
+            Comments: client.Comments,
+            firstName: clientName.firstName,
+            lastName: clientName.lastName,
+          };
+        return { _id: client._id, Comments: client.Comments };
+      }
+      return null;
+    })
+  );
 };
 
 const convertToDateObject = (dateTimeString: string) => {
   return new Date(dateTimeString);
 };
 
+// this function have object to split each comment then order it by date
 
-  // this function have object to split each comment then order it by date 
+const splitComments = (Clients: any) => {
+  let allCommentsSplited: any = [];
+  Clients.map((client: ClientRateAndCommentsAndName) => {
+    client.Comments.map((comment: Comment) => {
+      allCommentsSplited.push({
+        _id: client._id,
+        text: comment.text,
+        name: client.firstName + " " + client.lastName,
+        date: comment.date,
+      });
+    });
+  });
+  return allCommentsSplited.sort((a: any, b: any) => {
+    const dateA = convertToDateObject(a.date).valueOf();
+    const dateB = convertToDateObject(b.date).valueOf();
+    return dateB - dateA;
+  });
+};
 
-const splitComments = (Clients:any)=>{
-    let allCommentsSplited :any = []
-    Clients.map((client:ClientRateAndCommentsAndName)=>{
-        client.Comments.map((comment:Comment)=>{
-            allCommentsSplited.push({_id:client._id,text:comment.text ,name:client.firstName + " " + client.lastName , date :comment.date})
-        })
-    })
-    return allCommentsSplited.sort((a:any, b:any) => {
-        const dateA = convertToDateObject(a.date).valueOf();
-        const dateB = convertToDateObject(b.date).valueOf();
-        return (dateB - dateA);
-      })
-    }
-
-
- 
 // this path fo client to make a Comments
 router.put(
   "/",
@@ -100,7 +101,7 @@ router.put(
         res.status(200).send("successfuly");
       }
     } else {
-      res.status(400).send("faild to find worker");
+      res.status(400).send({ message: "فشل في العثور على العامل" });
     }
   })
 );
@@ -114,19 +115,19 @@ router.get(
     if (idWorker) {
       const Clients = idWorker.Clients;
       if (Clients) {
-        const allComments = await getClients(Clients)
+        const allComments = await getClients(Clients);
         const filterClients = allComments.filter((client) => client !== null);
 
-        if(filterClients.length>0){
-            const clientSplited = splitComments(filterClients)
-            return res.status(200).json(clientSplited);
+        if (filterClients.length > 0) {
+          const clientSplited = splitComments(filterClients);
+          return res.status(200).json(clientSplited);
         }
-        res.status(400).json({ message: "there is no comments yet " });
+        res.status(400).json({ message: "لا يوجد تعليقات حتى الآن  " });
       } else {
-        res.status(400).json({ message: "there is no comments yet " });
+        res.status(400).json({ message: "لا يوجد تعليقات حتى الآن  " });
       }
     } else {
-      res.status(400).json({ message: "we dont find worker" });
+      res.status(400).send({ message: "فشل في العثور على العامل" });
     }
   })
 );

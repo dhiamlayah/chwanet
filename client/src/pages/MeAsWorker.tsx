@@ -7,6 +7,8 @@ const MeAsWorker = () => {
   const url = process.env.REACT_APP_port;
   const [WorkerInformations, setWorkerInformations] = useState<any>(null);
   const [profilPicture, setProfilePicture] = useState<any>(null);
+  const [update,setUpdate]=useState<boolean>(false)
+
   const getWorkerInformation = async () => {
     try {
       await axios
@@ -38,6 +40,7 @@ const MeAsWorker = () => {
   useEffect(() => {
     getWorkerInformation();
   }, []);
+
   useEffect(() => {
     if (WorkerInformations) {
       getWorkerPicture(WorkerInformations.photo);
@@ -45,6 +48,10 @@ const MeAsWorker = () => {
   }, [WorkerInformations]);
 
  
+  // when we update data or make a changes we call server to get updates
+  useEffect(() => {
+     getWorkerInformation();
+  }, [update]);
 
   
   if(profilPicture)return (
@@ -52,6 +59,7 @@ const MeAsWorker = () => {
         <WorkerProfil
           profilPicture={profilPicture}
           WorkerInformations={WorkerInformations}
+          setUpdate={setUpdate}
         />
     </div>  
   );

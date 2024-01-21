@@ -1,44 +1,46 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
     <div style={{ backgroundColor: "#385470e6", padding: "1px" }}>
       <footer>
-        <div className=" d-sm-flex justify-content-center align-items-center m-5">
-          <img
-            src="./images/logoFooter.png"
-            style={{ maxWidth: "25vh", height: "auto" }}
-            alt=".."
-          />
-          <div className="w-50 p-5 d-flex">
-            <div>
+        <div className=" d-sm-flex justify-content-around  m-5">
+          <div className=" d-flex  align-items-center  justify-content-center">
+            <img
+              src="./images/logoFooter.png"
+              style={{ maxWidth: "25vh", height: "auto" }}
+              alt=".."
+            />
+          </div>
+          <div className=" d-flex justify-content-between  pt-5 row ">
+            <div className=" text-end col">
               <h4>اتصل بنا</h4>
-              <p>اسم الشركة</p>
-              <p>البريد الإلكتروني: info@example.com</p>
+               <p > info@example.com: البريد الإلكتروني</p>
             </div>
-
-            <div>
+            <div className="col border-left">
+         </div>
+            <div className=" col ">
               <h4>روابط سريعة</h4>
               <ul>
                 <li>
-                  <a href="/">الرئيسية</a>
+                  <Link to="/" className="text-decoration-none text-dark">الرئيسية</Link>
                 </li>
                 <li>
-                  <a href="/services">الخدمات</a>
+                  <Link to="/" className="text-decoration-none text-dark">الخدمات</Link>
                 </li>
                 <li>
-                  <a href="/about">من نحن</a>
+                  <Link to="/" className="text-decoration-none text-dark">من نحن</Link>
                 </li>
                 <li>
-                  <a href="/contact">اتصل بنا</a>
+                  <Link to="/" className="text-decoration-none text-dark">اتصل بنا</Link>
                 </li>
               </ul>
             </div>
           </div>
         </div>
         <div className="d-flex  justify-content-center align-items-center">
-          {/* <FontAwesomeIcon icon={faFacebookF} />    */}
-          {/* <FontAwesomeIcon icon={faLinkedinIn} /> */}
+        
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="30"

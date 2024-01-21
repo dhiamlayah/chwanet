@@ -7,7 +7,9 @@ import WorkerModel from "../models/worker";
 router.get("/:id",asyncMiddleware(
     async (req: any, res: any) => {
         const id = req.params.id
-        console.log('id',id)
+        if(id === "me"){
+          return res.status(400).json({message : "current worker"})
+        }
         const user = await WorkerModel.findById(id).select("-password"); //select that mean exclude
        if(user === null){
         return res.status(400).json({message : "user dosin't exist "})
