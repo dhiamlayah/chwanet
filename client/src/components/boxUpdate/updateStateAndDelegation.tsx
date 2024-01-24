@@ -4,37 +4,42 @@ import { Button, Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { sendUpdate } from "../../methods/updateData";
+import ChooseStateAndDelegation from "../ChooseStateAndDelegation";
 
 type Props = {
-  phone: string;
+    currentState: string,
+    currnetDelegation: string;
+
 };
 
-const UpdatePhone = ({ phone }: Props) => {
+const UpdateStateAndDelegation = ({ currentState,currnetDelegation }: Props) => {
   const { setUpdate } = useContext(globalComponents);
   const [show, setShow] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [wait, setWait] = useState(false);
-  const [newPhone, setNewPhone] = useState({
-    phone: phone,
-  });
+  const [newState, setNewState] = useState<string>(currentState)
+  const [newDelegation, setNewDelegation] = useState<string>(currnetDelegation)
 
-  const closeBoxShow =()=>{
-    setError(null)
-    setSuccess(null)
-    setShow(false)
-  }
+ 
+
+ 
+  const closeBoxShow = () => {
+    setError(null);
+    setSuccess(null);
+    setShow(false);
+  };
 
   const checkUpdate = async () => {
-    const number = Number(newPhone.phone);
-    if (!number) {
-      return setError("رقم الهاتف خاطئ");
+     if (!newState || !newDelegation) {
+      return setError("wrang state and delegation ");
     }
-    if (newPhone.phone.trim() === "" ){
-      return setError("رقم الهاتف");
-     } else {
+     else {
       setWait(true);
-      const messageRecive = await sendUpdate( {phone:number}, setError);
+      const messageRecive = await sendUpdate(
+        { state: newState, delegation:newDelegation },
+        setError
+      );
       if (!messageRecive) {
         return setWait(false);
       } else {
@@ -66,21 +71,17 @@ const UpdatePhone = ({ phone }: Props) => {
         <Modal.Header closeButton>
           <Modal.Title>تحديث الهاتف </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <div className=" text-center ">
-            <h2 className="text-end px-3 p-2"> : الهاتف </h2>
-            <p className="text-end px-3">
-              تذكر أن رقمك مطلوب لتسجيل الدخول وتأكد من أنه يعمل لسهولة اتصال
-              العميل بك
-            </p>
-            <input
-              type="text"
-              className="w-50 fw-bold text-center my-2 "
-              style={{ height: "50px", fontSize: "20px" }}
-              value={newPhone.phone}
-              onChange={(e) => setNewPhone({ phone: e.target.value })}
+        <Modal.Body className="bg-secondary ">
+          <div
+            className="text-light text-center  py-5 w-75 "
+            style={{ fontSize: "20px" }}
+          >
+            <ChooseStateAndDelegation
+              state={newState}
+              userDelegation={newDelegation}
+              setUserDelegation={setNewDelegation}
+              setState={setNewState}
             />
-            <br />
           </div>
           {success && <div className="alert alert-success mt-2">{success}</div>}
           {error && <div className="alert alert-danger mt-2">{error}</div>}
@@ -108,4 +109,4 @@ const UpdatePhone = ({ phone }: Props) => {
   );
 };
 
-export default UpdatePhone;
+export default UpdateStateAndDelegation;

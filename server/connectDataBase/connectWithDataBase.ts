@@ -1,3 +1,4 @@
+export{}
 const mongoose = require("mongoose");
 const urlDataBase = process.env.urlDataBase;
 const connectWithDataBase = async () => {

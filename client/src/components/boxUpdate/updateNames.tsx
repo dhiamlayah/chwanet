@@ -77,7 +77,7 @@ const UpdateNames = ({ firstName, lastName }: Props) => {
       >
         <FontAwesomeIcon icon={faPenToSquare} />
       </h3>
-      <Modal show={show} onHide={closeBoxShow}>
+      <Modal show={show} onHide={closeBoxShow} centered>
         <Modal.Header closeButton>
           <Modal.Title>تحديث الأسماء </Modal.Title>
         </Modal.Header>

@@ -59,7 +59,7 @@ const UpdateDiscreption = ({ discreption }: Props) => {
       >
         <FontAwesomeIcon icon={faPenToSquare} />
       </p>
-      <Modal show={show} onHide={closeBoxShow}>
+      <Modal show={show} onHide={closeBoxShow} centered>
         <Modal.Header closeButton>
           <Modal.Title>تحديث الهاتف </Modal.Title>
         </Modal.Header>

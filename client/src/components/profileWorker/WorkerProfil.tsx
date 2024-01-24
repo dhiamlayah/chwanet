@@ -1,8 +1,6 @@
-import { useState, useEffect,createContext } from "react";
+import { useState, useEffect, createContext } from "react";
 import axios from "axios";
-
 import WorkerDiscreption from "./WorkerDiscreption";
-import UpdateData from "../updateData/UpdateData";
 import WorkerImages from "./WorkerImages";
 import WorkerName from "./WorkersName";
 import WorkerListGroup from "./WorkerListGroup";
@@ -10,7 +8,7 @@ import WorkerComments from "./WorkerComments";
 
 import "../../StyleDesign/meAsWorker.css";
 import PicturesLife from "./WorkerPicturesLife";
- 
+
 export type UserData = {
   type: null | string;
   informations: Array<any>;
@@ -18,21 +16,20 @@ export type UserData = {
 
 export const globalComponents = createContext<any | undefined>(undefined);
 
-
-const WorkerProfil = ({ profilPicture, WorkerInformations,setUpdate }: any) => {
+const WorkerProfil = ({
+  profilPicture,
+  WorkerInformations,
+  setUpdate,
+}: any) => {
   const url: string = process.env.REACT_APP_port + "/meAs";
-  const [WorkerRate,setWorkerRate]=useState({rate:0,length:0})
+  const [WorkerRate, setWorkerRate] = useState({ rate: 0, length: 0 });
   const [number, setNumber] = useState(1);
+  const [clientGiveRate, setClientGiveRate] = useState<boolean>(false); //update profile if client rate worker
   const [user, setUser] = useState<any>(null);
   const [isMe, setIsMe] = useState<boolean>(false);
-  const [showUpdateDiv, setShowUpdateDiv] = useState(false);
-  const [updateData, setUpdateData] = useState<UserData>({
-    type: null,
-    informations: [],
-  });
 
   // id of worker visited profile
-  const {_id} = WorkerInformations;
+  const { _id } = WorkerInformations;
 
   // get current visiter (client or worker)
   const getCurrentUser = async () => {
@@ -52,17 +49,20 @@ const WorkerProfil = ({ profilPicture, WorkerInformations,setUpdate }: any) => {
       console.log("ther is an error to get current user ", err);
     }
   };
- 
+
   // get the rate of worker profile
-  const getWorkerRate = async()=>{
-    const url: string = process.env.REACT_APP_port + `/rateWorker/${_id}` ;
-    await axios.get(url).then((res:any)=>{
-        console.log("we get worker rate ",res.data)
-        setWorkerRate(res.data)
-    }).catch((err:any)=>{
-      console.log("we can't get worker rate ",err.response.data)
-    })
-  }
+  const getWorkerRate = async () => {
+    const url: string = process.env.REACT_APP_port + `/rateWorker/${_id}`;
+    await axios
+      .get(url)
+      .then((res: any) => {
+        console.log("we get worker rate ", res.data);
+        setWorkerRate(res.data);
+      })
+      .catch((err: any) => {
+        console.log("we can't get worker rate ", err.response.data);
+      });
+  };
 
   const handleClick = (numb: number) => {
     if (numb === 1) {
@@ -74,17 +74,7 @@ const WorkerProfil = ({ profilPicture, WorkerInformations,setUpdate }: any) => {
     }
   };
 
-
-  const handleUpdate = (type: string, informations: Array<any>) => {
-    const ourData = {
-      type,
-      informations,
-    };
-    setUpdateData(ourData);
-    setShowUpdateDiv(true);
-  };
-
-  // sheck the visiter is the same worker profile or not 
+  // sheck the visiter is the same worker profile or not
   const isThisMe = () => {
     if (user) {
       return setIsMe(user._id === WorkerInformations._id);
@@ -92,55 +82,53 @@ const WorkerProfil = ({ profilPicture, WorkerInformations,setUpdate }: any) => {
     return setIsMe(false);
   };
 
-
-
   useEffect(() => {
     const token = localStorage.getItem("Token");
-    getWorkerRate()
+    getWorkerRate();
     if (token) {
       getCurrentUser();
     }
   }, []);
 
   useEffect(() => {
-    if (user) {    
+    if (user) {
       isThisMe();
     }
   }, [user]);
 
-  
+  useEffect(() => {
+    getWorkerRate();
+  }, [clientGiveRate]);
 
-  
   return (
-     <globalComponents.Provider value={{WorkerInformations,WorkerRate,handleUpdate,isMe,profilPicture,user,setUpdate}}>
-     <div
-         className='w-100'
-         style={!showUpdateDiv ? {}  : {overflow:"hidden",maxHeight:'100vh'}}
-     >
-       <div className={showUpdateDiv ? " " : "d-none"}>
-         <UpdateData updateData={updateData} setShowUpdateDiv={setShowUpdateDiv} />
-       </div>
-       <div
-         className={!showUpdateDiv ? " Profilbackground opacity-100 "  : "BackProfilbackground  "}
-         style={{ zIndex: "12" }}
-       >
-         <div id="content" className={!showUpdateDiv? "": "opacity-25"}>
+    <globalComponents.Provider
+      value={{
+        setClientGiveRate,
+        WorkerInformations,
+        WorkerRate,
+        isMe,
+        profilPicture,
+        user,
+        setUpdate,
+      }}
+    >
+      <div className=" Profilbackground  ">
+        <div id="content">
+          <WorkerImages />
+          <WorkerName />
+          <WorkerListGroup number={number} handleClick={handleClick} />
 
-           <WorkerImages />
-           <WorkerName />
-           <WorkerListGroup number={number} handleClick={handleClick}/>
-
-           <div style={{minHeight:'50vh', overflow:'hidden'}} className="mb-5">
-              {number === 1 && !showUpdateDiv && (<WorkerDiscreption/> )}
-              {number === 2 && !showUpdateDiv && (<PicturesLife/>)}
-              {number === 3 && !showUpdateDiv && (<WorkerComments />)}
-            </div>
+          <div
+            style={{ minHeight: "50vh", overflow: "hidden" }}
+            className="mb-5"
+          >
+            {number === 1 && <WorkerDiscreption />}
+            {number === 2 && <PicturesLife />}
+            {number === 3 && <WorkerComments />}
           </div>
-           
         </div>
-     </div>
-  
-     </globalComponents.Provider>
+      </div>
+    </globalComponents.Provider>
   );
 };
 

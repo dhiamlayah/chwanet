@@ -1,6 +1,11 @@
 import { typeWork } from "../staticData/genres";
 
-const ChooseDomain = ({workName ,handleChange}:any) => {
+type Props ={
+  workName: string,
+  handleChange :Function ,
+
+}
+const ChooseDomain = ({workName ,handleChange}:Props) => {
     const workType = typeWork;
 
   return (

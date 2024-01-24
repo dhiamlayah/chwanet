@@ -6,7 +6,7 @@ const path = require('path')
 
 
 const corsOptions = {
-  exposedHeaders: 'Token',
+  exposedHeaders: 'Token', 
 };
 
 app.use(cors())
@@ -16,7 +16,7 @@ app.use(cors(corsOptions));
 const PORT = process.env.PORT || 3000
  
  //----------------------winston logger-------------------------------------------//
-import logger from "./Logger/winston" ;
+// import logger from "./Logger/winston" ;
 
 //-----------------------middelwares-------------------------------------------//
 const dataBaseError = require("./middelwares/errorDataBase");
@@ -32,12 +32,10 @@ connectWithDataBase()
 //--------------------Uncaught exceptions -------------------------------------------//
 process.on('uncaughtException',(error:any)=>{
   console.log('Uncaught Exceptions',error)
-  logger.error('Uncaught Exceptions ',error)
  })
 //-------------------unhandled rejection -------------------------------------------//
 process.on('unhandledRejection',(error:any)=>{
   console.log('Unhandled Rejection',error)
-  logger.error('Unhandled Rejection',error)
  })
 
 //---------------------routers-------------------------------------------//
@@ -80,7 +78,7 @@ app.use(dataBaseError);
 
 
 app.listen(PORT, () => {
-  logger.info(`port is listen in ${PORT}`);
+  console.log(`port is listen in ${PORT}`);
 });
 
 

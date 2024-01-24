@@ -2,13 +2,12 @@ import { useContext } from "react";
 import { globalComponents } from "./WorkerProfil";
 
 const WorkerImages = () => {
-
     const {profilPicture} = useContext(globalComponents);
-
     const chooseImg = () => {
         const imgUrl = `url('/images/home/picture1.jpg')`;
         return imgUrl;
       };
+      
     return ( 
         <div>
         <div

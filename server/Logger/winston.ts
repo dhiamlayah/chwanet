@@ -8,7 +8,7 @@ const urlDataBase = process.env.urlDataBase;
 
 const logger = winston.createLogger({
 
-    transports: [
+    // transports: [
     // new winston.transports.File({ filename: 'loggerFileMessages/info.log' ,level:'info'}),
     // new winston.transports.File({ filename: 'loggerFileMessages/error.log' ,level:'error'}),
   //   new winston.transports.MongoDB({

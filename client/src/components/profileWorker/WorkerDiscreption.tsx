@@ -1,13 +1,15 @@
 import { useContext } from "react";
 import { globalComponents } from "./WorkerProfil";
-import { faPenToSquare, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UpdatePhone from "../boxUpdate/updatePhone";
 import UpdateDiscreption from "../boxUpdate/updateDiscreption";
+import UpdateWorkName from "../boxUpdate/updateWorkName";
+import UpdateStateAndDelegation from "../boxUpdate/updateStateAndDelegation";
 
 const WorkerDiscreption = () => {
 
-  const { WorkerInformations ,  handleUpdate  , isMe } = useContext(globalComponents);
+  const { WorkerInformations , isMe } = useContext(globalComponents);
   const { discreption, phone, state, delegation, workName } = WorkerInformations;
 
 
@@ -20,15 +22,8 @@ const WorkerDiscreption = () => {
        <div id="photo" className="m-1 p-2" style={{boxShadow:' 5px 5px 10px rgba(0, 0, 0, 0.3)'}}>
         <div className="  p-8 " >
           <div className={isMe ? "d-flex justify-content-between" : ""}>
-            {isMe && (
-              <p
-                className="p-2"
-                style={{ cursor: "pointer" }}
-                onClick={() => handleUpdate("workName", [workName])}
-              >
-                <FontAwesomeIcon icon={faPenToSquare} />
-              </p>
-            )}
+           {isMe && <UpdateWorkName currentWorkName={workName} />}
+
             <p className="fw-bold">{workName}</p>
           </div>
           <div className={isMe ? "d-flex justify-content-start" : ""}>
@@ -49,28 +44,15 @@ const WorkerDiscreption = () => {
           </p>
         </div>
         <div className={isMe ? "d-flex justify-content-between" : ""}>
-          {isMe && (
-            <p
-              style={{ cursor: "pointer" }}
-              onClick={() => handleUpdate("state", [state])}
-            >
-              <FontAwesomeIcon icon={faPenToSquare} />
-            </p>
-          )}
+        {isMe && <UpdateStateAndDelegation currentState={state}  currnetDelegation={delegation}/>}
+
           <p>
             <span className="fw-bold">ولاية : </span>
             {state}
           </p>
         </div>
         <div className={isMe ? "d-flex justify-content-between" : ""}>
-          {isMe && (
-            <p style={{ cursor: "pointer" }}>
-              <FontAwesomeIcon
-                icon={faPenToSquare}
-                onClick={() => handleUpdate("state", [state])}
-              />
-            </p>
-          )}
+        {isMe && <UpdateStateAndDelegation currentState={state}  currnetDelegation={delegation}/>}
           <p>
             <span className="fw-bold">مدينة :</span>
             {delegation}

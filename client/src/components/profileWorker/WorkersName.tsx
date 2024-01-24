@@ -1,16 +1,14 @@
 import { useContext } from "react";
 import { globalComponents } from "./WorkerProfil";
-import { faClipboard, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UpdateNames from "../boxUpdate/updateNames";
+import GiveRate from "../boxUpdate/rateWorker";
 
 const WorkerName = () => {
   const user = localStorage.getItem("User");
 
-  const { WorkerInformations, handleUpdate, isMe, WorkerRate } =
+  const { WorkerInformations,isMe,WorkerRate } =
     useContext(globalComponents);
   const { firstName, lastName } = WorkerInformations;
-  console.log("worker rate .........>", WorkerRate);
   const starImag = () => {
     const imagUrl = "../../images/rateStars/";
     if (WorkerRate.rate < 1.25) {
@@ -59,13 +57,7 @@ const WorkerName = () => {
           />
         </div>
         {user !== "Worker" && (
-          <p
-            id="giveRate"
-            onClick={() => handleUpdate("rateWorker", [])}
-            className="text-end pe-5 fs-5"
-          >
-            <FontAwesomeIcon icon={faClipboard} /> قدم له تقييم
-          </p>
+           <GiveRate/>
         )}
       </div>
     </div>

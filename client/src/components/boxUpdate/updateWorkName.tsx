@@ -4,37 +4,49 @@ import { Button, Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { sendUpdate } from "../../methods/updateData";
+import ChooseDomain from "../ChooseDomain";
 
 type Props = {
-  phone: string;
+  currentWorkName: string;
 };
 
-const UpdatePhone = ({ phone }: Props) => {
+const UpdateWorkName = ({ currentWorkName }: Props) => {
   const { setUpdate } = useContext(globalComponents);
   const [show, setShow] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [wait, setWait] = useState(false);
-  const [newPhone, setNewPhone] = useState({
-    phone: phone,
+  const [newWorkName, setNewWorkName] = useState({
+    workName: currentWorkName,
   });
 
-  const closeBoxShow =()=>{
-    setError(null)
-    setSuccess(null)
-    setShow(false)
-  }
+
+  // name parameter not neccessery but we should put it cause the component need it 
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    name: string
+  ) => {
+    setNewWorkName({ workName: e.target.value });
+  };
+
+  console.log('new workName',newWorkName)
+
+  const closeBoxShow = () => {
+    setError(null);
+    setSuccess(null);
+    setShow(false);
+  };
 
   const checkUpdate = async () => {
-    const number = Number(newPhone.phone);
-    if (!number) {
-      return setError("رقم الهاتف خاطئ");
+    const workName = newWorkName.workName;
+    if (!workName) {
+      return setError("wrang work name ");
     }
-    if (newPhone.phone.trim() === "" ){
-      return setError("رقم الهاتف");
-     } else {
+    if (newWorkName.workName.trim() === "") {
+      return setError(" work name  neccessery");
+    } else {
       setWait(true);
-      const messageRecive = await sendUpdate( {phone:number}, setError);
+      const messageRecive = await sendUpdate({workName:workName.trim()}, setError);
       if (!messageRecive) {
         return setWait(false);
       } else {
@@ -66,21 +78,15 @@ const UpdatePhone = ({ phone }: Props) => {
         <Modal.Header closeButton>
           <Modal.Title>تحديث الهاتف </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <div className=" text-center ">
-            <h2 className="text-end px-3 p-2"> : الهاتف </h2>
-            <p className="text-end px-3">
-              تذكر أن رقمك مطلوب لتسجيل الدخول وتأكد من أنه يعمل لسهولة اتصال
-              العميل بك
-            </p>
-            <input
-              type="text"
-              className="w-50 fw-bold text-center my-2 "
-              style={{ height: "50px", fontSize: "20px" }}
-              value={newPhone.phone}
-              onChange={(e) => setNewPhone({ phone: e.target.value })}
+        <Modal.Body className="bg-secondary ">
+          <div
+            className="text-light text-center  py-5 w-75 "
+            style={{ fontSize: "20px" }}
+          >
+            <ChooseDomain
+              workName={newWorkName.workName}
+              handleChange={handleChange}
             />
-            <br />
           </div>
           {success && <div className="alert alert-success mt-2">{success}</div>}
           {error && <div className="alert alert-danger mt-2">{error}</div>}
@@ -108,4 +114,4 @@ const UpdatePhone = ({ phone }: Props) => {
   );
 };
 
-export default UpdatePhone;
+export default UpdateWorkName;
