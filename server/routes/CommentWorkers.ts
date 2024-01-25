@@ -34,7 +34,7 @@ const getClients = async (Clients: ClientRateAndComments[]) => {
   );
 };
 
-const convertToDateObject = (dateTimeString: string) => {
+const convertToDateObject = (dateTimeString: any) => {
   return new Date(dateTimeString);
 };
 

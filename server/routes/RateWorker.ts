@@ -45,7 +45,6 @@ router.get ("/",auth,asyncMiddleware(
 router.put("/",auth,asyncMiddleware(
     async(req:any,res:any)=>{
             const clientRate=req.body.Rate
-            console.log('clientRate',clientRate)
             const clientId : string = req.user._id
             const workerId = req.body.workerId
             const worker = await WorkerRatingsAndCommentsModel.findOne({_id:workerId})

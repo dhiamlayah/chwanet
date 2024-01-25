@@ -1,12 +1,15 @@
 import axios from "axios";
-import { useContext, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { globalComponents } from "./profileWorker/WorkerProfil";
-import { toast } from "react-toastify";
-import { ToastContainer } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
-const SendComments = () => {
+type Props = {
+  setAddNewComment: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const SendComments = ({setAddNewComment}:Props) => {
   const { WorkerInformations } = useContext(globalComponents);
   const url: string = process.env.REACT_APP_port + `/commentWorker`;
   const token = localStorage.getItem("Token");
@@ -25,22 +28,24 @@ const SendComments = () => {
           },
         }
       )
-      .then((res: any) => {
+      .then(() => {
         setError(null);
-        setSuccess(res.data);
+        setSuccess('تم إرسال التعليق بنجاح');
         setComments(null);
-        redirectUser();
+        setAddNewComment((prev:boolean)=>{return !prev})
+        setTimeout(()=>{
+          setSuccess(null);
+        },2500)
       })
-      .catch((err: any) => {
-        console.log("we cant rate worker", err);
-      });
+      .catch((error: any) => {
+        if(error.response){
+          setError(error.response.data.message)
+        }else{
+          setError('لا يمكن الاتصال بالسرفر')
+        }      
+       });
   };
-
-  const redirectUser = () => {
-    return setTimeout(() => {
-      window.location.reload();
-    }, 3000);
-  };
+ 
 
   const handleClick = () => {
     if (comment === null || comment === null) return null;
@@ -54,7 +59,9 @@ const SendComments = () => {
 
   return (
     <div>
-      {error && <div className="alert alert-danger">{error}</div>}
+      {error && <div className="alert alert-danger">{error}
+      {!token && <Link to="/login" className="px-2">تسجيل الدخول</Link>}
+      </div>}
       {success && (
         <div className="alert  bg-success text-white" role="alert">
           <FontAwesomeIcon icon={faCheck} className="px-5" />
