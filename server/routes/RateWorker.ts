@@ -65,7 +65,7 @@ router.put("/",auth,asyncMiddleware(
                     await worker?.save();
                     res.status(200).send("successfuly");
                 }else{
-                    allClients?.push({_id:clientId,Comments:[],Rate:clientRate})
+                    allClients?.push({_id:clientId,Comment:null,Rate:clientRate})
                     await worker?.updateOne({Clients:allClients})
                     await worker?.save()
                     res.status(200).send("successfuly")

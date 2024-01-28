@@ -7,7 +7,7 @@ export type Comment ={
 
 export interface ClientRateAndComments  {
     _id:String,
-    Comments:Comment[] ,
+    Comment:Comment | null ,
     Rate:number | null
 }
 

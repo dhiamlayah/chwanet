@@ -21,6 +21,7 @@ const AllWorkerPictures = () => {
   const { WorkerInformations } = useContext(globalComponents);
   const [pictures, setPictures] = useState<Picture[]>([]);
   const [picturesLength, setPicturesLength] = useState<number>(0);
+  const [error,setError]=useState<string|null>(null)
   const [show, setShow] = useState<Picture | null>(null);
   const [curseur,setCurseur]=useState({
     left:'pointer',
@@ -34,15 +35,18 @@ const AllWorkerPictures = () => {
           `/workerPictures/${WorkerInformations._id}?startFrom=${startFrom}&endIn=${endIn}`
       )
       .then((res) => {
-        console.log("response", res.data);
+        setError(null)
         setPicturesLength(res.data.length);
         setPictures((prev) => {
           return [...prev, ...res.data.pictures];
         });
-        console.log("picture", pictures);
       })
-      .catch((err: any) => {
-        console.log("can't get pictures :", err);
+      .catch((error: any) => {
+        if(error.response){
+          setError(error.response.data.message);
+       }else{
+          setError('لا يمكن الاتصال بالسرفر')
+       }   
       });
   };
   const nextShow = (picture: Picture) => {
@@ -70,7 +74,7 @@ const AllWorkerPictures = () => {
 
   return (
     <AnimatedPage>
-      <div className="d-block">
+      <div className="d-block" style={{minHeight:"30vh"}}>
         {show && (
           <div className="mb-3 d-flex align-items-lg-end align-items-center  ">
             <button
@@ -159,7 +163,9 @@ const AllWorkerPictures = () => {
               );
             })}
         </picture>
-       {picturesLength && addMoreNb*10<picturesLength &&
+
+        {error && <div className="alert alert-danger mt-2">{error}</div>}
+       {picturesLength>0 && addMoreNb*10<picturesLength &&
         <div className=" d-flex justify-content-center align-items-center my-2">
           <button
             className="btn btn-info "

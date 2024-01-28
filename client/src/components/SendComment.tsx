@@ -21,7 +21,7 @@ const SendComments = ({setAddNewComment}:Props) => {
     await axios
       .put(
         url,
-        { workerId: WorkerInformations._id, Comment: comment },
+        { workerId: WorkerInformations._id, Comment: comment?.trim() },
         {
           headers: {
             token: token,
@@ -48,7 +48,7 @@ const SendComments = ({setAddNewComment}:Props) => {
  
 
   const handleClick = () => {
-    if (comment === null || comment === null) return null;
+    if (comment === null || comment.trim() === "") return null;
     if (!token) {
       return setError(
         " يؤسفنا إبلاغك بأنه يجب أن يكون لديك حساب قبل أن تقوم بتقييم العامل "
@@ -76,8 +76,8 @@ const SendComments = ({setAddNewComment}:Props) => {
         >
           إرسال
         </button>
-        <input
-          type="text"
+        <textarea
+          rows={1}
           className=" border border-dark form-control "
           placeholder="اكتب تعليقك"
           aria-label="Recipient's username"

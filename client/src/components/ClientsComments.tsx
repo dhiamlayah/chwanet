@@ -3,6 +3,7 @@ import {useContext, useEffect, useState } from "react";
 import { globalComponents } from "./profileWorker/WorkerProfil";
 import "../StyleDesign/workerComments.css";
 import LodingPage from "../loading";
+import StarsRating from "react-star-rate";
 
 interface comment {
   _id: string;
@@ -17,8 +18,7 @@ interface Props {
 
 const ClientsComments = ({addNewComment}:Props) => {
   const { WorkerInformations ,user} = useContext(globalComponents);
-  let key = 0; // key for the list
-  const [comments, setComments] = useState<comment[]>([]);
+  const [clientsComment, setClientComment] = useState<comment[]>([]);
   const [nothingFound, setNothingFound] = useState<string | null>(null);
 
   const url: string =
@@ -28,7 +28,7 @@ const ClientsComments = ({addNewComment}:Props) => {
       .get(url)
       .then((res: any) => {
         setNothingFound(null)
-        setComments(res.data);
+        setClientComment(res.data);
       })
       .catch((error: any) => {
           if(error.response){
@@ -47,38 +47,45 @@ const ClientsComments = ({addNewComment}:Props) => {
     getComments();
   }, []);
 
+  console.log('client comment', clientsComment)
+
 
   return (
     <div style={{ backgroundColor: "#FCFDFF", minHeight: "30vh" }}>
-        {comments.length===0 && !nothingFound &&
+        {clientsComment.length===0 && !nothingFound &&
          <LodingPage/>
         }
-         {comments.length>0  && (
+         {clientsComment.length>0  && (
           <ul className="list-group" id="allClientsComments">
-            {comments.map((comment: any) => {
-              key++;         
-              const commaIndex = comment.date.indexOf(',') + 2
-              const gmtIndex = comment.date.indexOf('GMT')
-              const extractedSubstring = comment.date.substring(commaIndex, gmtIndex).trim();
+            {clientsComment.map((clientComment: any) => {
+              const commaIndex = clientComment.Comment.date.indexOf(',') + 2
+              const gmtIndex = clientComment.Comment.date.indexOf('GMT')
+              const extractedSubstring = clientComment.Comment.date.substring(commaIndex, gmtIndex).trim();
 
               return (
                 <li
                   className="list-group-item   text-dark lh-1"
-                  key={comment._id + key}
+                  key={clientComment._id}
                 >
                   <p className="lh-1">
                     <span className="text-primary fw-bold px-1">
-                      {comment.name}
+                      {clientComment.firstName}{clientComment.lastName}
                     </span>
                     : {extractedSubstring}
-                    {user && user._id === comment._id._id && <span className="text-end text-danger ps-5" style={{cursor:'pointer'}}>حذف</span>}
+                    {user && user._id === clientComment._id && <span className="text-end text-danger ps-5" style={{cursor:'pointer'}}>حذف</span>}
 
                   </p>
+                  {clientComment.Rate  &&
+
+                   <StarsRating
+                  style={{ style: { fontSize: "25px" ,marginTop:'-15px',padding:'0 50px 20px 15px',color:'black'} }}
+                  value={clientComment.Rate }
+                  />}
                   <p
-                    className="lh-1  text-secondary"
-                    style={{ marginTop: "-5px" }}
+                    className="lh-1 text-center text-secondary"
+                    style={{marginTop: "-5px",whiteSpace: "pre-line"}}
                   >
-                    {comment.text}
+                    {clientComment.Comment.text}
                   </p>
                 </li>
               );

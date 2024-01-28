@@ -10,18 +10,18 @@ const WorkerImages = () => {
       
     return ( 
         <div>
-        <div
-          className="z-8 position-absolute"
-          style={{ backgroundImage: chooseImg() }}
-          id="couvertImg"
-        ></div>
-        <div className="z-5 position-absolute">
           <div
             className="z-8 position-absolute"
-            style={{ backgroundImage: `url('${profilPicture}')` }}
-            id="pdp"
+            style={{ backgroundImage: chooseImg() }}
+            id="couvertImg"
           ></div>
-      </div>
+          <div className="z-5 position-absolute">
+            <div
+              className="z-8 position-absolute"
+              style={{ backgroundImage: `url('${profilPicture}')` }}
+              id="pdp"
+            ></div>
+        </div>
       </div>
       
      );

@@ -1,33 +1,29 @@
+import { Comment } from './../models/RatingsAndComments';
 const express = require("express");
 const router = express.Router();
 const auth = require("../middelwares/authorization");
 const asyncMiddleware = require("../middelwares/asyncMiddleware");
 
 import WorkerRatingsAndCommentsModel, {
-  Comment,
   ClientRateAndComments,
 } from "../models/RatingsAndComments";
 
 import UserModel from "../models/users";
 
-interface ClientRateAndCommentsAndName extends ClientRateAndComments {
-  firstName: string | undefined;
-  lastName: string | undefined;
-}
-
 const getClients = async (Clients: ClientRateAndComments[]) => {
   return await Promise.all(
     Clients.map(async (client) => {
-      if (client.Comments.length > 0) {
+      if (client.Comment) {
         const clientName = await UserModel.findOne({ _id: client._id });
         if (clientName)
           return {
             _id: client._id,
-            Comments: client.Comments,
+            Comment: client.Comment,
+            Rate: client.Rate,
             firstName: clientName.firstName,
             lastName: clientName.lastName,
           };
-        return { _id: client._id, Comments: client.Comments };
+        return { _id: client._id, Comment: client.Comment, Rate: client.Rate,firstName:'في انتظار ',lastName:"الاسم" };
       }
       return null;
     })
@@ -38,26 +34,16 @@ const convertToDateObject = (dateTimeString: any) => {
   return new Date(dateTimeString);
 };
 
-// this function have object to split each comment then order it by date
-
-const splitComments = (Clients: any) => {
-  let allCommentsSplited: any = [];
-  Clients.map((client: ClientRateAndCommentsAndName) => {
-    client.Comments.map((comment: Comment) => {
-      allCommentsSplited.push({
-        _id: client._id,
-        text: comment.text,
-        name: client.firstName + " " + client.lastName,
-        date: comment.date,
-      });
-    });
-  });
-  return allCommentsSplited.sort((a: any, b: any) => {
-    const dateA = convertToDateObject(a.date).valueOf();
-    const dateB = convertToDateObject(b.date).valueOf();
+const sortClientsCommentByDate = (
+  allClientsComment: any
+) => {
+  return allClientsComment.sort((a: any, b: any) => {
+    const dateA = convertToDateObject(a.Comment.date).valueOf();
+    const dateB = convertToDateObject(b.Comment.date).valueOf();
     return dateB - dateA;
   });
 };
+
 
 // this path fo client to make a Comments
 router.put(
@@ -65,8 +51,7 @@ router.put(
   auth,
   asyncMiddleware(async (req: any, res: any) => {
     const clientComment = req.body.Comment;
-    console.log("client Comment", clientComment);
-    const clientId: string = req.user;
+    const clientId: string = req.user._id;
     const workerId = req.body.workerId;
     const worker = await WorkerRatingsAndCommentsModel.findOne({
       _id: workerId,
@@ -77,13 +62,15 @@ router.put(
       const findClient = allClients?.find((e) => {
         if (e._id === clientId) return e;
       });
+
+      // console.log('find client ',findClient)
       if (findClient !== undefined) {
         const updateClients = allClients?.map((client) => {
           if (client._id === findClient._id) {
-            client.Comments.push({
+            client.Comment = {
               text: clientComment,
               date: date.toUTCString(),
-            });
+            };
           }
           return client;
         });
@@ -93,7 +80,7 @@ router.put(
       } else {
         allClients?.push({
           _id: clientId,
-          Comments: [{ text: clientComment, date: date.toUTCString() }],
+          Comment: { text: clientComment, date: date.toUTCString() },
           Rate: null,
         });
         await worker?.updateOne({ Clients: allClients });
@@ -116,10 +103,10 @@ router.get(
       const Clients = idWorker.Clients;
       if (Clients) {
         const allComments = await getClients(Clients);
-        const filterClients = allComments.filter((client) => client !== null);
+        const filterClients  = allComments.filter((client) => client !== null);
 
-        if (filterClients.length > 0) {
-          const clientSplited = splitComments(filterClients);
+        if (filterClients.length > 0 ) {
+          const clientSplited = sortClientsCommentByDate(filterClients);
           return res.status(200).json(clientSplited);
         }
         res.status(400).json({ message: "لا يوجد تعليقات حتى الآن  " });

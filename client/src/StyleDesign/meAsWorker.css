@@ -55,8 +55,7 @@
         margin: 20rem 0 0 224px;
     }
     #rate {
-        margin: 0rem 4rem 0 0  ;
-        line-height:10px;
+         line-height:10px;
 
     }
     #workerData{
@@ -69,21 +68,21 @@
         width: 30%;
         height: fit-content;
         padding: 20px;
-        background-color:#f3f6f3;
+        background-color:beige;
         border: #80808069 1px solid;
         font-size: 22px;
         border-radius: 10px;
-
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3)
 
     }
-    #photo{
+    #cartDiscreption{
         border: #80808069 1px solid;
-
         margin-right: 5%;
         width: 70%;
         height: fit-content;
         border-radius: 10px;
         background-color:#f3f6f3;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3)
 
     }
     
@@ -115,8 +114,13 @@
     }
   
     #cartId{
-       margin: 0 5% 0 5%;
        border-radius: 10px;
+       background-color:#f3f6f3;
+       border: #80808069 1px solid;
+       padding: 15px;
+       box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2)
+
+       
     }
 
     #rate {
@@ -124,8 +128,11 @@
         line-height:10px;
 
     }
-    #photo{
-        margin: 0 5% 0 5%;
+    #cartDiscreption{
+        background-color:beige;
+        border: #80808069 1px solid;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2)
+
      
     }
 }
