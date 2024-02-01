@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Placeholder } from "react-bootstrap";
 
 function WorkerFound({ workers }: any) {
-  console.log("workers to the show", workers);
+  const url: string | undefined = process.env.REACT_APP_port;
 
   return (
     <Row xs={2} sm={3} md={3} lg={4} xl={4} className="g-4 m-0 ">
@@ -16,12 +16,12 @@ function WorkerFound({ workers }: any) {
           return (
             <Col key={worker._id}>
               <Card>
-                {worker.picture && (
+                {worker.photo && (
                   <Card.Img
                     variant="top"
                     className=" w-100   "
                     style={{ imageRendering: "pixelated", height: "13rem" }}
-                    src={worker.picture}
+                    src={`${url}/userPicture/${worker._id}/${worker.photo.filename}`}
                   />
                 )}
                 <Card.Body>
@@ -45,7 +45,7 @@ function WorkerFound({ workers }: any) {
             </Col>
           );
         })}
-      {workers.length === 0 && (
+      {!workers && (
         <>
           <Card style={{ width: "18rem", height: "18rem", margin: "10px" }}>
             <Card.Body>
