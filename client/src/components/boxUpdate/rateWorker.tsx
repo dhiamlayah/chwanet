@@ -46,6 +46,7 @@ const GiveRate = () => {
          }, 2000);
       })
       .catch((error: any) => {
+        setWait(true)
             if(error.response){
                 setError(error.response.data.message)
             }else{

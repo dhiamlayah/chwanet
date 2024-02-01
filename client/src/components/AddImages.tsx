@@ -9,10 +9,10 @@ import axios from "axios";
 const AddImages = ({ back }: any) => {
   const [userPhoto, setUserPhoto] = useState<any>(null);
   const [userFile, setUserFile] = useState<any>();
-  const [pictureStatue,setPictureStatue]=useState<null|string>(null)
-  const url: string | undefined = process.env.REACT_APP_port ;
+  const [descreption, setDescreption] = useState<null | string>(null);
+  const url: string | undefined = process.env.REACT_APP_port;
   const inputImg = useRef<any>(null);
-  
+  const [wait, setWait] = useState(false);
   const handleChangeFile = (event: any) => {
     const file = event.target.files[0];
     if (file !== undefined) {
@@ -31,47 +31,50 @@ const AddImages = ({ back }: any) => {
 
   const sendPictureToServer = async () => {
     const formData = new FormData();
+    const jsonWorkerDescription = JSON.stringify(descreption);
     formData.append("file", userFile);
-    console.log('form data ',userFile)
-
+    formData.append("discreption", jsonWorkerDescription);
     try {
       await axios
-        .post(url+ "/workerPictures", formData, {
+        .post(url + "/workerPictures", formData, {
           headers: {
             token: localStorage.getItem("Token"),
           },
         })
-        .then((res) => {
+        .then(() => {
+          setWait(false);
           toast.success("تم إنشاؤه بنجاح");
           redirectUser();
         });
-    } catch (err: any) {
-      console.log('err to send image',err)
-      if (err.response.data) {
-        return toast.error(err.response.data.message);
+    } catch (error: any) {
+      if (error.response) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("لا يمكن الاتصال بالسرفر");
       }
     }
   };
 
   const redirectUser = () => {
     return setTimeout(() => {
-      back(false)
-     }, 5000);
+      back(false);
+    }, 2000);
   };
 
-  const handleClick = ()=>{
-     sendPictureToServer()
-  }
+  const handleClick = () => {
+    setWait(true);
+    sendPictureToServer();
+  };
 
   return (
     <div className="position-relative" style={{ minHeight: "35vh" }}>
-      <ToastContainer/>
+      <ToastContainer />
       <div
         className="position-absolute top-0 start-0 m-1"
-        style={{cursor:"pointer"}}
+        style={{ cursor: "pointer" }}
         onClick={() => back(false)}
       >
-         <FontAwesomeIcon icon={faArrowLeft} className="fs-5" />
+        <FontAwesomeIcon icon={faArrowLeft} className="fs-5" />
       </div>
       <AnimatedPage>
         <div className=" d-flex justify-content-center align-items-center pt-5">
@@ -83,34 +86,50 @@ const AddImages = ({ back }: any) => {
             </div>
             {userPhoto && (
               <div className="d-block">
-                <div>
+                <div className="d-flex justify-content-center align-items-lg-end align-items-center  ">
                   <img
                     src={userPhoto}
                     onClick={onUplodeImage}
-                    style={{ maxWidth: "70vh", maxHeight: "34vh" }}
-                    alt=""
+                    style={{
+                      width: "80%",
+                      height: "auto",
+                      boxShadow: " 5px 5px 10px rgba(0, 0, 0, 0.3)",
+                    }}
+                    alt="photo uploded "
                   />
                 </div>
-                <div className="my-3">
+                <div className="m-3">
                   <div className="d-flex justify-content-end my-2">
                     <label
                       htmlFor="exampleInputPassword1 text-end "
                       className="form-label fs-5 fw-bold"
                     >
                       وصف للصورة
-
                     </label>
                   </div>
                   <textarea
-                    className="form-control border border-dark"
-                    value={pictureStatue ? pictureStatue : ""}
-                    onChange={(e)=>setPictureStatue(e.target.value)}
+                    className="form-control border border-dark "
+                    value={descreption ? descreption : ""}
+                    onChange={(e) => setDescreption(e.target.value)}
                     id="exampleInputPassword1"
                   />
                 </div>
                 <div>
-                  <button className="btn btn-outline-success mb-4 " onClick={handleClick}>
-                  حفظ
+                  <button
+                    className="btn btn-outline-success mb-4 mx-1 "
+                    onClick={handleClick}
+                  >
+                    {!wait ? (
+                      "حفظ"
+                    ) : (
+                      <>
+                        <span role="status">انتظر...</span>
+                        <span
+                          className="spinner-grow spinner-grow-sm"
+                          aria-hidden="true"
+                        ></span>
+                      </>
+                    )}
                   </button>
                 </div>
               </div>
@@ -120,6 +139,7 @@ const AddImages = ({ back }: any) => {
               type="file"
               ref={inputImg}
               onChange={handleChangeFile}
+              accept="image/*"
             />
           </div>
         </div>

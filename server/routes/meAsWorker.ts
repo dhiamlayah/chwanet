@@ -21,7 +21,6 @@ router.put(
   "/update",
   auth,
   asyncMiddleware(async (req: any, res: any) => {
-    console.log('req body :',req.body)
     if(req.body.phone){
       const phoneExist = await WorkerModel.findOne({ phone:req.body.phone });
       if(phoneExist){

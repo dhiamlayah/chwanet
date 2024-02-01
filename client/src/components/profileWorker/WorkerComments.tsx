@@ -8,7 +8,7 @@ import SendComments from "../SendComment";
 const WorkerComments = () => {
   const [addNewComment,setAddNewComment]=useState<boolean>(false)
   return (
-    <div id="Comments"  >
+    <div id="Comments" style={{minHeight:"30vh"}}  >
       <ClientsComments  addNewComment={addNewComment} />
       {localStorage.getItem("User") !== "Worker" && <SendComments   setAddNewComment={setAddNewComment} />}
     </div>

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export type picture = {
-    descreption:string ,
+    descreption:string |null ,
     picture :{
       filename:string,
       destination:string

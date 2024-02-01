@@ -41,6 +41,7 @@ upload.single("file"),
 resizeImages,
 asyncMiddelware(
     async (req:any,res:any)=>{
+        const discreption  = JSON.parse(req.body.discreption);
         const imageResized = req.imageResized
         const date = new Date();
         const workerId = req.user._id
@@ -71,7 +72,7 @@ asyncMiddelware(
           }
         workerPictures?.push(
             {
-                descreption : req.body.descreption,
+                descreption : discreption,
                 picture : {
                      filename:imageResized.filename,
                     destination :imageResized.destination

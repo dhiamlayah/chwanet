@@ -73,7 +73,6 @@ const WorkerInformation = () => {
     const formData = new FormData();
     formData.append("file", userFile);
     formData.append("document", jsonWorkerInformations);
-    console.log('form data ',userFile)
 
     try {
       await axios

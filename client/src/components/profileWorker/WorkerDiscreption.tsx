@@ -17,7 +17,7 @@ const WorkerDiscreption = () => {
     <div
       id="workerData"
       className="pt-3 text-end "
-      style={{ backgroundColor: "#rgb(255 224 217 / 28%)" }}
+      style={{ backgroundColor: "#rgb(255 224 217 / 28%)",minHeight:"30vh" }}
     >
        <div id="cartDiscreption" className="m-1 p-2"  >
         <div className="  p-8 " >

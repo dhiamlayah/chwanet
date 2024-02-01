@@ -8,6 +8,7 @@ import {
   faAnglesRight,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
+import LodingPage from "../loading";
 type Picture = {
   descreption: string;
   picture: {
@@ -21,13 +22,13 @@ const AllWorkerPictures = () => {
   const { WorkerInformations } = useContext(globalComponents);
   const [pictures, setPictures] = useState<Picture[]>([]);
   const [picturesLength, setPicturesLength] = useState<number>(0);
-  const [error,setError]=useState<string|null>(null)
+  const [error, setError] = useState<string | null>(null);
   const [show, setShow] = useState<Picture | null>(null);
-  const [curseur,setCurseur]=useState({
-    left:'pointer',
-    right:'no-drop'
-  })
-  const [addMoreNb,setAddMoreNb]=useState<number>(1) //how many we click to add more to call server for more pictures
+  const [curseur, setCurseur] = useState({
+    left: "pointer",
+    right: "no-drop",
+  });
+  const [addMoreNb, setAddMoreNb] = useState<number>(1); //how many we click to add more to call server for more pictures
   const getPicturesFromServer = async (startFrom: number, endIn: number) => {
     await axios
       .get(
@@ -35,48 +36,53 @@ const AllWorkerPictures = () => {
           `/workerPictures/${WorkerInformations._id}?startFrom=${startFrom}&endIn=${endIn}`
       )
       .then((res) => {
-        setError(null)
+        setError(null);
         setPicturesLength(res.data.length);
         setPictures((prev) => {
           return [...prev, ...res.data.pictures];
         });
       })
       .catch((error: any) => {
-        if(error.response){
+        if (error.response) {
           setError(error.response.data.message);
-       }else{
-          setError('لا يمكن الاتصال بالسرفر')
-       }   
+        } else {
+          setError("لا يمكن الاتصال بالسرفر");
+        }
       });
   };
   const nextShow = (picture: Picture) => {
     const index = pictures.indexOf(picture);
-    if (index === pictures.length - 1) return setCurseur({left:'pointer',right:'no-drop'});
-    setCurseur({right:'pointer',left:'pointer'})
+    if (index === pictures.length - 1)
+      return setCurseur({ left: "pointer", right: "no-drop" });
+    setCurseur({ right: "pointer", left: "pointer" });
     return setShow(pictures[index + 1]);
   };
   const prevShow = (picture: Picture) => {
     const index = pictures.indexOf(picture);
-    if (index === 0) return setCurseur({right:"pointer",left:'no-drop'});
-    setCurseur({right:'pointer',left:'pointer'})
+    if (index === 0) return setCurseur({ right: "pointer", left: "no-drop" });
+    setCurseur({ right: "pointer", left: "pointer" });
     return setShow(pictures[index - 1]);
   };
 
-  const callServerForMore = ()=>{
-    const startFrom= addMoreNb*10
-    const endIn=(addMoreNb+1)*10
-    getPicturesFromServer(startFrom, endIn)
-    setAddMoreNb(endIn/10)
-  }
+  const callServerForMore = () => {
+    const startFrom = addMoreNb * 10;
+    const endIn = (addMoreNb + 1) * 10;
+    getPicturesFromServer(startFrom, endIn);
+    setAddMoreNb(endIn / 10);
+  };
   useEffect(() => {
     getPicturesFromServer(0, 10);
   }, []);
 
+  console.log('picture ',pictures)
   return (
     <AnimatedPage>
-      <div className="d-block" style={{minHeight:"30vh"}}>
+      <div className="d-block" style={{ minHeight: "30vh" }}>
+      {pictures.length===0 && !error &&
+         <LodingPage/>
+        }
         {show && (
-          <div className="mb-3 d-flex align-items-lg-end align-items-center  ">
+          <div className="mb-3 d-flex align-items-lg-end align-items-center  w-100 ">
             <button
               className="text-secondary border border-secondary ms-2"
               onClick={() => prevShow(show)}
@@ -84,7 +90,7 @@ const AllWorkerPictures = () => {
             >
               <FontAwesomeIcon icon={faAnglesLeft} />
             </button>
-            <div>
+            <div className="w-100">
               <p
                 className="text-end fw-bold fs-5"
                 onClick={() => setShow(null)}
@@ -99,9 +105,11 @@ const AllWorkerPictures = () => {
                 {show.date}
               </p>
               <div className="d-flex justify-content-center align-items-lg-end align-items-center mx-5 ">
-                <div>
+                <div >
                   <hr className="mx-5 d-flex justify-content-center " />
-                  <p className="text-center">هذي نهرت إلي مشيت السوسة مئة مرة مئة مرة مئة مرة مئة مرة مئة مر ة عة مئة مرة مئة مرة مئة مرلك أزل ململومل </p>
+                  {show.descreption &&  <p className="text-center text-break ">
+                          {show.descreption }
+                  </p>}
                   <img
                     src={`${url}/userPicture/${WorkerInformations._id}/${show.picture.filename}`}
                     style={{
@@ -138,13 +146,13 @@ const AllWorkerPictures = () => {
                     style={
                       show
                         ? {
-                            cursor:'pointer',
+                            cursor: "pointer",
                             maxWidth: "15vh",
                             height: "auto",
                             boxShadow: " 5px 5px 10px rgba(0, 0, 0, 0.3)",
                           }
                         : {
-                          cursor:'pointer',
+                            cursor: "pointer",
 
                             maxWidth: "32vh",
                             height: "auto",
@@ -164,17 +172,35 @@ const AllWorkerPictures = () => {
             })}
         </picture>
 
-        {error && <div className="alert alert-danger mt-2">{error}</div>}
-       {picturesLength>0 && addMoreNb*10<picturesLength &&
-        <div className=" d-flex justify-content-center align-items-center my-2">
-          <button
-            className="btn btn-info "
-            onClick={() => callServerForMore()}
+
+        {error && (
+          <div
+            className="d-flex text-end"
+            style={{ justifyContent: "space-around" }}
           >
-            {" "}
-            see more{" "}
-          </button>
-        </div>}
+            <img
+              src="../../images/nothingFound.png"
+              style={{ width: "350px", height: "196px" }}
+              className="d-none d-sm-block"
+              alt="nothing found"
+            />
+            <p className="pt-5 text-end fw-bold text-secondary mt-3">
+             {error}
+            </p>
+          </div>
+        )} 
+
+        {picturesLength > 0 && addMoreNb * 10 < picturesLength && (
+          <div className=" d-flex justify-content-center align-items-center my-2">
+            <button
+              className="btn btn-info "
+              onClick={() => callServerForMore()}
+            >
+              {" "}
+              see more{" "}
+            </button>
+          </div>
+        )}
       </div>
     </AnimatedPage>
   );
