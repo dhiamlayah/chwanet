@@ -27,26 +27,19 @@ const SearchWorker = () => {
   const queryState=queryParams.get("state")
   const queryDomain =queryParams.get("domain") 
   const queryDelegation = queryParams.get("delegation") 
-  
-  const [domain, setDomain] = useState(()=>{ return queryDomain ? queryDomain: ""}),
-        [state, setState] = useState(()=>{ return queryState ? queryState: ""}),
-        [delegation, setDelegation] = useState(()=>{ return queryDelegation ? queryDelegation: ""}),
+  const querySearch = queryParams.get("search") 
+
+  const [domain, setDomain] = useState<string>(()=>{ return queryDomain ? queryDomain: ""}),
+        [state, setState] = useState<string>(()=>{ return queryState ? queryState: ""}),
+        [delegation, setDelegation] = useState<string>(()=>{ return queryDelegation ? queryDelegation: ""}),
         [workers, setWorkers] = useState<Worker[] | null>(null),
-        [numberOfWorkers, setNumberOfWorkers] = useState<number>(0);
+        [numberOfWorkers, setNumberOfWorkers] = useState<number>(0),
+        [search,setSearch]=useState<string>(()=>{ return querySearch ? querySearch: ""})
 
   const [error, setError] = useState<null | string>(null);
   const url: any = process.env.REACT_APP_port;
 
   const queryPage = Number(queryParams.get("page"));
-
-
-
-
-  console.log("domain",domain)
-  console.log("state",state)
-  console.log("delegation",delegation)
-
-
 
 
   const specifecWorkersFromDB = async (page: number, limit: number) => {
@@ -55,6 +48,7 @@ const SearchWorker = () => {
         state,
         delegation,
         domain,
+        search:search.trim()
       })
       .then((res) => {
         setNumberOfWorkers(res.data.numberOfWorkers);
@@ -90,20 +84,17 @@ const SearchWorker = () => {
 
 
   useEffect(() => {
-    console.log('rander 1 ')
-
     setWorkers(null)
     specifecWorkersFromDB(queryPage, 12);
-  }, [state,delegation,domain]);
+  }, [state,delegation,domain,search]);
 
   useEffect(() => {
-    console.log('rander 2 ')
      specifecWorkersFromDB(queryPage, 12);
   }, [queryPage]);
 
   return (
     <globalSearchComponent.Provider
-      value={{ domain, handleChange, state, delegation, specifecWorkersFromDB ,setSearchParams}}
+      value={{ domain, handleChange, state, delegation, specifecWorkersFromDB ,setSearchParams,search,setSearch,numberOfWorkers}}
     >
       <div
         className="d-md-flex"
