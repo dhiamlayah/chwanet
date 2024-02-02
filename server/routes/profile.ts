@@ -21,6 +21,18 @@ router.get("/:id",asyncMiddleware(
 module.exports = router
 
 
+router.get("/:id/Rate",asyncMiddleware(
+  async (req: any, res: any) => {
+      const id = req.params.id
+      const user = await WorkerModel.findById(id).select("Rate");
+     if(user === null){
+      return res.status(400).json({message : "user dosin't exist "})
+      }
+      res.status(200).json(user.Rate);
+})
+);
+
+module.exports = router
 
 
 // router.get('/:id/pictures',asyncMiddleware(

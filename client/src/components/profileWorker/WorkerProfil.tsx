@@ -29,7 +29,7 @@ const WorkerProfil = ({
   const [isMe, setIsMe] = useState<boolean>(false);
 
   // id of worker visited profile
-  const { _id } = WorkerInformations;
+  const { _id,Rate } = WorkerInformations;
 
   // get current visiter (client or worker)
   const getCurrentUser = async () => {
@@ -45,22 +45,31 @@ const WorkerProfil = ({
           console.log("successfuly", res.data);
           setUser(res.data.user);
         });
-    } catch (err) {
-      console.log("ther is an error to get current user ", err);
+    } catch (err :any ) {
+      if(err.response){
+        console.log("ther is an error to get current user ", err);
+      }else{
+        console.log("ther is an error to get current user ", err);
+      }
     }
   };
 
   // get the rate of worker profile
   const getWorkerRate = async () => {
-    const url: string = process.env.REACT_APP_port + `/rateWorker/${_id}`;
+    const url: string = process.env.REACT_APP_port + `/profile/${_id}/Rate`;
     await axios
       .get(url)
       .then((res: any) => {
-        console.log("we get worker rate ", res.data);
         setWorkerRate(res.data);
       })
       .catch((err: any) => {
-        console.log("we can't get worker rate ", err.response.data);
+        if(err.response){
+          console.log("we can't get worker rate ", err.response.data);
+        }
+        else{
+          console.log("faild to connect with data base ");
+
+        }
       });
   };
 
@@ -81,10 +90,12 @@ const WorkerProfil = ({
     }
     return setIsMe(false);
   };
+  
+
 
   useEffect(() => {
     const token = localStorage.getItem("Token");
-    getWorkerRate();
+    if(Rate) setWorkerRate(Rate)
     if (token) {
       getCurrentUser();
     }

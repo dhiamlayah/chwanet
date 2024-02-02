@@ -14,7 +14,7 @@ export interface Worker {
   phone: number;
   workName: string;
   photo: any;
-  picture: string;
+  Rate: {rate : number ,length:number} |null;
 }
 
 export const globalSearchComponent = createContext<any | undefined>(undefined);

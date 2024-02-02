@@ -4,10 +4,16 @@ import Row from "react-bootstrap/Row";
 import { Worker } from "../pages/SearchWorker";
 import { Link } from "react-router-dom";
 import { Placeholder } from "react-bootstrap";
+import StarsRating from "react-star-rate";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPersonDigging, faPhone } from "@fortawesome/free-solid-svg-icons";
 
-function WorkerFound({ workers }: any) {
+type Props = {
+  workers: Worker[] | null;
+};
+
+function WorkerFound({ workers }: Props) {
   const url: string | undefined = process.env.REACT_APP_port;
-
   return (
     <Row xs={2} sm={3} md={3} lg={4} xl={4} className="g-4 m-0 ">
       {workers &&
@@ -25,14 +31,58 @@ function WorkerFound({ workers }: any) {
                   />
                 )}
                 <Card.Body>
-                  <Card.Title className="text-center">
-                    {worker.firstName} {worker.lastName}{" "}
+                  {worker && worker.Rate && (
+                    <StarsRating
+                      style={{
+                        style: {
+                          fontSize: "60px",
+                          marginTop: "-70px",
+                          display: "flex",
+                          flexDirection: "row-reverse",
+                        },
+                      }}
+                      value={worker.Rate.rate / 5.0}
+                      count={1}
+                    />
+                  )}
+                  {worker && !worker.Rate && (
+                    <StarsRating
+                      style={{
+                        style: {
+                          fontSize: "60px",
+                          marginTop: "-70px",
+                          display: "flex",
+                          flexDirection: "row-reverse",
+                        },
+                      }}
+                      value={0}
+                      count={1}
+                    />
+                  )}
+                  <Card.Title
+                    className="text-center"
+                    style={{ marginTop: "-15px" }}
+                  >
+                    {worker.firstName} {worker.lastName}
+                    <div className="d-flex justify-content-center">
+                      <div className="line line-dark w-25   bg-secondary  "></div>
+                    </div>
                   </Card.Title>
-                  <Card.Text className="text-end">
-                    <span className="fw-bold">هاتف: </span> {worker.phone}{" "}
-                    <br />
-                    <span className="fw-bold">مجال العمل: </span>{" "}
-                    {worker.workName}
+                  <Card.Text className="text-end ">
+                    <ul>
+                      <div className=" d-flex justify-content-end " style={{    lineBreak: 'anywhere',marginBottom:'-10px'}}>
+                        <p>{worker.phone}</p>
+                        <p className="fw-bold px-2 text-secondary">
+                          <FontAwesomeIcon icon={faPhone} />{" "}
+                        </p>
+                      </div>
+                      <div className="d-flex justify-content-end ">
+                        <p>{worker.workName}</p>
+                        <p className="fw-bold px-2 text-secondary">
+                          <FontAwesomeIcon icon={faPersonDigging} />
+                        </p>{" "}
+                      </div>
+                    </ul>
                   </Card.Text>
                   <Link
                     to={`/profile/${worker._id}`}

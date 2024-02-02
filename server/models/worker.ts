@@ -17,7 +17,8 @@ interface Worker extends User {
     discreption:String,
     photo:MulterType,
     team:Boolean,
-    experience:Number
+    experience:{rate:number,length:number},
+    Rate:Number
 }
 
 
@@ -71,6 +72,7 @@ const workerSchema =new mongoose.Schema<Worker>({
         require:true
       },
       team:Boolean,
+      Rate:Object,
       experience:Number
 })
 

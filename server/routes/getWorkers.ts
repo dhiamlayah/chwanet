@@ -58,30 +58,13 @@ router.post(
       {
         $or: seachDataFromDataBase,
       },
-      "photo firstName workName phone lastName",
+      "photo firstName workName phone lastName Rate",
       { skip: startIndex, limit: limit }
     ).where({ photo: { $ne: null } });
     res.status(200).send({ Workers, numberOfWorkers: allWorkers });
   })
 );
 
-router.post("/search", async (req: any, res: any) => {
-  const query = req.body.search;
-
-  try {
-    const results = await WorkerModel.find({
-      $or: [
-        { firstName: { $regex: query, $options: "i" } },
-        { lastName: { $regex: query, $options: "i" } },
-        { workName: { $regex: query, $options: "i" } },
-      ],
-    });
-
-    res.json(results);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
+ 
 
 module.exports = router;

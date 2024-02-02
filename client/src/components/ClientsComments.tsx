@@ -47,7 +47,6 @@ const ClientsComments = ({addNewComment}:Props) => {
     getComments();
   }, []);
 
-  console.log('client comment', clientsComment)
 
 
   return (
@@ -80,6 +79,7 @@ const ClientsComments = ({addNewComment}:Props) => {
                    <StarsRating
                   style={{ style: { fontSize: "25px" ,marginTop:'-15px',padding:'0 50px 20px 15px',color:'black'} }}
                   value={clientComment.Rate }
+                  onHoverChange={()=>{return null}}
                   />}
                   <p
                     className="lh-1 text-center text-secondary"

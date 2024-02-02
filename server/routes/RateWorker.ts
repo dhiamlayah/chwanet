@@ -4,6 +4,7 @@ const auth = require("../middelwares/authorization");
 const asyncMiddleware = require("../middelwares/asyncMiddleware");
 
 import WorkerRatingsAndCommentsModel, { ClientRateAndComments } from "../models/RatingsAndComments";
+import WorkerModel from "../models/worker";
  
 const calcRate  = (Client:ClientRateAndComments[])=>{
     const length = Client.length;
@@ -12,7 +13,6 @@ const calcRate  = (Client:ClientRateAndComments[])=>{
     if(length===0)return {sum:0,length:numOfClientWhoRate}
     Client.map((client)=>{
         if(client.Rate!==null){
-            console.log(client)
             somme=somme+client.Rate
             numOfClientWhoRate=numOfClientWhoRate+1
         }
@@ -26,8 +26,6 @@ router.get ("/",auth,asyncMiddleware(
     async (req:any,res:any)=>{
         const id=req.user._id
         const idWorker = await WorkerRatingsAndCommentsModel.findOne({_id:id})
- 
-        console.log('id worker', idWorker)
         if(idWorker===null){
             const AddWorkerRate = new WorkerRatingsAndCommentsModel({
                 _id:id,
@@ -48,6 +46,8 @@ router.put("/",auth,asyncMiddleware(
             const clientId : string = req.user._id
             const workerId = req.body.workerId
             const worker = await WorkerRatingsAndCommentsModel.findOne({_id:workerId})
+            const workerModel = await WorkerModel.findOne({_id:workerId})
+
             if(worker){
                 let allClients = worker?.Clients
                 const findClient = allClients?.find((e)=>{
@@ -59,51 +59,34 @@ router.put("/",auth,asyncMiddleware(
                         client.Rate=clientRate
                     }
                     return client
-
                     })
                     await worker?.updateOne({Clients:updateClients});
-                    await worker?.save();
                     res.status(200).send("successfuly");
+                    if(updateClients){
+                        await workerModel?.updateOne({Rate:calcRate(updateClients)})
+                        await workerModel?.save()       
+                    }
+                    await worker?.save();
                 }else{
                     allClients?.push({_id:clientId,Comment:null,Rate:clientRate})
                     await worker?.updateOne({Clients:allClients})
-                    await worker?.save()
                     res.status(200).send("successfuly")
+                    if(allClients) {
+                        await workerModel?.updateOne({Rate:calcRate(allClients)})
+                        await workerModel?.save()    
+                    }
+                    await worker?.save()
                 }
             }else{
                 res.status(400).send({message:"faild to find worker"})
             }
-
-
- 
         } 
 )) 
 
 
-//this path to get worker rate
-router.get("/:id",asyncMiddleware(
-    async(req:any,res:any)=>{
-        const id = req.params.id
-        const idWorker = await WorkerRatingsAndCommentsModel.findOne({_id:id})
-        if(idWorker){
-            const Clients = idWorker.Clients
-            if(Clients){
-                const rateAndLength = calcRate(Clients)
-                res.status(200).json(rateAndLength) //result {rate:number,length:number}
-            }else{
-                res.status(400).json({message:"we dont find worker"})
-            } 
-        }else{
-            res.status(400).json({message:"we dont find worker"})
-        }
-    }
-))
+
 
 
 
 module.exports = router
 
-// const date = new Date 
-// if(client._id===findClient._id){
-//     client.Comments.push({text:'new update 2',date:date.toLocaleDateString()})
-// }
