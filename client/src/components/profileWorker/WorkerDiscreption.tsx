@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { globalComponents } from "./WorkerProfil";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,10 +8,15 @@ import UpdateWorkName from "../boxUpdate/updateWorkName";
 import UpdateStateAndDelegation from "../boxUpdate/updateStateAndDelegation";
 
 const WorkerDiscreption = () => {
+  const arabicRegex = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
 
   const { WorkerInformations , isMe } = useContext(globalComponents);
   const { discreption, phone, state, delegation, workName } = WorkerInformations;
-
+  
+  let writeRight="text-start"
+  if(arabicRegex.test(discreption.trim())){
+      writeRight ="text-end"
+  }
 
   return (
     <div
@@ -28,12 +33,12 @@ const WorkerDiscreption = () => {
           </div>
           <div className={isMe ? "d-flex justify-content-start" : ""}>
             {isMe && <UpdateDiscreption discreption={discreption} />}
-             <p className="text-break text-center w-100"  style={{whiteSpace: "pre-line"}}>{discreption}</p>
+             <p className={`text-break ${writeRight} w-100`}  style={{whiteSpace: "pre-line",minHeight:"27vh"}}>{discreption}</p>
            </div>
         </div>
       </div>
       
-      <div className="m-1" id="cartId" >
+      <div className="m-1" id="cartId" style={{minHeight:"27vh"}} >
         <div className={isMe ? "d-flex justify-content-between" : ""}>
         {isMe && <UpdatePhone phone={phone} />}
           <p>

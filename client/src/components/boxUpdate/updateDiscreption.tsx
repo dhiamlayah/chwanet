@@ -10,6 +10,8 @@ type Props = {
 };
 
 const UpdateDiscreption = ({ discreption }: Props) => {
+  const arabicRegex = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
+  const [writeRight,setWriteRight]=useState<string>("text-start")
   const { setUpdate } = useContext(globalComponents);
   const [show, setShow] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -71,10 +73,17 @@ const UpdateDiscreption = ({ discreption }: Props) => {
             بك
             </p>
             <textarea
-            className=" fw-bold text-center   w-100 "
+            className={`fw-bold ${writeRight}   w-100 `}
             style={{ height: "150px",  }}
             value={newDiscreption.discreption}
-            onChange={(e) => setNewDiscreption({discreption:e.target.value})}
+            onChange={(e) => {
+              setNewDiscreption({discreption:e.target.value})
+              if(arabicRegex.test(e.target.value.trim())){
+                setWriteRight("text-end")
+                }else{
+                  setWriteRight("text-start")
+                }
+            }}
             />
             <br />
         </div>

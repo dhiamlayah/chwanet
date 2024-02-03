@@ -94,7 +94,7 @@ const SearchWorker = () => {
 
   return (
     <globalSearchComponent.Provider
-      value={{ domain, handleChange, state, delegation, specifecWorkersFromDB ,setSearchParams,search,setSearch,numberOfWorkers}}
+      value={{ domain, handleChange, state, delegation, specifecWorkersFromDB,setSearchParams,search,setSearch,numberOfWorkers}}
     >
       <div
         className="d-md-flex"

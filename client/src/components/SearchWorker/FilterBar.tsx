@@ -21,6 +21,8 @@ const FilterBar = () => {
             onChange={(e)=>{
               setSearch(e.target.value)
               queryParams.set('search', e.target.value);
+              queryParams.set('page', '1');
+
               setSearchParams(queryParams)
 
             }}

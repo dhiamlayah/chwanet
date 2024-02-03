@@ -12,7 +12,10 @@ type WorkerInformations = {
 };
 
 const WorkerInformation = () => {
-  const url: string | undefined = process.env.REACT_APP_port ;
+  // Regular expression to match Arabic characters
+  const arabicRegex = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
+
+  const url: string | undefined = process.env.REACT_APP_port;
   const navigate = useNavigate();
   const inputImg = useRef<any>(null);
   const [userPhoto, setUserPhoto] = useState<any>(null);
@@ -25,6 +28,9 @@ const WorkerInformation = () => {
       experience: -1,
     });
 
+  const [newDomain,setNewDomain]=useState<string>("")
+  const [writeRight,setWriteRight]=useState({ newDomain :"text-start",discreption :"text-start"})
+
   const handleChange = (e: any, name: string) => {
     setWorkerInformations((prevWorkerInformation) => {
       return { ...prevWorkerInformation, [name]: e.target.value };
@@ -35,19 +41,24 @@ const WorkerInformation = () => {
     event.preventDefault();
   };
 
-  // this function to create new schema in the data base for rating and comments workers  
-  const createSchemaForRatingAndComments=async()=>{
-    try{
-     await axios.get(url+'/rateWorker',{
-      headers: {
-        token: localStorage.getItem("Token"),
-      },
-    }) 
-  }catch(error:any){
-      {error&&console.log('error to create schema for rating workers',error.response.data)}
+  // this function to create new schema in the data base for rating and comments workers
+  const createSchemaForRatingAndComments = async () => {
+    try {
+      await axios.get(url + "/rateWorker", {
+        headers: {
+          token: localStorage.getItem("Token"),
+        },
+      });
+    } catch (error: any) {
+      {
+        error &&
+          console.log(
+            "error to create schema for rating workers",
+            error.response.data
+          );
       }
-
-  }
+    }
+  };
 
   const onUplodeImage = () => {
     if (inputImg.current) {
@@ -76,7 +87,7 @@ const WorkerInformation = () => {
 
     try {
       await axios
-        .put(url+ "/meAsWorker", formData, {
+        .put(url + "/meAsWorker", formData, {
           headers: {
             token: localStorage.getItem("Token"),
           },
@@ -131,13 +142,13 @@ const WorkerInformation = () => {
     }, 5000);
   };
 
-  useEffect(()=>{
-    createSchemaForRatingAndComments()
-  },[])
+  useEffect(() => {
+    createSchemaForRatingAndComments();
+  }, []);
 
   if (localStorage.getItem("User") === "Client")
-    return <h1 className="text-center pt-5">404 NOT FOUND :(</h1>;
-
+    return <h1 className="text-center pt-5">404 NOT FOUND :(</h1>;     
+  
   return (
     <div className="background">
       <div
@@ -150,7 +161,7 @@ const WorkerInformation = () => {
             className="mb-3 text-white text-end"
             style={{ display: "flex", justifyContent: "space-around" }}
           >
-            <div style={{ backgroundImage: chooseImg() }}  id="imgUploded"></div>
+            <div style={{ backgroundImage: chooseImg() }} id="imgUploded"></div>
             <div style={{ display: "inline-grid", alignContent: "center" }}>
               <input
                 type="file"
@@ -172,6 +183,30 @@ const WorkerInformation = () => {
               handleChange={handleChange}
             />
           </div>
+          {workerInformations.workName === "أخرى (أريد إضافة عملي)" && (
+            <div className="mb-3 text-white text-end">
+             <label htmlFor="name" className="form-label mx-2 ">
+                :أضف اسم عملك
+              </label>
+              <input
+                type="text"
+                className={`form-control text-white   ${writeRight.newDomain}`}
+                id="name"
+                aria-describedby="emailHelp"
+                value={newDomain}
+                onChange={(e)=>{
+                  setNewDomain(e.target.value)
+                  if(arabicRegex.test(newDomain.trim())){
+                    setWriteRight((prev)=>{return {...prev,newDomain:"text-end"}})
+                    }else{
+                      setWriteRight((prev)=>{return {...prev,newDomain:"text-start"}})
+                    }
+                }}
+                style={{ backgroundColor: "#ffffff4f",}}
+                />
+              
+            </div>
+          )}
 
           <div className="mb-3 text-white text-end">
             <label htmlFor="tlph" className="form-label">
@@ -181,10 +216,15 @@ const WorkerInformation = () => {
               placeholder="سيتم عرض هذا النص في ملفك الشخصي لجذب العميل"
               style={{ backgroundColor: "#ffffff4f" }}
               id="text"
-              className="form-control text-light fs-9"
+              className={`form-control text-light fs-9 ${writeRight.discreption}`}
               value={workerInformations.discreption}
               onChange={(e) => {
                 handleChange(e, "discreption");
+                if(arabicRegex.test(workerInformations.discreption.trim())){
+                  setWriteRight((prev)=>{return {...prev,discreption:"text-end"}})
+                }else{
+                  setWriteRight((prev)=>{return {...prev,discreption:"text-start"}})
+                }
               }}
               rows={5}
             ></textarea>
