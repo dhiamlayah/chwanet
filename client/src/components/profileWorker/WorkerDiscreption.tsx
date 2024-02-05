@@ -26,19 +26,23 @@ const WorkerDiscreption = () => {
     >
        <div id="cartDiscreption" className="m-1 p-2"  >
         <div className="  p-8 " >
-          <div className={isMe ? "d-flex justify-content-between" : ""}>
+         {workName!=="أخرى (أريد إضافة عملي)" && <div className={isMe ? "d-flex justify-content-between" : ""}>
            {isMe && <UpdateWorkName currentWorkName={workName} />}
 
             <p className="fw-bold">{workName}</p>
-          </div>
+          </div>}
+          {workName==="أخرى (أريد إضافة عملي)" && <p className="fw-bold text-center text-danger">
+          لم تتم إضافة اسم عملك حتى الآن من قبل المسؤول ولكن لا تقلق، سنقوم بإضافته قريبًا ليكون مرئيًا
+
+            </p>}
           <div className={isMe ? "d-flex justify-content-start" : ""}>
             {isMe && <UpdateDiscreption discreption={discreption} />}
-             <p className={`text-break ${writeRight} w-100`}  style={{whiteSpace: "pre-line",minHeight:"27vh"}}>{discreption}</p>
+             <p className={`text-break ${writeRight} w-100`}  style={{whiteSpace: "pre-line",minHeight:"12vh"}}>{discreption}</p>
            </div>
         </div>
       </div>
       
-      <div className="m-1" id="cartId" style={{minHeight:"27vh"}} >
+      <div className="m-1" id="cartId" >
         <div className={isMe ? "d-flex justify-content-between" : ""}>
         {isMe && <UpdatePhone phone={phone} />}
           <p>

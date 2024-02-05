@@ -4,6 +4,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ChooseDomain from "../components/ChooseDomain";
+import BoxInformation from "../components/boxMessages/boxInformation";
 
 type WorkerInformations = {
   workName: string;
@@ -28,6 +29,7 @@ const WorkerInformation = () => {
       experience: -1,
     });
 
+  const [open,setOpen]=useState(false)
   const [newDomain,setNewDomain]=useState<string>("")
   const [writeRight,setWriteRight]=useState({ newDomain :"text-start",discreption :"text-start"})
 
@@ -92,14 +94,17 @@ const WorkerInformation = () => {
             token: localStorage.getItem("Token"),
           },
         })
-        .then((res) => {
+        .then(() => {
+          setErrors(null)
           toast.success("تم إنشاؤه بنجاح");
           redirectUser();
         });
     } catch (err: any) {
       if (err.response.data) {
         return toast.error(err.response.data.message);
-      }
+      }else{
+        setErrors('لا يمكن الاتصال بالسرفر')
+    }   
     }
   };
 
@@ -118,7 +123,8 @@ const WorkerInformation = () => {
       workerInformations.experience === null
     )
       return false;
-    if (workerInformations.discreption === "") return false;
+    if (workerInformations.discreption.trim() === "") return false;
+    if(workerInformations.workName === "أخرى (أريد إضافة عملي)" && newDomain.trim()==='') return false 
     return true;
   };
 
@@ -128,11 +134,15 @@ const WorkerInformation = () => {
       return setErrors("يرجى استكمال جميع المعلومات");
     }
     if (workerInformations.experience < 0) {
-      return setErrors("يرجى وظع سنوات الخبرة ");
+      return setErrors("يرجى وظع سنوات الخبرة");
     }
     if (!userPhoto) {
       return setErrors("يرجي وضع صورتك الشخصية");
     }
+    if(workerInformations.workName === "أخرى (أريد إضافة عملي)" && newDomain.trim()!==""){
+      setOpen(true)
+    }
+
     await sendWorkerInformation();
   };
 
@@ -151,6 +161,8 @@ const WorkerInformation = () => {
   
   return (
     <div className="background">
+              <BoxInformation  open={open}/>
+
       <div
         className=" p-5"
         style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
@@ -192,6 +204,7 @@ const WorkerInformation = () => {
                 type="text"
                 className={`form-control text-white   ${writeRight.newDomain}`}
                 id="name"
+                placeholder="أضف اسم عمل"
                 aria-describedby="emailHelp"
                 value={newDomain}
                 onChange={(e)=>{
@@ -199,7 +212,7 @@ const WorkerInformation = () => {
                   if(arabicRegex.test(newDomain.trim())){
                     setWriteRight((prev)=>{return {...prev,newDomain:"text-end"}})
                     }else{
-                      setWriteRight((prev)=>{return {...prev,newDomain:"text-start"}})
+                    setWriteRight((prev)=>{return {...prev,newDomain:"text-start"}})
                     }
                 }}
                 style={{ backgroundColor: "#ffffff4f",}}
