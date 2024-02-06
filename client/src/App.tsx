@@ -10,6 +10,7 @@ import MeAsWorker from "./pages/MeAsWorker";
 import SearchWorker from "./pages/SearchWorker";
 import LodingPage from "./loading";
 import Profile from "./pages/Profile";
+import AdminSpace from "./pages/Admin";
 export interface User {
   date: string;
   delegation: string;
@@ -73,6 +74,7 @@ function App() {
           {user && <Route path="/profile/me" element={<MeAsWorker/>} />}
           <Route path="/profile/:id" element={<Profile />} /> 
           <Route path="/searchWorker" element={<SearchWorker/>}/>
+          {user && user.isAdmin && <Route path="/admin" element={<AdminSpace/>}/>}
           <Route path="/*" element={<h1 className="p-5">Not Found 404</h1>} />
         </Routes>
       </Suspense>

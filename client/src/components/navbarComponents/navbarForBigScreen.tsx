@@ -41,6 +41,17 @@ const NavbarForBigScreen = ({user}:Props) => {
               معلومات عنا
             </Link>
           </li>
+          {user && user.isAdmin &&
+             <li className="nav-item ">
+             <Link
+               to="/admin"
+               id="link"
+               className="text-decoration-none   nav-link"
+             >
+                مساحة المشرف
+              </Link>
+           </li>
+          }
         </ul>
         
         { location.pathname !== "/register" &&

@@ -8,8 +8,8 @@ const auth = require("../middelwares/authorization");
 
 router.get("/", auth, asyncMiddleware(
     async (req: any, res: any) => {
-       const user = await UserModel.findById(req.user._id).select("-password"); //select that mean exclude
-       res.json({ user: user }); 
+       const user = await UserModel.findById(req.user._id).select("-password "); //select that mean exclude
+       res.status(200).json({ user: user }); 
   })
   );
 

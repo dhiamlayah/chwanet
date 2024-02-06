@@ -10,7 +10,6 @@ function auth(req: any, res: any, next: any) {
     req.user = decoded
     next()
   } catch (error: any) {
-    console.log("this is an invalid access token :(", error.response);
     res.status(400).json({ message: "invalid token"});
   }
 }

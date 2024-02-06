@@ -49,7 +49,7 @@ const GetWorkers = require("./routes/getWorkers")
 const RateWoker = require("./routes/RateWorker")
 const CommentWorker = require ("./routes/CommentWorkers")
 const WorkerPictures = require("./routes/workerPictures")
-
+const Admin = require('./routes/Admin')
 app.use('/register',Register)
 app.use('/login',Login)
 app.use('/meAsClient',MeAsClient)
@@ -61,7 +61,7 @@ app.use('/getWorkers',GetWorkers)
 app.use('/rateWorker',RateWoker)
 app.use('/commentWorker',CommentWorker)
 app.use('/workerPictures',WorkerPictures)
-
+app.use('/Admin',Admin)
 //----------------static file containe all workers pictures -------------------------------------------//
 app.use('/userPicture/:id', (req:any, res:any, next:any) => {
   const userId = req.params.id;

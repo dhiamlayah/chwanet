@@ -1,10 +1,10 @@
-import NewWorkNameModel from "../models/NewWorkName";
-
 export{}
 const express = require("express");
 const router = express.Router();
 const auth = require("../middelwares/authorization");
 const asyncMiddleware = require("../middelwares/asyncMiddleware");
+const admin =require("../middelwares/admin")
+import NewWorkNameModel from "../models/NewWorkName";
 
 //this path if worker want to add new name work send a report to admin to accept it 
 router.post("/newDomain",auth,asyncMiddleware(
@@ -25,3 +25,21 @@ router.post("/newDomain",auth,asyncMiddleware(
         return res.status(200).json({message:'report sent successfully'})
     }
 ))
+
+
+router.get('/newDomain',auth,admin,asyncMiddleware(
+    async(req:any,res:any)=>{
+        const allNewDomain = await NewWorkNameModel.find()
+        res.status(200).json({allNewDomain})
+    }
+))
+
+
+router.get('/isAdmin',auth,admin,asyncMiddleware(
+   async(req:any,res:any)=>{
+    res.status(200).send({message:"is an admin"})
+   }
+))
+
+
+module.exports = router

@@ -11,7 +11,7 @@ router.get(
   "/",
   auth,
   asyncMiddleware(async (req: any, res: any) => {
-    const user = await WorkerModel.findById(req.user._id).select("-password"); //select that mean exclude
+    const user = await WorkerModel.findById(req.user._id).select("-password "); //select that mean exclude
     res.status(200).json({ user: user });
   })
 );

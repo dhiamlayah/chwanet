@@ -10,7 +10,6 @@ const NewWorkNameSchema = new mongoose.Schema({
   newWorkName: {
     type: String,
     required: true,
-    unique:true,
   },
 });
 

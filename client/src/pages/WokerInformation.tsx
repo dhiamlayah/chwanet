@@ -14,8 +14,10 @@ type WorkerInformations = {
 
 const WorkerInformation = () => {
   // Regular expression to match Arabic characters
-  const arabicRegex = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
+  const arabicRegex =
+    /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
 
+  const [wait, setWait] = useState(false);
   const url: string | undefined = process.env.REACT_APP_port;
   const navigate = useNavigate();
   const inputImg = useRef<any>(null);
@@ -29,9 +31,12 @@ const WorkerInformation = () => {
       experience: -1,
     });
 
-  const [open,setOpen]=useState(false)
-  const [newDomain,setNewDomain]=useState<string>("")
-  const [writeRight,setWriteRight]=useState({ newDomain :"text-start",discreption :"text-start"})
+  const [open, setOpen] = useState(false);
+  const [newDomain, setNewDomain] = useState<string>("");
+  const [writeRight, setWriteRight] = useState({
+    newDomain: "text-start",
+    discreption: "text-start",
+  });
 
   const handleChange = (e: any, name: string) => {
     setWorkerInformations((prevWorkerInformation) => {
@@ -81,6 +86,34 @@ const WorkerInformation = () => {
     }
   };
 
+  const sendForAddingNewDomain = async () => {
+    try {
+      await axios
+        .post(
+          url + "/Admin/newDomain",
+          {
+            newDomain,
+          },
+          {
+            headers: {
+              token: localStorage.getItem("Token"),
+            },
+          }
+        )
+        .then(() => {
+          setOpen(true);
+          setWait(false);
+        });
+    } catch (err: any) {
+      setWait(false);
+      if (err.respons) {
+        return toast.error(err.response.data.message);
+      } else {
+        setErrors("لا يمكن الاتصال بالسرفر");
+      }
+    }
+  };
+
   const sendWorkerInformation = async () => {
     const jsonWorkerInformations = JSON.stringify(workerInformations);
     const formData = new FormData();
@@ -95,16 +128,24 @@ const WorkerInformation = () => {
           },
         })
         .then(() => {
-          setErrors(null)
-          toast.success("تم إنشاؤه بنجاح");
-          redirectUser();
+          setErrors(null);
+          if (
+            workerInformations.workName === "أخرى (أريد إضافة عملي)" &&
+            newDomain.trim() !== ""
+          ) {
+            sendForAddingNewDomain();
+          } else {
+            toast.success("تم إنشاؤه بنجاح");
+            redirectUser();
+          }
         });
     } catch (err: any) {
-      if (err.response.data) {
+      setWait(false);
+      if (err.response) {
         return toast.error(err.response.data.message);
-      }else{
-        setErrors('لا يمكن الاتصال بالسرفر')
-    }   
+      } else {
+        setErrors(",لا يمكن الاتصال بالسرفر حاول ثانية");
+      }
     }
   };
 
@@ -124,7 +165,11 @@ const WorkerInformation = () => {
     )
       return false;
     if (workerInformations.discreption.trim() === "") return false;
-    if(workerInformations.workName === "أخرى (أريد إضافة عملي)" && newDomain.trim()==='') return false 
+    if (
+      workerInformations.workName === "أخرى (أريد إضافة عملي)" &&
+      newDomain.trim() === ""
+    )
+      return false;
     return true;
   };
 
@@ -139,17 +184,15 @@ const WorkerInformation = () => {
     if (!userPhoto) {
       return setErrors("يرجي وضع صورتك الشخصية");
     }
-    if(workerInformations.workName === "أخرى (أريد إضافة عملي)" && newDomain.trim()!==""){
-      setOpen(true)
-    }
-
+    setWait(true);
     await sendWorkerInformation();
   };
 
   const redirectUser = () => {
     return setTimeout(() => {
+      setWait(false);
       navigate("/profile/me");
-    }, 5000);
+    }, 2000);
   };
 
   useEffect(() => {
@@ -157,12 +200,11 @@ const WorkerInformation = () => {
   }, []);
 
   if (localStorage.getItem("User") === "Client")
-    return <h1 className="text-center pt-5">404 NOT FOUND :(</h1>;     
-  
+    return <h1 className="text-center pt-5">404 NOT FOUND :(</h1>;
+
   return (
     <div className="background">
-              <BoxInformation  open={open}/>
-
+      <BoxInformation open={open} />
       <div
         className=" p-5"
         style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
@@ -197,7 +239,7 @@ const WorkerInformation = () => {
           </div>
           {workerInformations.workName === "أخرى (أريد إضافة عملي)" && (
             <div className="mb-3 text-white text-end">
-             <label htmlFor="name" className="form-label mx-2 ">
+              <label htmlFor="name" className="form-label mx-2 ">
                 :أضف اسم عملك
               </label>
               <input
@@ -207,17 +249,20 @@ const WorkerInformation = () => {
                 placeholder="أضف اسم عمل"
                 aria-describedby="emailHelp"
                 value={newDomain}
-                onChange={(e)=>{
-                  setNewDomain(e.target.value)
-                  if(arabicRegex.test(newDomain.trim())){
-                    setWriteRight((prev)=>{return {...prev,newDomain:"text-end"}})
-                    }else{
-                    setWriteRight((prev)=>{return {...prev,newDomain:"text-start"}})
-                    }
+                onChange={(e) => {
+                  setNewDomain(e.target.value);
+                  if (arabicRegex.test(newDomain.trim())) {
+                    setWriteRight((prev) => {
+                      return { ...prev, newDomain: "text-end" };
+                    });
+                  } else {
+                    setWriteRight((prev) => {
+                      return { ...prev, newDomain: "text-start" };
+                    });
+                  }
                 }}
-                style={{ backgroundColor: "#ffffff4f",}}
-                />
-              
+                style={{ backgroundColor: "#ffffff4f" }}
+              />
             </div>
           )}
 
@@ -233,10 +278,14 @@ const WorkerInformation = () => {
               value={workerInformations.discreption}
               onChange={(e) => {
                 handleChange(e, "discreption");
-                if(arabicRegex.test(workerInformations.discreption.trim())){
-                  setWriteRight((prev)=>{return {...prev,discreption:"text-end"}})
-                }else{
-                  setWriteRight((prev)=>{return {...prev,discreption:"text-start"}})
+                if (arabicRegex.test(workerInformations.discreption.trim())) {
+                  setWriteRight((prev) => {
+                    return { ...prev, discreption: "text-end" };
+                  });
+                } else {
+                  setWriteRight((prev) => {
+                    return { ...prev, discreption: "text-start" };
+                  });
                 }
               }}
               rows={5}
@@ -266,7 +315,17 @@ const WorkerInformation = () => {
             className="btn btn-outline-warning"
             onClick={handleClick}
           >
-            سجل
+            {!wait ? (
+              "سجل"
+            ) : (
+              <>
+                <span role="status">انتظر...</span>
+                <span
+                  className="spinner-grow spinner-grow-sm"
+                  aria-hidden="true"
+                ></span>
+              </>
+            )}
           </button>
           {errors && <div className="alert alert-danger">{errors}</div>}
         </form>
