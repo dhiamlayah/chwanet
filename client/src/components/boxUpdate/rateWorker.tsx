@@ -38,7 +38,6 @@ const GiveRate = () => {
         setSuccess("تم تقييم العمل بنجاح ");
         setError(null);
         setClientGiveRate((prev:boolean)=>{return !prev})
-
         setTimeout(() => {
             setShow(false);
             setSuccess(null)

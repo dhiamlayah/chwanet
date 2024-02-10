@@ -68,8 +68,7 @@ function WorkerFound({ workers }: Props) {
                       <div className="line line-dark w-25   bg-secondary  "></div>
                     </div>
                   </Card.Title>
-                  <Card.Text className="text-end ">
-                    <ul>
+                    <div className="text-end pb-1">
                       <div className=" d-flex justify-content-end " style={{    lineBreak: 'anywhere',marginBottom:'-10px'}}>
                         <p>{worker.phone}</p>
                         <p className="fw-bold px-2 text-secondary">
@@ -82,8 +81,7 @@ function WorkerFound({ workers }: Props) {
                           <FontAwesomeIcon icon={faPersonDigging} />
                         </p>{" "}
                       </div>
-                    </ul>
-                  </Card.Text>
+                    </div>
                   <Link
                     to={`/profile/${worker._id}`}
                     className="btn btn-outline-warning"

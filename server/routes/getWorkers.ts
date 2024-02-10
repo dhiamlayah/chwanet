@@ -52,7 +52,7 @@ router.post(
     const allWorkers = await WorkerModel.find({
       $or: seachDataFromDataBase,
     })
-      .where({ photo: { $ne: null } })
+.where({ $and: [ { photo: { $ne: null } }, { workName: { $ne: "أخرى (أريد إضافة عملي)" } } ] })
       .countDocuments();
     const Workers = await WorkerModel.find(
       {
@@ -60,7 +60,7 @@ router.post(
       },
       "photo firstName workName phone lastName Rate",
       { skip: startIndex, limit: limit }
-    ).where({ photo: { $ne: null } });
+    ).where({ $and: [ { photo: { $ne: null } }, { workName: { $ne: "أخرى (أريد إضافة عملي)" } } ] })
     res.status(200).send({ Workers, numberOfWorkers: allWorkers });
   })
 );
