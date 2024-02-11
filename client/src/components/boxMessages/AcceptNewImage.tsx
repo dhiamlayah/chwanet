@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { globalComponents } from "../profileWorker/WorkerProfil";
 import axios from "axios";
 
-const AcceptNewImag = ({open,setOpen,setUserPhoto,imgPDPUrl,setUserFile,userFile}:any) => {
+const AcceptNewImag = ({open,setOpen,setUserPhoto,imgPDPUrl,setUserFile,userFile,path}:any) => {
   const url = process.env.REACT_APP_port;
   const {setUpdate}= useContext(globalComponents)
   const [error, setError] = useState<string | null>(null);
@@ -26,7 +26,7 @@ const AcceptNewImag = ({open,setOpen,setUserPhoto,imgPDPUrl,setUserFile,userFile
     formData.append("file", userFile);
     try {
       await axios
-        .put(url + "/meAsWorker/profilePicrure", formData, {
+        .put(url + "/meAsWorker/"+path, formData, {
           headers: {
             token: localStorage.getItem("Token"),
           },

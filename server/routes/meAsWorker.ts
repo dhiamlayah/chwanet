@@ -60,6 +60,7 @@ router.put(
       workName: workName,
       discreption: discreption.trim(),
       photo: imageResized,
+      backgroundImage:{filename:"communBackground.jpg"},
       team: true,
       experience: experience,
     });
@@ -72,14 +73,13 @@ router.put(
   })
 );
 router.put(
-  "/profilePicrure",
+  "/profilePicture",
   auth,
   upload.single("file"),
   resizeImages,
   asyncMiddleware(async (req: any, res: any) => {
     const imageResized = req.imageResized;
     const findWorker = await WorkerModel.findById(req.user._id);
-    console.log("find worker", findWorker);
     if (findWorker) {
       fs.rmSync(`userPicture/${req.user._id}/${findWorker.photo.filename}`, {
         force: true,
@@ -95,6 +95,35 @@ router.put(
       res.status(200).send("success");
     } else {
       res.status(400).send({ message: "faild to change image" });
+    }
+  })
+);
+
+router.put(
+  "/profileBackgroudPicture",
+  auth,
+  upload.single("file"),
+  resizeImages,
+  asyncMiddleware(async (req: any, res: any) => {
+    const imageResized = req.imageResized;
+    const findWorker = await WorkerModel.findById(req.user._id);
+    if (findWorker) {
+      if(findWorker.backgroundImage.filename!=="communBackground.jpg"){
+        fs.rmSync(`userPicture/${findWorker.backgroundImage.filename}`, {
+          force: true,
+        }); // delete the tmp file as now have buffer
+      }
+    } else {
+       return res.status(400).send({ message: " worker not found " });
+    }
+    const user = await WorkerModel.findByIdAndUpdate(req.user._id, {
+      backgroundImage: {filename:req.user._id+"/"+imageResized.filename},
+    });
+    if (user) {
+      await user.save();
+      return  res.status(200).send("success");
+    } else {
+     return  res.status(400).send({ message: "faild to change image" });
     }
   })
 );
