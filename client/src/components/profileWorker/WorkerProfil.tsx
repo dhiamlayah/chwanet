@@ -5,7 +5,6 @@ import WorkerImages from "./WorkerImages";
 import WorkerName from "./WorkersName";
 import WorkerListGroup from "./WorkerListGroup";
 import WorkerComments from "./WorkerComments";
-
 import "../../StyleDesign/meAsWorker.css";
 import PicturesLife from "./WorkerPicturesLife";
 
@@ -17,7 +16,7 @@ export type UserData = {
 export const globalComponents = createContext<any | undefined>(undefined);
 
 const WorkerProfil = ({
-  profilPicture,
+  // profilPicture,
   WorkerInformations,
   setUpdate,
 }: any) => {
@@ -73,15 +72,6 @@ const WorkerProfil = ({
       });
   };
 
-  const handleClick = (numb: number) => {
-    if (numb === 1) {
-      setNumber(1);
-    } else if (numb === 2) {
-      setNumber(2);
-    } else {
-      setNumber(3);
-    }
-  };
 
   // sheck the visiter is the same worker profile or not
   const isThisMe = () => {
@@ -118,7 +108,6 @@ const WorkerProfil = ({
         WorkerInformations,
         WorkerRate,
         isMe,
-        profilPicture,
         user,
         setUpdate,
       }}
@@ -127,7 +116,7 @@ const WorkerProfil = ({
         <div id="content">
           <WorkerImages />
           <WorkerName />
-          <WorkerListGroup number={number} handleClick={handleClick} />
+          <WorkerListGroup number={number} setNumber={setNumber} />
 
           <div
             style={{ minHeight: "50vh", overflow: "hidden" }}

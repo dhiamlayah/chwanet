@@ -8,7 +8,7 @@ const Profile = ( ) => {
     const workerId = params.id
     const url = process.env.REACT_APP_port;
     const [WorkerInformations, setWorkerInformations] = useState<any>(null);
-    const [profilPicture, setProfilePicture] = useState<any>(null);
+    // const [profilPicture, setProfilePicture] = useState<any>(null);
     const [update,setUpdate]=useState<boolean>(false)
 
       const getWorkerInformation = async () => {
@@ -22,34 +22,33 @@ const Profile = ( ) => {
           console.log(err);
         }
       };
-      const getWorkerPicture = async (photo: any) => {
-        try {
-          await axios.get(url + `/userPicture/${workerId}/` + photo.filename).then((res) => {
-            console.log("hello", res.config.url);
-            setProfilePicture(res.config.url);
-          });
-        } catch (err) {
-          console.log("there is an error to get imageUrl", err);
-        }
-      };
+      // const getWorkerPicture = async (photo: any) => {
+      //   try {
+      //     await axios.get(url + `/userPicture/${workerId}/` + photo.filename).then((res) => {
+      //       console.log("hello", res.config.url);
+      //       setProfilePicture(res.config.url);
+      //     });
+      //   } catch (err) {
+      //     console.log("there is an error to get imageUrl", err);
+      //   }
+      // };
       useEffect(() => {
         getWorkerInformation();
       }, []);
 
-      useEffect(() => {
-        if (WorkerInformations) {
-          getWorkerPicture(WorkerInformations.photo);
-        }
-      }, [WorkerInformations]);
+      // useEffect(() => {
+      //   if (WorkerInformations) {
+      //     getWorkerPicture(WorkerInformations.photo);
+      //   }
+      // }, [WorkerInformations]);
     
       useEffect(() => {
         getWorkerInformation();
      }, [update]);
    
 
-   if(profilPicture)return ( 
+   if(WorkerInformations)return ( 
               <WorkerProfil
-                profilPicture={profilPicture}
                 WorkerInformations={WorkerInformations}
                 setUpdate={setUpdate}
               />

@@ -6,7 +6,7 @@ import LodingPage from "../loading";
 const MeAsWorker = () => {
   const url = process.env.REACT_APP_port;
   const [WorkerInformations, setWorkerInformations] = useState<any>(null);
-  const [profilPicture, setProfilePicture] = useState<any>(null);
+  const [go,setGo]=useState<boolean>(false)
   const [update,setUpdate]=useState<boolean>(false)
 
   const getWorkerInformation = async () => {
@@ -28,13 +28,12 @@ const MeAsWorker = () => {
  
   const getWorkerPicture = async (photo: any) => {
     try {
-      await axios.get(url + `/userPicture/${WorkerInformations._id}/` + photo.filename).then((res) => {
-        setProfilePicture(res.config.url);
-      });
+      await axios.get(url + `/userPicture/${WorkerInformations._id}/` + photo.filename).then(()=>{
+        setGo(true)
+      })
     } catch (err) {
-      console.log("there is an error to get imageUrl", err);
       window.location.pathname = '/register/info'
-    }
+     }
   };
 
   useEffect(() => {
@@ -42,8 +41,8 @@ const MeAsWorker = () => {
   }, []);
 
   useEffect(() => {
-    if (WorkerInformations) {
-      getWorkerPicture(WorkerInformations.photo);
+    if(WorkerInformations){
+      getWorkerPicture(WorkerInformations.photo)
     }
   }, [WorkerInformations]);
 
@@ -54,10 +53,10 @@ const MeAsWorker = () => {
   }, [update]);
 
   
-  if(profilPicture)return (
+  if(go)return (
     <div>
         <WorkerProfil
-          profilPicture={profilPicture}
+          // profilPicture={profilPicture}
           WorkerInformations={WorkerInformations}
           setUpdate={setUpdate}
         />

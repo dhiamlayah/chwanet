@@ -6,12 +6,12 @@ import GiveRate from "../boxUpdate/rateWorker";
 const WorkerName = () => {
   const user = localStorage.getItem("User");
 
-  const { WorkerInformations,isMe,WorkerRate } =
-    useContext(globalComponents);
+  const { WorkerInformations, isMe, WorkerRate } = useContext(globalComponents);
   const { firstName, lastName } = WorkerInformations;
   const starImag = () => {
     const imagUrl = "../../images/rateStars/";
-    if (WorkerRate.rate < 1.25 ||WorkerRate.rate ===null) {
+
+    if (WorkerRate.rate < 1.25 || WorkerRate.rate === undefined) {
       return imagUrl + "0.png";
     } else if (WorkerRate.rate >= 1.25 && WorkerRate.rate < 2.5) {
       return imagUrl + "0.25.png";
@@ -56,9 +56,7 @@ const WorkerName = () => {
             alt="star"
           />
         </div>
-        {user !== "Worker" && (
-           <GiveRate/>
-        )}
+        {user !== "Worker" && <GiveRate />}
       </div>
     </div>
   );
