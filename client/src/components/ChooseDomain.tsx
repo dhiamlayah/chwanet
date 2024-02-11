@@ -13,7 +13,7 @@ const ChooseDomain = ({ workName, handleChange }: Props) => {
     try {
       await axios.get(url + "/workNameList").then((res: any) => {
         console.log("work name list ", location.pathname);
-        setWorkNameList(res.data.message);
+        setWorkNameList(res.data.workNames);
       });
     } catch (error: any) {
       setWorkNameList([{ name: "لا يمكن الاتصال بالسرفر", _id: "9" }]);

@@ -7,6 +7,7 @@ import DeleteWorker from "../boxMessages/DeleteWorker";
 
 const ListOfNewWorkName = () => {
   let count = 0;
+  const [error, setError] = useState<string | null>(null);
   const [openAccept, setOpenAccept] = useState<boolean>(false);
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const [updateTable,setUpdateTable]= useState<boolean>(false)
@@ -27,10 +28,12 @@ const ListOfNewWorkName = () => {
           },
         })
         .then((res) => {
+          setError(null)
           setAllNewDomainList(res.data.allNewDomain);
         });
     } catch (err) {
-      console.log("error", err);
+      setError("لا يمكن الاتصال بالسرفر");
+ 
     }
   };
 
@@ -44,14 +47,24 @@ const ListOfNewWorkName = () => {
         <thead className="table-primary">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">_id</th>
-            <th scope="col">New Work </th>
-            <th scope="col ">accept</th>
-            <th scope="col">delete</th>
+            <th scope="col">معرف</th>
+            <th scope="col">عمل جديد </th>
+            <th scope="col ">مقبول</th>
+            <th scope="col">حذف</th>
           </tr>
         </thead>
         <tbody className="table-dark">
-          {allNewWorklist?.length &&
+          {!allNewWorklist || allNewWorklist.length===0 &&
+           <tr>
+              <th>1</th>
+              <td colSpan={4} > لم يتم العثور على شيء  </td>
+            </tr>}
+            {error &&
+           <tr>
+              <th>1</th>
+              <td  colSpan={4}> {error} </td>
+            </tr>}
+          {allNewWorklist && allNewWorklist.length>0 &&
             allNewWorklist.map((newWork) => {
               count++;
               return (

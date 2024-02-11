@@ -33,10 +33,11 @@ const asyncMiddleware = (fn : Function ) => (req:any, res:any, next:any) => {
 
 const resizeImages = asyncMiddleware( async( req:any,res:any,next:any)=>{
     const file : File = req.file;    
-    console.log('idd',req.user)
     // Assuming req.user._id is the user's ID
     const userFolder = `./userPicture/${req.user._id}/`;
 
+
+    console.log("path of the image ",file.path)
     // Create the user folder if it doesn't exist
     if (!fs.existsSync(userFolder)) {
      fs.mkdirSync(userFolder, { recursive: true });

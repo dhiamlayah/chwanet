@@ -24,7 +24,7 @@ router.get('/',asyncMiddleware(
      async(req:any,res:any)=>{
        const workNames =await WorkNameModel.find({},"name")
        if(workNames.length===0)return res.status(200).json({message:'there is no WorkName right now'})
-       return res.status(200).json({message:workNames}) 
+       return res.status(200).json({workNames}) 
     }
 
 ))

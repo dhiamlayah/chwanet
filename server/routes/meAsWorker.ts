@@ -63,8 +63,10 @@ router.put(
       experience: experience,
     });
     if (user) {
-      res.send("success");
+      res.status(200).send("success");
       return await user.save();
+    }else{
+      res.status(400).send({message:"worker not found"})
     }
   })
 );

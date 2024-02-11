@@ -30,7 +30,7 @@ const ChooseBetwen = ({number,setNumber}:any) => {
             >
               All Works
             </button>
-            <button
+            {/* <button
               type="button"
               className={
                 number === 3
@@ -55,7 +55,7 @@ const ChooseBetwen = ({number,setNumber}:any) => {
               }}
             >
               All Clients
-            </button>
+            </button> */}
           </div>
       </div>
       <hr className="mx-5 d-flex justify-content-center " />

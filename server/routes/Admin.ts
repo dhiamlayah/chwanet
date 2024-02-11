@@ -4,6 +4,8 @@ const router = express.Router();
 const auth = require("../middelwares/authorization");
 const asyncMiddleware = require("../middelwares/asyncMiddleware");
 const admin = require("../middelwares/admin");
+const fs  = require('fs')
+
 import NewWorkNameModel from "../models/NewWorkName";
 import ProfilesModels from "../models/ProfilesPictures";
 import WorkerRatingsAndCommentsModel from "../models/RatingsAndComments";
@@ -72,19 +74,26 @@ router.put(
 
 router.delete(
   "/:id",
+  auth,
+  admin,
   asyncMiddleware(async (req: any, res: any) => {
     const id = req.params.id;
-    const workModel = await WorkerModel.deleteOne({ _id: id });
-    const profileModel = await ProfilesModels.deleteOne({ _id: id });
-    const Rating = await WorkerRatingsAndCommentsModel.deleteOne({ _id: id });
-    const Name = await NewWorkNameModel.deleteOne({ _id: id });
-    console.log(workModel);
-    console.log(profileModel);
-    console.log(Rating);
-    console.log(Name);
+    await WorkerModel.deleteOne({ _id: id });
+    await ProfilesModels.deleteOne({ _id: id });
+    await WorkerRatingsAndCommentsModel.deleteOne({ _id: id });
+    await NewWorkNameModel.deleteOne({ _id: id });
+    fs.rm(`userPicture/${id}`, { recursive: true }, (err:any) => {
+      if (err) {
+          console.error('Error deleting directory:', err);
+          res.status(400).send({message:'Error deleting directory not found '});
+      } else {
+          console.log('Directory deleted successfully');
+          res.status(200).send('Directory deleted successfully');
+      }
+  });
 
-    res.send("success");
   })
 );
 
 module.exports = router;
+ 
