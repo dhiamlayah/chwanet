@@ -15,6 +15,8 @@ const WorkerImages = () => {
     process.env.REACT_APP_port +
     `/userPicture/${WorkerInformations.backgroundImage.filename}`;
 
+
+    
   const [userPhoto, setUserPhoto] = useState<any>("/images/profil.jpg");
   const [backgroundImage, setBackgroundImage] =useState<any>("/images/profil.jpg");
   const [userFile, setUserFile] = useState<any>(null);

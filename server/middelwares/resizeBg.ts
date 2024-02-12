@@ -1,4 +1,4 @@
-
+export{}
 const sharp = require('sharp');
 const fs  = require('fs')
 
@@ -31,18 +31,19 @@ const asyncMiddleware = (fn : Function ) => (req:any, res:any, next:any) => {
   
 
 
-const resizeImages = asyncMiddleware( async( req:any,res:any,next:any)=>{
+const resizeBg= asyncMiddleware( async( req:any,res:any,next:any)=>{
     const file : File = req.file;    
     // Assuming req.user._id is the user's ID
     const userFolder = `./userPicture/${req.user._id}/`;
 
 
-    console.log("path of the image ",file.path)
-    // Create the user folder if it doesn't exist
     if (!fs.existsSync(userFolder)) {
      fs.mkdirSync(userFolder, { recursive: true });
     }
  
+    if (!fs.existsSync(userFolder+"bgImage/")) {
+      fs.mkdirSync(userFolder+"bgImage/", { recursive: true }); // Create directory recursively if it doesn't exist
+    }
  
     // Use Sharp for image processing
     const image = sharp(file.path) //path to the stored image 
@@ -50,14 +51,14 @@ const resizeImages = asyncMiddleware( async( req:any,res:any,next:any)=>{
        await image.metadata().   // get image metadata for size 
         then((metadata:any)=>{
           if (metadata.width > 550) {
-            return image.resize({ width: 550 }).toFile(`${userFolder}${file.originalname}`) ; // resize if too big
+            return image.resize({ width: 550 }).toFile(`${userFolder}bgImage/${file.originalname}`) ; // resize if too big
           } else {
             return image.toFile(`${userFolder}${file.originalname}`);
           }
         }).then((data:ResizedImage)=>{
             fs.rmSync(req.file.path, { force: true }); // delete the tmp file as now have buffer
             data.filename = file.originalname
-            data.destination=`./userPicture/${req.user._id}`
+            data.destination= userFolder+"bgImage/"
             req.imageResized = data
             next()
         });  
@@ -69,4 +70,4 @@ const resizeImages = asyncMiddleware( async( req:any,res:any,next:any)=>{
 }
 )
 
-module.exports= resizeImages
+module.exports= resizeBg

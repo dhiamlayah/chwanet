@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const asyncMiddleware = require("../middelwares/asyncMiddleware");
 const resizeImages = require("../middelwares/resizeImages");
+const resizeBg = require("../middelwares/resizeBg");
+const resizeProfilePicture = require("../middelwares/resizeProfilePicture");
 const upload = require("../middelwares/multer");
 const auth = require("../middelwares/authorization");
 const fs = require("fs");
@@ -52,7 +54,7 @@ router.put(
   "/",
   auth,
   upload.single("file"),
-  resizeImages,
+  resizeProfilePicture,
   asyncMiddleware(async (req: any, res: any) => {
     const imageResized = req.imageResized;
     const { workName, discreption, experience } = JSON.parse(req.body.document);
@@ -76,7 +78,7 @@ router.put(
   "/profilePicture",
   auth,
   upload.single("file"),
-  resizeImages,
+  resizeProfilePicture,
   asyncMiddleware(async (req: any, res: any) => {
     const imageResized = req.imageResized;
     const findWorker = await WorkerModel.findById(req.user._id);
@@ -103,7 +105,7 @@ router.put(
   "/profileBackgroudPicture",
   auth,
   upload.single("file"),
-  resizeImages,
+  resizeBg,
   asyncMiddleware(async (req: any, res: any) => {
     const imageResized = req.imageResized;
     const findWorker = await WorkerModel.findById(req.user._id);
@@ -117,7 +119,7 @@ router.put(
        return res.status(400).send({ message: " worker not found " });
     }
     const user = await WorkerModel.findByIdAndUpdate(req.user._id, {
-      backgroundImage: {filename:req.user._id+"/"+imageResized.filename},
+      backgroundImage: {filename:req.user._id+"/bgImage/"+imageResized.filename},
     });
     if (user) {
       await user.save();
