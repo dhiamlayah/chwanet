@@ -6,9 +6,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAnglesLeft,
   faAnglesRight,
+  faTrash,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import LodingPage from "../loading";
+import DeleteImage from "./boxMessages/DeleteImage";
 type Picture = {
   descreption: string;
   picture: {
@@ -21,9 +23,11 @@ const AllWorkerPictures = () => {
   const url: string | undefined = process.env.REACT_APP_port;
   const { WorkerInformations } = useContext(globalComponents);
   const [pictures, setPictures] = useState<Picture[]>([]);
+  const [fileNameToDelete,setFileNameToDelete]=useState<null|string>(null)
   const [picturesLength, setPicturesLength] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
   const [show, setShow] = useState<Picture | null>(null);
+  const [open,setOpen]=useState<boolean>(false)
   const [curseur, setCurseur] = useState({
     left: "pointer",
     right: "no-drop",
@@ -32,8 +36,7 @@ const AllWorkerPictures = () => {
   const getPicturesFromServer = async (startFrom: number, endIn: number) => {
     await axios
       .get(
-        url +
-          `/workerPictures/${WorkerInformations._id}?startFrom=${startFrom}&endIn=${endIn}`
+        url + `/workerPictures/${WorkerInformations._id}?startFrom=${startFrom}&endIn=${endIn}`
       )
       .then((res) => {
         setError(null);
@@ -72,9 +75,12 @@ const AllWorkerPictures = () => {
   };
   useEffect(() => {
     getPicturesFromServer(0, 10);
-  }, []);
+  },[]);
 
-  console.log('picture ',pictures)
+
+  console.log("images",pictures)
+  console.log("length",picturesLength)
+
   return (
     <AnimatedPage>
       <div className="d-block" style={{ minHeight: "30vh" }}>
@@ -83,6 +89,7 @@ const AllWorkerPictures = () => {
         }
         {show && (
           <div className="mb-3 d-flex align-items-lg-end align-items-center  w-100 ">
+            
             <button
               className="text-secondary border border-secondary ms-2"
               onClick={() => prevShow(show)}
@@ -91,6 +98,16 @@ const AllWorkerPictures = () => {
               <FontAwesomeIcon icon={faAnglesLeft} />
             </button>
             <div className="w-100">
+              <p
+                className="text-start fw-bold fs-5"
+                onClick={() => {
+                  setFileNameToDelete(show.picture.filename)
+                  setOpen(true)
+                }}
+                style={{ marginBottom: "-20px", cursor: "pointer" }}
+              >
+                <FontAwesomeIcon icon={faTrash} style={{color: "#9c0707"}} />           
+             </p>
               <p
                 className="text-end fw-bold fs-5"
                 onClick={() => setShow(null)}
@@ -104,11 +121,12 @@ const AllWorkerPictures = () => {
               >
                 {show.date}
               </p>
+             
               <div className="d-flex justify-content-center align-items-lg-end align-items-center mx-5 ">
                 <div >
                   <hr className="mx-5 d-flex justify-content-center " />
-                  {show.descreption &&  <p className="text-center text-break ">
-                          {show.descreption }
+                  {show.descreption!==null  &&  <p className="text-center text-break ">
+                           {show.descreption}
                   </p>}
                   <img
                     src={`${url}/userPicture/${WorkerInformations._id}/${show.picture.filename}`}
@@ -202,6 +220,7 @@ const AllWorkerPictures = () => {
           </div>
         )}
       </div>
+      <DeleteImage open={open} setOpen={setOpen} NoPictureRest={setError} fileNameToDelete={fileNameToDelete} setShow={setShow} pictures={pictures}setPictures={setPictures} setFileNameToDelete={setFileNameToDelete}  />
     </AnimatedPage>
   );
 };
