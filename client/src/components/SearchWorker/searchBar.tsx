@@ -1,29 +1,33 @@
 import "../../StyleDesign/searchPage.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { globalSearchComponent } from "../../pages/SearchWorker";
 const SearchBar = () => {
-  const { numberOfWorkers } = useContext(globalSearchComponent);
+  const queryParams = new URLSearchParams(location.search);
+  const { numberOfWorkers, setSearchParams, setSortBy } = useContext(
+    globalSearchComponent
+  );
   return (
     <div className="container mt-5 text-center d-flex w-100">
       <div className="line line-dark w-25  "></div>
-      <p style={{ width: "18rem" }}>{numberOfWorkers} worker found</p>
+      <p style={{ width: "18rem" }}  >عامل محترف    <span>{numberOfWorkers} </span>  </p>
       <div className="line line-dark w-50  "></div>
 
-      <div className="dropdown">
-        <p
-          className="dropdown-toggle"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-          style={{ width: "4rem" ,cursor:"pointer"}}
+     
+      <div>
+        <select
+          style={{ backgroundColor: "rgb(0,0,0,0)", border: "0 " }}
+          onChange={(e) => {
+            setSortBy(e.target.value);
+            queryParams.set("sortBy", e.target.value);
+            queryParams.set("page","1");
+
+            setSearchParams(queryParams);
+          }}
         >
-          sort by
-        </p>
-        <ul
-          className="dropdown-menu "
-         >
-          <li>must comment</li>
-          <li>must rate</li>
-        </ul>
+          <option value={"nothing"}>ترتيب حسب</option>
+          <option value={"rate"}>الأفضل تقييم  </option>
+          <option value={"length"}>الأكثر مقيمين </option>
+        </select>
       </div>
 
       <div className="line line-dark  "></div>

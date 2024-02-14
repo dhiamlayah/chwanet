@@ -19,7 +19,6 @@ router.post(
     const filterBy = req.body;
     let sendFilter: WorkerInformation = {};
     let sortQuery :any = {};
-
     if(req.query.sortBy === "length" ){
       sortBy = "Rate.length"
     }
@@ -27,10 +26,7 @@ router.post(
       sortBy =  "Rate.rate" 
     }
 
-    sortQuery[sortBy] = -1;
-
-    console.log("sortBy",sortBy)
-    console.log("req.query.sortBy",req.query.sortBy)
+    sortQuery[sortBy] = "desc";
 
     if (filterBy.domain !== "") {
       sendFilter.workName = filterBy.domain;
@@ -68,17 +64,20 @@ router.post(
 
     const allWorkers = await WorkerModel.find({
       $or: seachDataFromDataBase,
+      $and: [ { photo: { $ne: null } }, { workName: { $ne: "أخرى (أريد إضافة عملي)" } } ] 
     })
-.where({ $and: [ { photo: { $ne: null } }, { workName: { $ne: "أخرى (أريد إضافة عملي)" } } ] })
       .countDocuments();
     const Workers = await WorkerModel.find(
       {
         $or: seachDataFromDataBase,
+        $and: [ { photo: { $ne: null } }, { workName: { $ne: "أخرى (أريد إضافة عملي)" } } ]
       },
       "photo firstName workName phone lastName Rate",
-      { skip: startIndex, limit: limit }
-    ).where({ $and: [ { photo: { $ne: null } }, { workName: { $ne: "أخرى (أريد إضافة عملي)" } } ] }).sort(sortQuery)
-    res.status(200).send({ Workers, numberOfWorkers: allWorkers });
+    ).sort(sortQuery)
+
+    
+     const newTable=  await Workers.slice(startIndex,page * limit)
+    res.status(200).send({ Workers:newTable, numberOfWorkers: allWorkers });
   })
 );
 

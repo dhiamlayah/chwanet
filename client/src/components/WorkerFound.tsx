@@ -6,13 +6,16 @@ import { Link } from "react-router-dom";
 import { Placeholder } from "react-bootstrap";
 import StarsRating from "react-star-rate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPersonDigging, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { faHourglass1, faPersonDigging, faPhone } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   workers: Worker[] | null;
 };
 
+
 function WorkerFound({ workers }: Props) {
+  console.log('workers ==========>',workers)
+
   const url: string | undefined = process.env.REACT_APP_port;
   return (
     <Row xs={2} sm={3} md={3} lg={4} xl={4} className="g-4 m-0 ">
@@ -201,6 +204,10 @@ function WorkerFound({ workers }: Props) {
           </Card>
         </>
       )}
+
+      {workers?.length==0&& <h1>
+          nothing found
+        </h1>}
     </Row>
   );
 }

@@ -28,13 +28,14 @@ const SearchWorker = () => {
   const queryDomain =queryParams.get("domain") 
   const queryDelegation = queryParams.get("delegation") 
   const querySearch = queryParams.get("search") 
-
+  const querySortBy= queryParams.get('sortBy')
   const [domain, setDomain] = useState<string>(()=>{ return queryDomain ? queryDomain: ""}),
         [state, setState] = useState<string>(()=>{ return queryState ? queryState: ""}),
         [delegation, setDelegation] = useState<string>(()=>{ return queryDelegation ? queryDelegation: ""}),
         [workers, setWorkers] = useState<Worker[] | null>(null),
         [numberOfWorkers, setNumberOfWorkers] = useState<number>(0),
-        [search,setSearch]=useState<string>(()=>{ return querySearch ? querySearch: ""})
+        [search,setSearch]=useState<string>(()=>{ return querySearch ? querySearch: ""}),
+        [sortBy,setSortBy]=useState<string>(()=>{ return querySortBy ? querySortBy: ""})
 
   const [error, setError] = useState<null | string>(null);
   const url: any = process.env.REACT_APP_port;
@@ -44,7 +45,7 @@ const SearchWorker = () => {
 
   const specifecWorkersFromDB = async (page: number, limit: number) => {
     await axios
-      .post(url + `/getWorkers?page=${page}&limit=${limit}`, {
+      .post(url + `/getWorkers?page=${page}&limit=${limit}&sortBy=${sortBy}`, {
         state,
         delegation,
         domain,
@@ -83,10 +84,13 @@ const SearchWorker = () => {
   };
 
 
+
   useEffect(() => {
+    console.log('querySortBy =======>',querySortBy)
+
     setWorkers(null)
     specifecWorkersFromDB(queryPage, 12);
-  }, [state,delegation,domain,search]);
+  }, [state,delegation,domain,search,sortBy]);
 
   useEffect(() => {
      specifecWorkersFromDB(queryPage, 12);
@@ -94,7 +98,7 @@ const SearchWorker = () => {
 
   return (
     <globalSearchComponent.Provider
-      value={{ domain, handleChange, state, delegation, specifecWorkersFromDB,setSearchParams,search,setSearch,numberOfWorkers}}
+      value={{ domain, handleChange, state, delegation, specifecWorkersFromDB,setSearchParams,search,setSearch,numberOfWorkers,setSortBy}}
     >
       <div
         className="d-md-flex"

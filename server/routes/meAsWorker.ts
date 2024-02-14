@@ -65,6 +65,7 @@ router.put(
       backgroundImage:{filename:"communBackground.jpg"},
       team: true,
       experience: experience,
+      Rate:{rate:0,length:0}
     });
     if (user) {
       res.status(200).send("success");
@@ -129,6 +130,7 @@ router.put(
     }
   })
 );
+
 
 
 module.exports = router;

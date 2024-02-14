@@ -36,7 +36,7 @@ const NavBar = ({ user }: any) => {
 
   return (
     <nav
-      className="navbar navbar-expand-lg border-bottom border-dark fixed-top"
+      className="navbar navbar-expand-lg border-bottom border-dark fixed-top "
       style={navColor()}
       id={navbarDesign()}
     >
