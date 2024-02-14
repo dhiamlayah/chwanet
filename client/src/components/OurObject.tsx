@@ -1,9 +1,9 @@
 const OurObjectif = () => {
   return (
-    <div className=" p-5" style={{ backgroundColor: "#a2717170" }}>
+    <div className=" py-5" style={{ backgroundColor: "#a2717170" }}>
       <h1 className="text-center text-secondary">أهدافنا </h1>
       <hr />
-      <div className="d-block p-5 text-center d-lg-flex">
+      <div className="d-block py-5 text-center d-lg-flex">
         <div className="bg-secondary m-3 rounded-3" style={{minHeight:"30vh" ,minWidth:"30%"}}>
           <h3 className="mt-3 fw-bold">منصة شاملة لخدمات المنزل</h3>
           <p className="text-light fs-5 p-3">

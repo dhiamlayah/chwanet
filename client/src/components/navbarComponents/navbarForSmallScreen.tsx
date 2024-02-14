@@ -66,7 +66,7 @@ const NavBarForSmallScreen = ({
         </Link>
 
         <Link
-          to="/register"
+          to="/abputUs"
           className="btn py-3 text-white text-decoration-none fw-medium "
           id="phoneNavBar"
           onClick={() => setShow(false)}

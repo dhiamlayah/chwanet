@@ -2,12 +2,15 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 const Login = () => {
   const url: string = process.env.REACT_APP_port + "/login";
   interface Input {
     phone: null | string;
     password: null | string;
   }
+  const [see, setSee] = useState<boolean>(false);
   const [phone, setPhone] = useState<number>(),
     [password, setPassword] = useState<string>(""),
     [errors, setErrors] = useState<Input>({
@@ -15,7 +18,6 @@ const Login = () => {
       password: null,
     }),
     [submitErrors, setSubmitErrors] = useState<string | null>();
-
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -57,8 +59,8 @@ const Login = () => {
         .then((res) => {
           console.log(res);
           const headers = res.headers["token"];
-          const user = res.data.user
-          localStorage.setItem('User',user)
+          const user = res.data.user;
+          localStorage.setItem("User", user);
           localStorage.setItem("Token", headers);
           toast.success("تسجيل الدخول بنجاح");
           redirectUser();
@@ -80,7 +82,7 @@ const Login = () => {
     if (!cheak) {
       return setSubmitErrors("يرجى استكمال البيانات ");
     }
-    setSubmitErrors(null)
+    setSubmitErrors(null);
     await sendUserData();
   };
   const redirectUser = () => {
@@ -89,64 +91,75 @@ const Login = () => {
     }, 5000);
   };
   return (
-      <div className="background2">
-
-        <div
-          className=" mt-5 p-5"
-          style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
-          id="register"
-        >
-          <form className="text-white fw-medium" onSubmit={handleSubmit}>
-            <div className="mb-3 text-white text-end">
-              <label htmlFor="tlph" className="form-label ">
-                رقم الهاتف
-              </label>
+    <div className="background2">
+      <div
+        className=" mt-5 p-5"
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
+        id="register"
+      >
+        <form className="text-white fw-medium" onSubmit={handleSubmit}>
+          <div className="mb-3 text-white text-end">
+            <label htmlFor="tlph" className="form-label ">
+              رقم الهاتف
+            </label>
+            <input
+              type="tel"
+              className="form-control text-white fs-5"
+              id="tlph"
+              aria-describedby="emailHelp"
+              style={{ backgroundColor: "#ffffff4f" }}
+              onChange={(e) => handleChange(e, setPhone, "phone")}
+            />
+            {errors.phone && (
+              <div className="text-danger p-1">* {errors.phone}</div>
+            )}
+          </div>
+          <div className="mb-3 text-end">
+            <label htmlFor="password" className="form-label ">
+              كلمة المرور
+            </label>
+            <div className="input-group mb-3">
+              <span
+                className="input-group-text bg-secondary"
+                style={{ cursor: "pointer" }}
+                onClick={() => setSee((prev) => !prev)}
+                id="basic-addon1"
+              >
+                {!see && <FontAwesomeIcon icon={faEye} />}
+                {see && <FontAwesomeIcon icon={faEyeSlash} />}
+              </span>
               <input
-                type="tel"
-                className="form-control text-white fs-5"
-                id="tlph"
-                aria-describedby="emailHelp"
-                style={{ backgroundColor: "#ffffff4f" }}
-                onChange={(e) => handleChange(e, setPhone, "phone")}
-              />
-              {errors.phone && (
-                <div className="text-danger p-1">* {errors.phone}</div>
-              )}
-            </div>
-            <div className="mb-3 text-end">
-              <label htmlFor="password" className="form-label ">
-                كلمة المرور
-              </label>
-              <input
-                type="password"
+                type={!see ? "password" : "text"}
                 className="form-control  text-white fs-5 "
                 id="password"
                 style={{ backgroundColor: "#ffffff4f" }}
                 value={password}
                 onChange={(e) => handleChange(e, setPassword, "password")}
               />
-              {errors.password && (
-                <div className="text-danger p-1">* {errors.password}</div>
-              )}
             </div>
-            <button
-              type="submit"
-              className="btn btn-outline-warning mt-2"
-              onClick={handleClick}
-            >
-              إرسال
-            </button>
-            {submitErrors && (
-              <div className="alert alert-danger mt-2">{submitErrors}</div>
+            {errors.password && (
+              <div className="text-danger p-1">* {errors.password}</div>
             )}
-          </form>
-          <div className="text-end fw-bold">
-            <Link to="/register" className="text-light text-decoration-none ">لا املك حساب </Link>
           </div>
+          <button
+            type="submit"
+            className="btn btn-outline-warning mt-2"
+            onClick={handleClick}
+          >
+            إرسال
+          </button>
+          {submitErrors && (
+            <div className="alert alert-danger mt-2">{submitErrors}</div>
+          )}
+        </form>
+        <div className="text-end fw-bold">
+          <Link to="/register" className="text-light text-decoration-none ">
+            لا املك حساب{" "}
+          </Link>
         </div>
-        <ToastContainer />
-
       </div>
+      <ToastContainer />
+    </div>
   );
 };
 

@@ -5,7 +5,7 @@ function Footer() {
   return (
     <div style={{ backgroundColor: "#385470e6", padding: "1px" }}>
       <footer>
-        <div className=" d-sm-flex justify-content-around  m-5">
+        <div className=" d-sm-flex justify-content-between  m-5">
           <div className=" d-flex  align-items-center  justify-content-center">
             <img
               src="./images/logoFooter.png"
@@ -21,7 +21,7 @@ function Footer() {
             <div className="col border-left">
          </div>
             <div className=" col ">
-              <h4>روابط سريعة</h4>
+              <h5>روابط سريعة</h5>
               <ul>
                 <li>
                   <Link to="/" className="text-decoration-none text-dark">الرئيسية</Link>

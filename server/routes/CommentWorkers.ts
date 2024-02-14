@@ -119,4 +119,33 @@ router.get(
   })
 );
 
+router.delete("/:id",auth,asyncMiddleware(
+  async(req:any ,res:any)=>{
+        const workerId = req.params.id
+        const worker = await WorkerRatingsAndCommentsModel.findById(workerId)
+      if (worker && worker.Clients) {
+        const newClientsComment : ClientRateAndComments[]  = worker?.Clients.map(
+          (client) => {
+            if (client._id === req.user._id){
+              return {_id : client._id ,Comment:null , Rate :client.Rate}
+            }else{
+              return client
+            }
+          }
+        );
+
+        await worker.updateOne({Clients:newClientsComment})
+        await worker.save()
+        res.status(200).send("delete successfuly")
+      }else{
+        res.status(400).send({message:'worker not found'})
+
+      }
+
+      
+  }
+))
+
+
+
 module.exports = router;

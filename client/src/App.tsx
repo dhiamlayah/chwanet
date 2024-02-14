@@ -11,6 +11,8 @@ import SearchWorker from "./pages/SearchWorker";
 import LodingPage from "./loading";
 import Profile from "./pages/Profile";
 import AdminSpace from "./pages/Admin";
+import AboutUs from "./pages/AboutUs";
+import NotFound from "./pages/NotFound";
 export interface User {
   date: string;
   delegation: string;
@@ -74,8 +76,9 @@ function App() {
           {user && <Route path="/profile/me" element={<MeAsWorker/>} />}
           <Route path="/profile/:id" element={<Profile />} /> 
           <Route path="/searchWorker" element={<SearchWorker/>}/>
+          <Route  path="/aboutUs" element={<AboutUs/>}/>
           {user && user.isAdmin && <Route path="/admin" element={<AdminSpace/>}/>}
-          <Route path="/*" element={<h1 className="p-5">Not Found 404</h1>} />
+          <Route path="/*" element={<NotFound/>} />
         </Routes>
       </Suspense>
     </Router>

@@ -34,7 +34,7 @@ const NavbarForBigScreen = ({user}:Props) => {
           </li>
           <li className="nav-item ">
             <Link
-              to="/"
+              to="/aboutUs"
               id="link"
               className="text-decoration-none  px-5 nav-link"
             >

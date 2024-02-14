@@ -5,6 +5,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ChooseStateAndDelegation from "../components/ChooseStateAndDelegation";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 const Register = () => {
   const url: string = process.env.REACT_APP_port + "/register";
 
@@ -17,8 +19,8 @@ const Register = () => {
     [delegation, setDelegation] = useState<string>(""),
     [cheakBox, setCheakBox] = useState<Boolean>(false),
     [wait, setWait] = useState(false),
-    [errors, setErrors] = useState<string | null>();
-
+    [errors, setErrors] = useState<string | null>(),
+    [see, setSee] = useState<boolean>(false);
   const handleChange = (event: any, setState: Function) => {
     setState(event.target.value);
   };
@@ -164,14 +166,27 @@ const Register = () => {
             <label htmlFor="password" className="form-label ">
               كلمة المرور
             </label>
-            <input
-              type="password"
-              className="form-control  text-white fs-5 "
-              id="password"
-              style={{ backgroundColor: "#ffffff4f" }}
-              value={password}
-              onChange={(e) => handleChange(e, setPassword)}
-            />
+            <div className="input-group mb-3">
+              <span
+                className="input-group-text bg-secondary"
+                style={{ cursor: "pointer" }}
+                onClick={() => setSee((prev) => !prev)}
+                id="basic-addon1"
+              >
+                {!see && <FontAwesomeIcon icon={faEye} />}
+                {see && <FontAwesomeIcon icon={faEyeSlash} />}
+              </span>
+
+              <input
+                type={!see ? "password" : "text"}
+                className="form-control  text-white fs-5 "
+                id="password"
+                style={{ backgroundColor: "#ffffff4f" }}
+                value={password}
+                onChange={(e) => handleChange(e, setPassword)}
+              />
+            </div>
+
             {password.length < 8 && password !== "" && (
               <div id="emailHelp" className="form-text text-danger">
                 يجب أن تكون كلمة المرور الخاصة بك أطول من 8 أحرف
