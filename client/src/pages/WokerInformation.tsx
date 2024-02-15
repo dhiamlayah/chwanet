@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ChooseDomain from "../components/ChooseDomain";
 import BoxInformation from "../components/boxMessages/boxInformation";
+import NotFound from "./NotFound";
 
 type WorkerInformations = {
   workName: string;
@@ -200,7 +201,7 @@ const WorkerInformation = () => {
   }, []);
 
   if (localStorage.getItem("User") === "Client")
-    return <h1 className="text-center pt-5">404 NOT FOUND :(</h1>;
+    return  <NotFound/>
 
   return (
     <div className="background">

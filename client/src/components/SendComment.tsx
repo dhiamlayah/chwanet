@@ -60,7 +60,7 @@ const SendComments = ({setAddNewComment}:Props) => {
   return (
     <div>
       {error && <div className="alert alert-danger">{error}
-      {!token && <Link to="/login" className="px-2">تسجيل الدخول</Link>}
+      {!token && <Link   to={`/register?redirectPath=${window.location.pathname}`} className="px-2">تسجيل الدخول</Link>}
       </div>}
       {success && (
         <div className="alert  bg-success text-white" role="alert">

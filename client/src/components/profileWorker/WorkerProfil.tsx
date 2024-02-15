@@ -28,7 +28,7 @@ const WorkerProfil = ({
   const [isMe, setIsMe] = useState<boolean>(false);
 
   // id of worker visited profile
-  const { _id,Rate } = WorkerInformations;
+  const { _id, Rate } = WorkerInformations;
 
   // get current visiter (client or worker)
   const getCurrentUser = async () => {
@@ -44,10 +44,10 @@ const WorkerProfil = ({
           console.log("successfuly", res.data);
           setUser(res.data.user);
         });
-    } catch (err :any ) {
-      if(err.response){
+    } catch (err: any) {
+      if (err.response) {
         console.log("ther is an error to get current user ", err);
-      }else{
+      } else {
         console.log("ther is an error to get current user ", err);
       }
     }
@@ -62,16 +62,13 @@ const WorkerProfil = ({
         setWorkerRate(res.data);
       })
       .catch((err: any) => {
-        if(err.response){
+        if (err.response) {
           console.log("we can't get worker rate ", err.response.data);
-        }
-        else{
+        } else {
           console.log("faild to connect with data base ");
-
         }
       });
   };
-
 
   // sheck the visiter is the same worker profile or not
   const isThisMe = () => {
@@ -80,12 +77,10 @@ const WorkerProfil = ({
     }
     return setIsMe(false);
   };
-  
-
 
   useEffect(() => {
     const token = localStorage.getItem("Token");
-    if(Rate) setWorkerRate(Rate)
+    if (Rate) setWorkerRate(Rate);
     if (token) {
       getCurrentUser();
     }

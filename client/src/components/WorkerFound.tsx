@@ -6,20 +6,34 @@ import { Link } from "react-router-dom";
 import { Placeholder } from "react-bootstrap";
 import StarsRating from "react-star-rate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHourglass1, faPersonDigging, faPhone } from "@fortawesome/free-solid-svg-icons";
-
+import {
+  faHourglass1,
+  faPersonDigging,
+  faPhone,
+} from "@fortawesome/free-solid-svg-icons";
+import { useContext } from "react";
+import { globalSearchComponent } from "../pages/SearchWorker";
 type Props = {
   workers: Worker[] | null;
 };
 
-
 function WorkerFound({ workers }: Props) {
-  console.log('workers ==========>',workers)
+  const { error, setError } = useContext(globalSearchComponent);
+
+  console.log("workers ==========>", workers);
 
   const url: string | undefined = process.env.REACT_APP_port;
   return (
-    <Row xs={2} sm={3} md={3} lg={4} xl={4} className="g-4 m-0 ">
-      {workers &&
+    <Row
+      xs={2}
+      sm={3}
+      md={3}
+      lg={4}
+      xl={4}
+      className="g-4 m-0 "
+      style={{ minHeight: "60vh" }}
+    >
+      {workers && !error &&
         workers.map((worker: Worker) => {
           if (worker.photo === null) return null;
           return (
@@ -96,7 +110,7 @@ function WorkerFound({ workers }: Props) {
             </Col>
           );
         })}
-      {!workers && (
+      {!workers && !error  && (
         <>
           <Card style={{ width: "18rem", height: "18rem", margin: "10px" }}>
             <Card.Body>
@@ -205,9 +219,37 @@ function WorkerFound({ workers }: Props) {
         </>
       )}
 
-      {workers?.length==0&& <h1>
-          nothing found
-        </h1>}
+      {workers?.length==0 && !error &&  <div className="d-lg-flex d-block justify-content-center w-100">
+            <div>
+                <h1 className="lead fw-bold opacity-75 pt-5 mt-2 text-center text-break"  >لم يتم العثور على أي عامل</h1>
+                <p className="lead text-break text-center"> ساعدنا على تطوير هذا الموقع <br />إذا كنت تعرف عمالًا محترفين <br />فأخبرهم عنا لإنشاء منصة وسعة ومتنوعة </p>
+             </div>
+            <div>
+              <img
+                src="../images/noWorkerFound.png"
+                style={{ width: "100%", height: "auto" }}
+                alt="server down"
+              />
+            </div>
+          </div>}
+
+      {error  && (
+          <div className="d-lg-flex d-block justify-content-center w-100">
+            <div>
+                <h1 className="lead fw-bold opacity-75 pt-5 mt-3 text-center text-break"  >فشل شيء ما فلسرفير منفضلك أعد تحميل الصفحة </h1>
+                <div className="d-flex justify-content-center pt-3 "><button className="btn btn-dark text-center  opacity-75" onClick={()=>{
+                        window.location.pathname = '/searchWorker';}}
+                > تحميل الصفحة</button></div>
+            </div>
+            <div>
+              <img
+                src="../images/serverDown.png"
+                style={{ width: "80%", height: "auto" }}
+                alt="server down"
+              />
+            </div>
+          </div>
+          )}
     </Row>
   );
 }

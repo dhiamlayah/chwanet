@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "../StyleDesign/homePage.css";
 
 const AddWorker = () => {
@@ -24,12 +25,13 @@ const AddWorker = () => {
           تنفيذها.
         </p>
         <div className="d-flex justify-content-center my-5">
-          <button
+          <Link
+            to='/searchWorker?filter=null&page=1'
             className="btn  text-light"
             style={{ backgroundColor: "teal" }}
           >
             انقر للبحث
-          </button>
+          </Link>
         </div>
       </div>
       <img

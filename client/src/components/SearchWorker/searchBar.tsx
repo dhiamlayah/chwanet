@@ -25,6 +25,8 @@ const SearchBar = () => {
           }}
         >
           <option value={"nothing"}>ترتيب حسب</option>
+          <option value={"nothing"}> لا شيء </option>
+
           <option value={"rate"}>الأفضل تقييم  </option>
           <option value={"length"}>الأكثر مقيمين </option>
         </select>

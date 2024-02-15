@@ -1,6 +1,7 @@
 import Carousel from "react-bootstrap/Carousel";
 import "../StyleDesign/CarouselExemples.css";
 import { Images } from "../staticData/imagesExemple";
+import { Link } from "react-router-dom";
 
 function CarouselExemples() {
   return (
@@ -16,7 +17,7 @@ function CarouselExemples() {
             />
             
             <Carousel.Caption>
-              <h1 className="fw-bold text-secondary">{image.domain}</h1>
+              <Link to={`/searchWorker?filter=null&page=1&domain=${image.sendTo}`}  className=" fs-1 fw-bold text-secondary">{image.domain}</Link>
               <p className="fw-bold  fs-4">{image.discreption}</p>
             </Carousel.Caption>
           </Carousel.Item>

@@ -28,7 +28,7 @@ const NavBarForSmallScreen = ({
   showProfile,
 }: Props) => {
   return (
-    <div className={show ? "list-group w-100 d-lg-none pt-2 " : "d-none"}>
+     <div  className={show ? "list-group w-100 d-lg-none pt-2 " : "d-none"}>
       <div
         className={showProfile ? "d-none" : "list-group w-100 d-lg-none pt-2 "}
       >
@@ -66,7 +66,7 @@ const NavBarForSmallScreen = ({
         </Link>
 
         <Link
-          to="/abputUs"
+          to="/aboutUs"
           className="btn py-3 text-white text-decoration-none fw-medium "
           id="phoneNavBar"
           onClick={() => setShow(false)}
@@ -126,6 +126,7 @@ const NavBarForSmallScreen = ({
         </ul>
       </div>
     </div>
+ 
   );
 };
 

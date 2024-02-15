@@ -50,7 +50,7 @@ router.post(
         _id: workerId,
         pictuers: [
           {
-            descreption: req.body.descreption,
+            descreption: discreption,
             picture: {
               filename: imageResized.filename,
               destination: imageResized.destination,

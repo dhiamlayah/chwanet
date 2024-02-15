@@ -23,6 +23,7 @@ const GiveRate = () => {
     setShow(false);
   };
 
+
   const sendRate = async () => {
     await axios
       .put(
@@ -101,7 +102,7 @@ const GiveRate = () => {
             <p>
               اضغط هنا لإنشاء حساب
               <Link
-                to="/register"
+                to={`/register?redirectPath=${window.location.pathname}`}
                 className="text-end px-2 text-decoration-none fw-bold"
               >
                 إنشاء حساب

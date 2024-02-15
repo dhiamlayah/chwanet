@@ -52,6 +52,7 @@ const SearchWorker = () => {
         search:search.trim()
       })
       .then((res) => {
+        setError(null)
         setNumberOfWorkers(res.data.numberOfWorkers);
         setWorkers(res.data.Workers);
       })
@@ -86,8 +87,6 @@ const SearchWorker = () => {
 
 
   useEffect(() => {
-    console.log('querySortBy =======>',querySortBy)
-
     setWorkers(null)
     specifecWorkersFromDB(queryPage, 12);
   }, [state,delegation,domain,search,sortBy]);
@@ -98,7 +97,7 @@ const SearchWorker = () => {
 
   return (
     <globalSearchComponent.Provider
-      value={{ domain, handleChange, state, delegation, specifecWorkersFromDB,setSearchParams,search,setSearch,numberOfWorkers,setSortBy}}
+      value={{ domain, handleChange, state, delegation, specifecWorkersFromDB,setSearchParams,search,setSearch,numberOfWorkers,setSortBy,error,setError}}
     >
       <div
         className="d-md-flex"

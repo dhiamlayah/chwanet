@@ -21,7 +21,7 @@ type Picture = {
 };
 const AllWorkerPictures = () => {
   const url: string | undefined = process.env.REACT_APP_port;
-  const { WorkerInformations } = useContext(globalComponents);
+  const { WorkerInformations,isMe } = useContext(globalComponents);
   const [pictures, setPictures] = useState<Picture[]>([]);
   const [fileNameToDelete,setFileNameToDelete]=useState<null|string>(null)
   const [picturesLength, setPicturesLength] = useState<number>(0);
@@ -98,7 +98,7 @@ const AllWorkerPictures = () => {
               <FontAwesomeIcon icon={faAnglesLeft} />
             </button>
             <div className="w-100">
-              <p
+          { isMe &&   <p
                 className="text-start fw-bold fs-5"
                 onClick={() => {
                   setFileNameToDelete(show.picture.filename)
@@ -107,7 +107,7 @@ const AllWorkerPictures = () => {
                 style={{ marginBottom: "-20px", cursor: "pointer" }}
               >
                 <FontAwesomeIcon icon={faTrash} style={{color: "#9c0707"}} />           
-             </p>
+             </p>}
               <p
                 className="text-end fw-bold fs-5"
                 onClick={() => setShow(null)}

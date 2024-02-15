@@ -1,5 +1,11 @@
+import { Link } from "react-router-dom";
 import "../StyleDesign/homePage.css";
 const Description = () => {
+
+  const userType = localStorage.getItem("User")
+
+
+  console.log("userType",userType)
   return (
     <div
       className="p-5 d-flex  justify-content-around "
@@ -29,9 +35,12 @@ const Description = () => {
         </p>
         <p className='text-end text-secondary'>!إذا كانت وظيفتك غير  موجودة في قائمة المهن, يمكنك إضافتهة بكل بساطة*</p>
         <div className="d-flex justify-content-center my-5">
-          <button className="btn  " style={{ backgroundColor: "cadetblue" }}>
+        {!userType &&  <Link className="btn" to="/register" style={{ backgroundColor: "cadetblue" }}>
             إنشاء حساب{" "}
-          </button>
+          </Link>}
+          {userType==="Worker" &&  <Link className="btn  " to='/profile/me' style={{ backgroundColor: "cadetblue" }}>
+          ملفك الشخصي
+          </Link>}
         </div>
       </div>
     </div>

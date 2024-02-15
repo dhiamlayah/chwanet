@@ -8,7 +8,11 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 const Register = () => {
+
+  const queryParams = new URLSearchParams(location.search);
+
   const url: string = process.env.REACT_APP_port + "/register";
+  const redirectPath=queryParams.get("redirectPath")
 
   const [firstName, setFirstName] = useState<string>(""),
     [lastName, setLastName] = useState<string>(""),
@@ -97,10 +101,12 @@ const Register = () => {
     let path = "/";
     if (user === "Worker") {
       path = "/register/info";
+    }else if(redirectPath){
+       path=redirectPath
     }
     return setTimeout(() => {
       window.location.pathname = path;
-    }, 5000);
+    }, 2500);
   };
 
   return (
