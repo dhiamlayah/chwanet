@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import "../StyleDesign/register.css";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import ChooseStateAndDelegation from "../components/ChooseStateAndDelegation";
-import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
+import ChooseStateAndDelegation from "../components/ChooseStateAndDelegation";
+import axios from "axios";
+
+import "react-toastify/dist/ReactToastify.css";
+import "../StyleDesign/register.css";
+
 const Register = () => {
 
   const queryParams = new URLSearchParams(location.search);
@@ -15,16 +18,18 @@ const Register = () => {
   const redirectPath=queryParams.get("redirectPath")
 
   const [firstName, setFirstName] = useState<string>(""),
-    [lastName, setLastName] = useState<string>(""),
-    [phone, setPhone] = useState<number>(),
-    [password, setPassword] = useState<string>(""),
-    [possition, setPossition] = useState<string>(""),
-    [state, setState] = useState<string>(""),
-    [delegation, setDelegation] = useState<string>(""),
-    [cheakBox, setCheakBox] = useState<Boolean>(false),
-    [wait, setWait] = useState(false),
-    [errors, setErrors] = useState<string | null>(),
-    [see, setSee] = useState<boolean>(false);
+        [lastName, setLastName] = useState<string>(""),
+        [phone, setPhone] = useState<number>(0),
+        [password, setPassword] = useState<string>(""),
+        [possition, setPossition] = useState<string>(""),
+        [state, setState] = useState<string>(""),
+        [delegation, setDelegation] = useState<string>(""),
+        [cheakBox, setCheakBox] = useState<Boolean>(false),
+        [wait, setWait] = useState(false),                  //boolean to wait for the response from server
+        [errors, setErrors] = useState<string | null>(),    
+        [see, setSee] = useState<boolean>(false);           //boolean to see your password 
+
+
   const handleChange = (event: any, setState: Function) => {
     setState(event.target.value);
   };
@@ -41,11 +46,12 @@ const Register = () => {
           delegation,
         })
         .then((res) => {
+          setWait(false);
           const headers = res.headers["token"];
           const user = res.data.user;
           localStorage.setItem("Token", headers);
           localStorage.setItem("User", user);
-          toast.success("تم إنشاؤه بنجاح");
+          toast.success("تم إنشاء حساب جديد بنجاح ، مرحبا بك ");
           redirectUser(user);
         });
     } catch (error: any) {
@@ -53,7 +59,7 @@ const Register = () => {
       if (error.response) {
         toast.error(error.response.data.message);
       } else {
-        toast.error("لا يمكن الاتصال بالسرفر");
+        toast.error("لا يمكن الاتصال بالسرفر، من فضلك أعد مرة أخرى ");
       }
     }
   };
@@ -62,6 +68,7 @@ const Register = () => {
     event.preventDefault();
   };
 
+  //cheak the inputs of the user befor sending it to server
   const cheackInputs = () => {
     if (firstName === "") {
       return false;
@@ -89,8 +96,10 @@ const Register = () => {
       return setErrors("تحقق من فضلك");
     }
     const number = Number(phone);
-    if (!number) {
+    if (!number ) {
       return setErrors("رقم الهاتف خاطئ");
+    }else if( number>99999999 || number <10000000){
+      return setErrors("رقم الهاتف يجب أن يتكون من 8 أرقام ")
     }
     setErrors(null);
     setWait(true);
@@ -111,7 +120,6 @@ const Register = () => {
 
   return (
     <div className="background">
-      {/* <AnimatedPage> */}
       <div
         className=" p-5"
         style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
@@ -286,7 +294,6 @@ const Register = () => {
         </div>
         <ToastContainer />
       </div>
-      {/* </AnimatedPage> */}
     </div>
   );
 };

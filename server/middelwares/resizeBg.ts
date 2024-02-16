@@ -50,10 +50,10 @@ const resizeBg= asyncMiddleware( async( req:any,res:any,next:any)=>{
     try{
        await image.metadata().   // get image metadata for size 
         then((metadata:any)=>{
-          if (metadata.width > 550) {
-            return image.resize({ width: 550 }).toFile(`${userFolder}bgImage/${file.originalname}`) ; // resize if too big
+          if (metadata.width > 750) {
+            return image.resize({ width: 750 }).toFile(`${userFolder}bgImage/${file.originalname}`) ; // resize if too big
           } else {
-            return image.toFile(`${userFolder}${file.originalname}`);
+            return image.toFile(`${userFolder}bgImage/${file.originalname}`);
           }
         }).then((data:ResizedImage)=>{
             fs.rmSync(req.file.path, { force: true }); // delete the tmp file as now have buffer

@@ -1,30 +1,35 @@
 import { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+
+interface Input {
+  phone: null | string;
+  password: null | string;
+}
+
 const Login = () => {
   const url: string = process.env.REACT_APP_port + "/login";
-  interface Input {
-    phone: null | string;
-    password: null | string;
-  }
-  const [see, setSee] = useState<boolean>(false);
-  const [phone, setPhone] = useState<number>(),
+  const [see, setSee] = useState<boolean>(false),
+    [wait, setWait] = useState(false), //boolean to wait for the response from server
+    [phone, setPhone] = useState<number>(),
     [password, setPassword] = useState<string>(""),
+    [submitErrors, setSubmitErrors] = useState<string | null>(),
     [errors, setErrors] = useState<Input>({
       phone: null,
       password: null,
-    }),
-    [submitErrors, setSubmitErrors] = useState<string | null>();
+    });
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
   };
 
+  // send error message if any input is vide
   const validate = (event: any, type: string) => {
     const newErrors = errors;
+
     if (event.target.value === "" || event.target.value === null) {
       if (type === "phone") {
         newErrors.phone = "الهاتف مطلوب";
@@ -57,16 +62,22 @@ const Login = () => {
           password,
         })
         .then((res) => {
-          console.log(res);
+          setWait(false);
           const headers = res.headers["token"];
-          const user = res.data.user;
+          const user : string = res.data.user;
           localStorage.setItem("User", user);
           localStorage.setItem("Token", headers);
-          toast.success("تسجيل الدخول بنجاح");
-          redirectUser();
+          toast.success("تم  تسجيل الدخول بنجاح ، مرحبا بعودتك ");
+          redirectUser(user);
         });
     } catch (err: any) {
-      toast.error(err.response.data.message);
+      setWait(false);
+
+      if (err.response) {
+        toast.error(err.response.data.message);
+      } else {
+        toast.error("لا يمكن الاتصال بالسرفر، من فضلك أعد مرة أخرى ");
+      }
     }
   };
 
@@ -77,18 +88,31 @@ const Login = () => {
       return true;
     }
   };
+
   const handleClick = async () => {
-    const cheak = cheackInputs();
-    if (!cheak) {
-      return setSubmitErrors("يرجى استكمال البيانات ");
+    const cheack = cheackInputs();
+    if (!cheack) {
+      return setSubmitErrors("يرجى استكمال جميع المعلومات ");
+    }
+    const number = Number(phone);
+    if (!number) {
+      return setSubmitErrors("رقم الهاتف خاطئ");
+    } else if (number > 99999999 || number < 10000000) {
+      return setSubmitErrors("رقم الهاتف يجب أن يتكون من 8 أرقام ");
     }
     setSubmitErrors(null);
+    setWait(true);
     await sendUserData();
   };
-  const redirectUser = () => {
+
+  const redirectUser = (user:string) => {
+    let path = "/";
+    if (user === "Worker"){
+      path="/profile/me"
+    }
     setTimeout(() => {
-      window.location.pathname = "/";
-    }, 5000);
+      window.location.pathname = path;
+    }, 2500);
   };
   return (
     <div className="background2">
@@ -146,7 +170,17 @@ const Login = () => {
             className="btn btn-outline-warning mt-2"
             onClick={handleClick}
           >
-            إرسال
+            {!wait ? (
+              "إرسال"
+            ) : (
+              <>
+                <span role="status">انتظر...</span>
+                <span
+                  className="spinner-grow spinner-grow-sm"
+                  aria-hidden="true"
+                ></span>
+              </>
+            )}
           </button>
           {submitErrors && (
             <div className="alert alert-danger mt-2">{submitErrors}</div>

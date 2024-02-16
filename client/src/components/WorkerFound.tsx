@@ -236,7 +236,7 @@ function WorkerFound({ workers }: Props) {
       {error  && (
           <div className="d-lg-flex d-block justify-content-center w-100">
             <div>
-                <h1 className="lead fw-bold opacity-75 pt-5 mt-3 text-center text-break"  >فشل شيء ما فلسرفير منفضلك أعد تحميل الصفحة </h1>
+                <h1 className="lead fw-bold opacity-75 pt-5 mt-3 text-center text-break"  >فشل شيء ما فلسرفير من فضلك أعد تحميل الصفحة </h1>
                 <div className="d-flex justify-content-center pt-3 "><button className="btn btn-dark text-center  opacity-75" onClick={()=>{
                         window.location.pathname = '/searchWorker';}}
                 > تحميل الصفحة</button></div>

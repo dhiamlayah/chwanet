@@ -3,12 +3,11 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const asyncMiddleware = require("../middelwares/asyncMiddleware");
- 
+
 import UserModel from "../models/users";
 import WorkerModel from "../models/worker";
 
-
- router.post(
+router.post(
   "/",
   asyncMiddleware(async (req: any, res: any) => {
     const {
@@ -20,66 +19,49 @@ import WorkerModel from "../models/worker";
       delegation,
       possition,
     } = req.body;
+    let newUser ;
+
+    const user = await UserModel.findOne({ phone });
+    const worker = await WorkerModel.findOne({ phone });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const userPossition =  (possition==="client") ? "Client" : "Worker"
+    if (user || worker)
+      return res.status(400).json({ message: "  !! المستخدم موجود بالفعل  " });
+
     if (possition === "client") {
-      const user = await UserModel.findOne({ phone });
-      if (user)
-        return res.status(400).json({ message: "  !! المستخدم موجود بالفعل  " });
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const newUser = new UserModel({
-        firstName:firstName.trim(),
-        lastName:lastName.trim(),
+        newUser = new UserModel({
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
         state,
         password: hashedPassword,
         delegation,
         possition,
         phone,
       });
-      await newUser.save();
-      const token = jwt.sign(
-        { _id: newUser._id, isAdmin: newUser.isAdmin },
-        process.env.access_token_secret
-      );
-      res.setHeader("token", token);
-      return res
-        .status(200)
-        .json({ message: "تم إنشاء المستخدم بنجاح", user: "Client" });
     } else {
-      const worker = await WorkerModel.findOne({ phone });
-      if (worker)
-        return res.status(400).json({ message: " !! المستخدم موجود بالفعل  " });
-      
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const newWorker = new WorkerModel({
-        firstName:firstName.trim(),
-        lastName:lastName.trim(),
+        newUser = new WorkerModel({
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
         state,
         password: hashedPassword,
         delegation,
         possition,
         phone,
-        workName: null,
-        discreption: null,
-        photo: null,
-        team: null,
-        experience: null,
       });
-      await newWorker.save();
-      const token = jwt.sign(
-        { _id: newWorker._id, isAdmin: newWorker.isAdmin },
-        process.env.access_token_secret
-      );
-      res.setHeader("token", token);
-      return res
-        .status(200)
-        .json({ message: "تم إنشاء المستخدم بنجاح", user: "Worker" });
+     
     }
+
+    await newUser.save();
+    const token = jwt.sign(
+      { _id: newUser._id, isAdmin: newUser.isAdmin },
+      process.env.access_token_secret
+    );
+    res.setHeader("token", token);
+    return res
+      .status(200)
+      .json({ message: "تم إنشاء المستخدم بنجاح", user: userPossition });
   })
 );
 
- 
-
-
-
 module.exports = router;
-
- 

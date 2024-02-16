@@ -53,7 +53,7 @@ const resizeProfilePicture= asyncMiddleware( async( req:any,res:any,next:any)=>{
           if (metadata.width > 550) {
             return image.resize({ width: 550 }).toFile(`${userFolder}ProfileImage/${file.originalname}`) ; // resize if too big
           } else {
-            return image.toFile(`${userFolder}${file.originalname}`);
+            return image.toFile(`${userFolder}ProfileImage/${file.originalname}`);
           }
         }).then((data:ResizedImage)=>{
             fs.rmSync(req.file.path, { force: true }); // delete the tmp file as now have buffer

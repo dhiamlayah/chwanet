@@ -61,7 +61,7 @@ router.put(
     const user = await WorkerModel.findByIdAndUpdate(req.user._id, {
       workName: workName,
       discreption: discreption.trim(),
-      photo: imageResized,
+      photo: {filename:imageResized.filename,destination:imageResized.destination},
       backgroundImage:{filename:"communBackground.jpg"},
       team: true,
       experience: experience,

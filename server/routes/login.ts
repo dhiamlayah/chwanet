@@ -7,15 +7,18 @@ const asyncMiddleware = require("../middelwares/asyncMiddleware");
 import UserModel from "../models/users";
 import WorkerModel from "../models/worker";
 
+
+// in this route we sheack first if the user is exist in client Model (User) if not then sheak if exist in Worker model
 router.post(
   "/",
   asyncMiddleware(async (req: any, res: any) => {
     const { password, phone } = req.body;
     const user = await UserModel.findOne({ phone });
+
     if (!user) {
       const worker = await WorkerModel.findOne({ phone });
       if (!worker) {
-        return  res.status(400).json({ message: "هاتف أو كلمة مرور غير صالحة" });
+        return  res.status(400).json({ message: "هاتف أو كلمة المرور  غير صالحة" });
       } else {
         const validPassword = await bcrypt.compare(password, worker.password);
         !validPassword &&
@@ -43,5 +46,3 @@ router.post(
 
 module.exports = router;
 
-
-//! the problem i this code if we have a client with the same number of a worker for exemple now how we can login ?????
