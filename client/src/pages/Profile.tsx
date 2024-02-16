@@ -23,7 +23,7 @@ const Profile = () => {
       if (err.response) {
         setErrorUser(err.response.data.message);
       } else {
-        setErrorServer(err.response);
+        setErrorServer('cant connect with server');
       }
     }
   };
@@ -82,13 +82,13 @@ const Profile = () => {
         <div className="d-lg-flex d-block  position-absolute top-50 start-50 translate-middle">
           <div>
             <h1 className="lead fw-bold opacity-75 pt-5 mt-3 text-center text-break">
-              فشل شيء ما فلسرفير منفضلك أعد تحميل الصفحة{" "}
+              فشل شيء ما فلسرفير من فضلك أعد تحميل الصفحة{" "}
             </h1>
             <div className="d-flex justify-content-center pt-3 ">
               <button
                 className="btn btn-dark text-center  opacity-75"
                 onClick={() => {
-                  window.location.pathname = "/searchWorker";
+                  window.location.pathname = `/profile/${workerId}`
                 }}
               >
                 {" "}

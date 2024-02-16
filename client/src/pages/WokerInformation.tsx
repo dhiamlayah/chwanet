@@ -1,11 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import ChooseDomain from "../components/ChooseDomain";
 import BoxInformation from "../components/boxMessages/boxInformation";
 import NotFound from "./NotFound";
+import axios from "axios";
+
+import "react-toastify/dist/ReactToastify.css";
+
 
 type WorkerInformations = {
   workName: string;
@@ -14,6 +16,7 @@ type WorkerInformations = {
 };
 
 const WorkerInformation = () => {
+
   // Regular expression to match Arabic characters
   const arabicRegex =
     /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
@@ -58,13 +61,11 @@ const WorkerInformation = () => {
         },
       });
     } catch (error: any) {
-      {
-        error &&
-          console.log(
-            "error to create schema for rating workers",
-            error.response.data
-          );
-      }
+        if(error.response){
+          return null
+        }else{
+          setErrors("لا يمكن الاتصال بالسرفر، من فضلك أعد تحميل الصفحة ")
+        }
     }
   };
 
@@ -87,6 +88,8 @@ const WorkerInformation = () => {
     }
   };
 
+
+  // if all worker want to add new work name  we send his request to server with different route  
   const sendForAddingNewDomain = async () => {
     try {
       await axios
@@ -110,11 +113,12 @@ const WorkerInformation = () => {
       if (err.respons) {
         return toast.error(err.response.data.message);
       } else {
-        setErrors("لا يمكن الاتصال بالسرفر");
+        setErrors("لا يمكن الاتصال بالسرفر، من فضلك أعد مرة أخرى ");
       }
     }
   };
 
+  // if all information writed successfuly we send them to server 
   const sendWorkerInformation = async () => {
     const jsonWorkerInformations = JSON.stringify(workerInformations);
     const formData = new FormData();
@@ -189,6 +193,7 @@ const WorkerInformation = () => {
     await sendWorkerInformation();
   };
 
+
   const redirectUser = () => {
     return setTimeout(() => {
       setWait(false);
@@ -200,7 +205,9 @@ const WorkerInformation = () => {
     createSchemaForRatingAndComments();
   }, []);
 
-  if (localStorage.getItem("User") === "Client")
+
+  //first sheack if who enter is a client or not to kick
+  if ( !localStorage.getItem("User") || localStorage.getItem("User") === "Client" )
     return  <NotFound/>
 
   return (

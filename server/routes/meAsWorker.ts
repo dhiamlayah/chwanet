@@ -15,7 +15,12 @@ router.get(
   auth,
   asyncMiddleware(async (req: any, res: any) => {
     const user = await WorkerModel.findById(req.user._id).select("-password "); //select that mean exclude
-    res.status(200).json({ user: user });
+    if(user){
+      res.status(200).json({ user: user });
+    }else{
+      res.status(400).json({message:'worker not found'})
+    }
+
   })
 );
 
@@ -63,7 +68,6 @@ router.put(
       discreption: discreption.trim(),
       photo: {filename:imageResized.filename,destination:imageResized.destination},
       backgroundImage:{filename:"communBackground.jpg"},
-      team: true,
       experience: experience,
       Rate:{rate:0,length:0}
     });
@@ -71,10 +75,11 @@ router.put(
       res.status(200).send("success");
       return await user.save();
     } else {
-      res.status(400).send({ message: "worker not found" });
+      res.status(400).send({ message: "لم يتم العثور على العامل " });
     }
   })
 );
+
 router.put(
   "/profilePicture",
   auth,

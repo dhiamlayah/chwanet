@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Suspense, useEffect, useState } from "react";
-import axios from "axios";
 import NavBar from "./components/Navbar";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
@@ -14,6 +13,9 @@ import AdminSpace from "./pages/Admin";
 import AboutUs from "./pages/AboutUs";
 import NotFound from "./pages/NotFound";
 import ClientOffLine from "./pages/ClientOffLine";
+
+import axios from "axios";
+
 export interface User {
   date: string;
   delegation: string;
@@ -29,7 +31,6 @@ interface Worker extends User {
   workName: String;
   discreption: String;
   photo: String;
-  team: Boolean;
   experience: Number;
 }
 
@@ -47,11 +48,10 @@ function App() {
           },
         })
         .then((res) => {
-          console.log("successfuly", res.data);
           setUser(res.data.user);
         });
     } catch (err) {
-      console.log("ther is an error to get current user ", err);
+        return null
     }
   };
 
@@ -63,6 +63,7 @@ function App() {
   }, []);
 
 
+  // for sheak if the network of the user is ok or not 
   useEffect(() => {
     const handleNetworkChange = () => {
       setIsOnline(navigator.onLine);
@@ -83,7 +84,7 @@ function App() {
       <Suspense fallback={<LodingPage />}>
         {isOnline && (
           <Routes>
-            <Route path="/" Component={() => <Home />} />
+            <Route path="/" element={<Home /> } />
             {!user && <Route path="/register" element={<Register />} />}
             <Route path="/register/info" element={<WorkerInformation />} />
             {!user && <Route path="/login" element={<Login />} />}
