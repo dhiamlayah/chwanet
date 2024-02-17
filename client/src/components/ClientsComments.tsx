@@ -35,6 +35,7 @@ const ClientsComments = ({ addNewComment }: Props) => {
         setClientComment(res.data);
       })
       .catch((error: any) => {
+        setClientComment([])
         if (error.response) {
           setNothingFound(
             " لا يوجد أي تعليق حتى الان كن الأول وشاركنا ملاحظتك"
@@ -49,12 +50,11 @@ const ClientsComments = ({ addNewComment }: Props) => {
     getComments();
   }, [addNewComment]);
 
-  useEffect(() => {
-    getComments();
-  }, []);
+
   useEffect(() => {
     getComments();
   }, [updateComments]);
+
 
   return (
     <div style={{ backgroundColor: "#FCFDFF", minHeight: "30vh" }}>

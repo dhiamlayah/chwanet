@@ -18,7 +18,6 @@ router.get("/:id",asyncMiddleware(
   })
   );
 
-module.exports = router
 
 
 router.get("/:id/Rate",asyncMiddleware(
@@ -34,11 +33,3 @@ router.get("/:id/Rate",asyncMiddleware(
 
 module.exports = router
 
-
-// router.get('/:id/pictures',asyncMiddleware(
-//     async(req:any , res:any )=>{
-//         const profile = await ProfilesModels.findById(req.body._id) 
-//         if(!profile) return res.status(400).json({message:'Profile dont exist'})
-//         return res.status(200).json({profile})
-//     }
-// ))

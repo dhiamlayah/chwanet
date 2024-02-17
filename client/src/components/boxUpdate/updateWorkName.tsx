@@ -29,7 +29,6 @@ const UpdateWorkName = ({ currentWorkName }: Props) => {
     setNewWorkName({ workName: e.target.value });
   };
 
-  console.log('new workName',newWorkName)
 
   const closeBoxShow = () => {
     setError(null);
@@ -40,10 +39,10 @@ const UpdateWorkName = ({ currentWorkName }: Props) => {
   const checkUpdate = async () => {
     const workName = newWorkName.workName;
     if (!workName) {
-      return setError("wrang work name ");
+      return setError("اسم العمل الخاطئ");
     }
     if (newWorkName.workName.trim() === "") {
-      return setError(" work name  neccessery");
+      return setError(" ضروري اسم العمل ");
     } else {
       setWait(true);
       const messageRecive = await sendUpdate({workName:workName.trim()}, setError);
@@ -51,7 +50,7 @@ const UpdateWorkName = ({ currentWorkName }: Props) => {
         return setWait(false);
       } else {
         setError(null);
-        setSuccess("تم تحديث البيانات بنجاح");
+        setSuccess("تم تحديث العمل بنجاح");
         setUpdate((prev: boolean) => {
           return !prev;
         });
@@ -76,7 +75,7 @@ const UpdateWorkName = ({ currentWorkName }: Props) => {
       </p>
       <Modal show={show} onHide={closeBoxShow} centered>
         <Modal.Header closeButton>
-          <Modal.Title>تحديث الهاتف </Modal.Title>
+          <Modal.Title>تحديث العمل </Modal.Title>
         </Modal.Header>
         <Modal.Body className="bg-secondary ">
           <div

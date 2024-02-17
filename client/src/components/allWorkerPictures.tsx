@@ -77,10 +77,7 @@ const AllWorkerPictures = () => {
     getPicturesFromServer(0, 10);
   },[]);
 
-
-  console.log("images",pictures)
-  console.log("length",picturesLength)
-
+ 
   return (
     <AnimatedPage>
       <div className="d-block" style={{ minHeight: "30vh" }}>
@@ -215,7 +212,8 @@ const AllWorkerPictures = () => {
               onClick={() => callServerForMore()}
             >
               {" "}
-              see more{" "}
+              شاهد المزيد
+              {" "}
             </button>
           </div>
         )}

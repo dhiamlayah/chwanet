@@ -63,7 +63,6 @@ const resizeImages = asyncMiddleware( async( req:any,res:any,next:any)=>{
         });  
      
     }catch(error){
-        console.log('we have a problem when we resize the image :( =>',error)
         next(error)
     }
 }

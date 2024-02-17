@@ -27,8 +27,10 @@ const UpdatePhone = ({ phone }: Props) => {
 
   const checkUpdate = async () => {
     const number = Number(newPhone.phone);
-    if (!number) {
+    if (!number ) {
       return setError("رقم الهاتف خاطئ");
+    }else if( number>99999999 || number <10000000){
+      return setError("رقم الهاتف يجب أن يتكون من 8 أرقام ")
     }
     if (newPhone.phone.trim() === "" ){
       return setError("رقم الهاتف");

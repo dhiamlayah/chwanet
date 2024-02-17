@@ -63,15 +63,14 @@ const UpdateDiscreption = ({ discreption }: Props) => {
       </p>
       <Modal show={show} onHide={closeBoxShow} centered>
         <Modal.Header closeButton>
-          <Modal.Title>تحديث الهاتف </Modal.Title>
+          <Modal.Title>تحديث  حياتك المهنية  </Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <div className=" text-center ">
             <h2 className="text-end    "> : صف حياتك المهنية </h2>
-            <p className="text-end  ">
-            تذكر أن رقمك مطلوب لتسجيل الدخول وتأكد من أنه يعمل لسهولة اتصال العميل
-            بك
-            </p>
+        
+            <p className="text-end text-break text-secondary">!  تذكر وصفك لمهارتك وخبرتك مهم جدا لجذب العميل </p>
+
             <textarea
             className={`fw-bold ${writeRight}   w-100 `}
             style={{ height: "150px",  }}

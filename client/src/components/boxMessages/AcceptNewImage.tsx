@@ -13,6 +13,7 @@ const AcceptNewImag = ({open,setOpen,setUserPhoto,imgPDPUrl,setUserFile,userFile
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [wait, setWait] = useState<boolean>(false);
+
   const handleClose = () => {
     setOpen(false)
     setWait(false)
@@ -48,7 +49,7 @@ const AcceptNewImag = ({open,setOpen,setUserPhoto,imgPDPUrl,setUserFile,userFile
       if (error.response) {
         setError(error.response.data.message);
       } else {
-        setError("لا يمكن الاتصال بالسرفر");
+        setError("لا يمكن الاتصال بالسرفر، من فضلك أعد مرة أخرى ");
       }
     }
   };

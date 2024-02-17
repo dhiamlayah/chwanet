@@ -16,7 +16,7 @@ export const sendUpdate = async (newData: object,setError:Dispatch<SetStateActio
         setError(error.response.data.message)
         message =  null
       }else{
-        setError('لا يمكن الاتصال بالسرفر')
+        setError("لا يمكن الاتصال بالسرفر، من فضلك أعد مرة أخرى ")
         message =  null
       }   
   }

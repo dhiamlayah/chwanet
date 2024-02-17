@@ -69,13 +69,14 @@ const UpdateStateAndDelegation = ({ currentState,currnetDelegation }: Props) => 
       </p>
       <Modal show={show} onHide={closeBoxShow} centered>
         <Modal.Header closeButton>
-          <Modal.Title>تحديث الهاتف </Modal.Title>
+          <Modal.Title>تحديث الموقع الجغرافي </Modal.Title>
         </Modal.Header>
         <Modal.Body className="bg-secondary ">
           <div
-            className="text-light text-center  py-5 w-75 "
+            className="text-light text-center  py-5  "
             style={{ fontSize: "20px" }}
           >
+            <p className="text-end text-white text-break">موقعك يساعد العملاء على العثور عليك  بسهولة </p>
             <ChooseStateAndDelegation
               state={newState}
               userDelegation={newDelegation}

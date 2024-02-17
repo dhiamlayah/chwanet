@@ -3,7 +3,7 @@ import { globalComponents } from "../profileWorker/WorkerProfil";
 import { Button, Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
-import { sendUpdate } from "../../methods/updateData";
+import { sendUpdate } from "../../methods/updateData"; // a function to send data to server 
 
 type Props = {
   firstName: string;
@@ -43,7 +43,7 @@ const UpdateNames = ({ firstName, lastName }: Props) => {
     const first = newName.firstName.trim();
     const last = newName.lastName.trim();
     if (first === "" || last === "") {
-      return setError("complete names");
+      return setError("يجب أن تملء الخانتين ");
     } else {
       setWait(true);
       const messageRecive = await sendUpdate(
@@ -79,7 +79,7 @@ const UpdateNames = ({ firstName, lastName }: Props) => {
       </h3>
       <Modal show={show} onHide={closeBoxShow} centered>
         <Modal.Header closeButton>
-          <Modal.Title>تحديث الأسماء </Modal.Title>
+          <Modal.Title>تغيير الأسم </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="  text-center ">

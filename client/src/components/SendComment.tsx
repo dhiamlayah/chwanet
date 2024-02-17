@@ -16,7 +16,6 @@ const SendComments = ({setAddNewComment}:Props) => {
   const [comment, setComments] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  console.log("WorkerInformations._id", WorkerInformations._id);
   const sendTheComment = async () => {
     await axios
       .put(

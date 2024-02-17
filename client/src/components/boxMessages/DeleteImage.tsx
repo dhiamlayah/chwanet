@@ -49,7 +49,7 @@ function DeleteImage({
       setError(null)
       setShow(null)
       if(pictures.length===1){
-         NoPictureRest("no picture yet")
+         NoPictureRest("لا توجد صور بعد")
         }
       setPictures((prev:any)=>{
           return prev.filter(
@@ -83,7 +83,7 @@ function DeleteImage({
         </Modal.Header>
         <Modal.Body className=" text-break  text-end">
           <h3 className="text-secondary py-5">
-            هل أنت متأكد أنك تريد حذف هذه الصورة !
+          ! هل أنت متأكد أنك تريد حذف هذه الصورة 
           </h3>
         </Modal.Body>
         {success && (

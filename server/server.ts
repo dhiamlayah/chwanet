@@ -14,8 +14,6 @@ app.use(cors(corsOptions));
 //-----------------------dependency-------------------------------------------//
 const PORT = process.env.PORT || 3000;
 
-//----------------------winston logger-------------------------------------------//
-// import logger from "./Logger/winston" ;
 
 //-----------------------middelwares-------------------------------------------//
 const dataBaseError = require("./middelwares/errorDataBase");
@@ -78,7 +76,4 @@ app.listen(PORT, () => {
   console.log(`port is listen in ${PORT}`);
 });
 
-// throw new Error("THROW NEW ERROR")
-
-// const p= Promise.reject(new Error("THROW AN ERROR"))
-// p.then(()=>{console.log('DONE')})
+ 

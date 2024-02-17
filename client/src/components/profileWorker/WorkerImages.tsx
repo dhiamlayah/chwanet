@@ -8,9 +8,11 @@ const WorkerImages = () => {
   const inputImg = useRef<any>(null);
   const inputImg2 = useRef<any>(null);
   const { WorkerInformations, isMe } = useContext(globalComponents);
+
   const imgPDPUrl =
     process.env.REACT_APP_port +
     `/userPicture/${WorkerInformations._id}/${WorkerInformations.photo.filename}`;
+  
   const backgroundImgUrl =
     process.env.REACT_APP_port +
     `/userPicture/${WorkerInformations.backgroundImage.filename}`;
@@ -23,7 +25,10 @@ const WorkerImages = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [open2, setOpen2] = useState<boolean>(false);
 
- 
+
+  console.log("file",userFile)
+  console.log("userPhoto",userPhoto)
+
   const handleChangeFile = (event: any) => {
     const file = event.target.files[0];
     if (file !== undefined) {

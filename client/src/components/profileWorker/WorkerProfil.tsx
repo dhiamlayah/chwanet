@@ -86,6 +86,7 @@ const WorkerProfil = ({
     }
   }, []);
 
+
   useEffect(() => {
     if (user) {
       isThisMe();
@@ -120,6 +121,7 @@ const WorkerProfil = ({
             {number === 1 && <WorkerDiscreption />}
             {number === 2 && <PicturesLife />}
             {number === 3 && <WorkerComments />}
+            
           </div>
         </div>
       </div>

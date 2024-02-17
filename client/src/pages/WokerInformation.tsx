@@ -20,7 +20,6 @@ const WorkerInformation = () => {
   // Regular expression to match Arabic characters
   const arabicRegex =
     /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
-
   const [wait, setWait] = useState(false);
   const url: string | undefined = process.env.REACT_APP_port;
   const navigate = useNavigate();

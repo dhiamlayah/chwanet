@@ -84,10 +84,8 @@ router.delete(
     await NewWorkNameModel.deleteOne({ _id: id });
     fs.rm(`userPicture/${id}`, { recursive: true }, (err:any) => {
       if (err) {
-          console.error('Error deleting directory:', err);
           res.status(400).send({message:'Error deleting directory not found '});
       } else {
-          console.log('Directory deleted successfully');
           res.status(200).send('Directory deleted successfully');
       }
   });

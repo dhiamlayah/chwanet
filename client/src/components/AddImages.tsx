@@ -7,6 +7,10 @@ import AnimatedPage from "../util/AnimatedPage";
 import axios from "axios";
 
 const AddImages = ({ back }: any) => {
+   // Regular expression to match Arabic characters
+   const arabicRegex =
+   /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
+  const [writeRight, setWriteRight] = useState("text-start");
   const [userPhoto, setUserPhoto] = useState<any>(null);
   const [userFile, setUserFile] = useState<any>();
   const [descreption, setDescreption] = useState<null | string>(null);
@@ -108,9 +112,16 @@ const AddImages = ({ back }: any) => {
                     </label>
                   </div>
                   <textarea
-                    className="form-control border border-dark "
+                    className={`form-control border border-dark ${writeRight}`}
                     value={descreption ? descreption : ""}
-                    onChange={(e) => setDescreption(e.target.value)}
+                    onChange={(e) => {
+                      setDescreption(e.target.value)
+                      if (arabicRegex.test(e.target.value.trim())) {
+                        setWriteRight("text-end");
+                      } else {
+                        setWriteRight("text-start");
+                      }
+                    }}
                     id="exampleInputPassword1"
                   />
                 </div>

@@ -4,8 +4,6 @@ const Description = () => {
 
   const userType = localStorage.getItem("User")
 
-
-  console.log("userType",userType)
   return (
     <div
       className="p-5 d-flex  justify-content-around "

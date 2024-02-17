@@ -8,6 +8,7 @@ const upload = require("../middelwares/multer");
 const auth = require("../middelwares/authorization");
 const fs = require("fs");
 
+import UserModel from "../models/users";
 import WorkerModel from "../models/worker";
 
 router.get(
@@ -30,26 +31,14 @@ router.put(
   auth,
   asyncMiddleware(async (req: any, res: any) => {
     if (req.body.phone) {
-      const phoneExist = await WorkerModel.findOne({ phone: req.body.phone });
-      if (phoneExist) {
-        res.status(400).json({ message: "user exist" });
+      const phoneExistInWorkerModel = await WorkerModel.findOne({ phone: req.body.phone });
+      const phoneExistInClientModel = await UserModel.findOne({ phone: req.body.phone });
+
+      if (phoneExistInWorkerModel || phoneExistInClientModel) {
+        return res.status(400).json({ message: "هذا الرقم موجود بالفعل في مكان آخر، اكتب رقم آخر" });
       }
     }
     const user = await WorkerModel.findByIdAndUpdate(req.user._id, req.body);
-    await user?.save();
-    res.send("success");
-  })
-);
-
-router.put(
-  "/position",
-  auth,
-  asyncMiddleware(async (req: any, res: any) => {
-    const newUpdate = {
-      state: req.body.state,
-      delegation: req.body.delegation,
-    };
-    const user = await WorkerModel.findByIdAndUpdate(req.user._id, newUpdate);
     await user?.save();
     res.send("success");
   })
@@ -93,7 +82,7 @@ router.put(
         force: true,
       }); // delete the tmp file as now have buffer
     } else {
-      res.status(400).send({ message: " worker not found " });
+      res.status(400).send({ message: "لم يتم العثور على العامل" });
     }
     const user = await WorkerModel.findByIdAndUpdate(req.user._id, {
       photo: imageResized,
@@ -102,7 +91,7 @@ router.put(
       await user.save();
       res.status(200).send("success");
     } else {
-      res.status(400).send({ message: "faild to change image" });
+      res.status(400).send({ message: "فشل في تغيير الصورة" });
     }
   })
 );
@@ -122,7 +111,7 @@ router.put(
         }); // delete the tmp file as now have buffer
       }
     } else {
-       return res.status(400).send({ message: " worker not found " });
+       return res.status(400).send({ message: "لم يتم العثور على العامل" });
     }
     const user = await WorkerModel.findByIdAndUpdate(req.user._id, {
       backgroundImage: {filename:req.user._id+"/bgImage/"+imageResized.filename},
@@ -131,7 +120,7 @@ router.put(
       await user.save();
       return  res.status(200).send("success");
     } else {
-     return  res.status(400).send({ message: "faild to change image" });
+     return  res.status(400).send({ message: "فشل في تغيير الصورة" });
     }
   })
 );

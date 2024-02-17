@@ -82,9 +82,10 @@ const GiveRate = () => {
 
       <Modal show={show} onHide={closeBoxShow} centered>
         <Modal.Header closeButton>
-          <Modal.Title>تحديث الهاتف </Modal.Title>
+          <Modal.Title>أعطه تقييماً لعمله </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <p className="text-end text-break text-secondary">تقييمك مهم بالنسبة لنا لنساهم  في تطوير هذا الموقع </p>
           <div className="d-flex justify-content-center align-items-center ">
             <StarsRating
               style={{ style: { fontSize: "50px" } }}

@@ -96,12 +96,11 @@ router.get(
 
     const worker = await ProfilesModels.findById({ _id: workerId });
     if (!worker) {
-      res.status(400).json({ message: "no picture yet" });
+      res.status(400).json({ message: "لا توجد صور بعد" });
     } else {
       const sortPictuers = sortPicturesByDate(worker.pictuers);
-      console.log("sortPictuers",sortPictuers)
       if(sortPictuers.length===0){
-        return  res.status(400).json({ message: "no picture yet" });
+        return  res.status(400).json({ message:  "لا توجد صور بعد" });
       }
       res
         .status(200)
@@ -121,13 +120,13 @@ router.delete(
     const ImageFileName = req.body.fileName;
     const findWorker = await ProfilesModels.findById({ _id: workerId });
     if (!findWorker) {
-      return res.status(400).send({ message: "worker not found" });
+      return res.status(400).send({ message: "لم يتم العثور على العامل" });
     }
     const newPicturesList = findWorker.pictuers?.filter(
       (p) => p.picture.filename !== ImageFileName
     );
     if(newPicturesList?.length === findWorker.pictuers?.length ){
-        return res.status(400).send({message:"image not found"})
+        return res.status(400).send({message:"الصورة غير موجودة"})
     }
     fs.rmSync(`userPicture/${workerId}/${ImageFileName}`, {
       force: true,

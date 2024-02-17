@@ -8,8 +8,8 @@ import "../StyleDesign/meAsWorker.css";
 const MeAsWorker = () => {
   const url = process.env.REACT_APP_port;
   const [WorkerInformations, setWorkerInformations] = useState<any>(null);
-  const [go, setGo] = useState<boolean>(false); // just a variable to sheack if everythnig ok we move to the next component (step)
-  const [update, setUpdate] = useState<boolean>(false); //whene we update somthing we rerender the data with this boolean
+  const [go, setGo] = useState<boolean>(false);          // just a variable to sheack if everythnig ok we move to the next component (step)
+  const [update, setUpdate] = useState<boolean>(false);  //whene we update somthing we rerender the data with this boolean
   const [errorUser, setErrorUser] = useState<null | string>(null);
   const [errorServer, setErrorServer] = useState<null | string>(null);
 
@@ -39,6 +39,8 @@ const MeAsWorker = () => {
       await axios
         .get(url + `/userPicture/${WorkerInformations._id}/` + photo.filename)
         .then(() => {
+          setErrorServer(null);
+          setErrorUser(null);
           setGo(true);
         });
     } catch (err) {
@@ -46,9 +48,10 @@ const MeAsWorker = () => {
     }
   };
 
-  useEffect(() => {
+   // get information and when we update data or make a changes we call server to get updates
+   useEffect(() => {
     getWorkerInformation();
-  }, []);
+  }, [update]);
 
   useEffect(() => {
     if (WorkerInformations) {
@@ -56,10 +59,7 @@ const MeAsWorker = () => {
     }
   }, [WorkerInformations]);
 
-  // when we update data or make a changes we call server to get updates
-  useEffect(() => {
-    getWorkerInformation();
-  }, [update]);
+
 
   // if worker not exist
   if (errorUser)

@@ -30,10 +30,6 @@ const Profile = () => {
 
   useEffect(() => {
     getWorkerInformation();
-  }, []);
-
-  useEffect(() => {
-    getWorkerInformation();
   }, [update]);
 
   if (WorkerInformations)

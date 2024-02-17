@@ -63,7 +63,6 @@ router.put(
         if (e._id === clientId) return e;
       });
 
-      // console.log('find client ',findClient)
       if (findClient !== undefined) {
         const updateClients = allClients?.map((client) => {
           if (client._id === findClient._id) {
@@ -138,7 +137,7 @@ router.delete("/:id",auth,asyncMiddleware(
         await worker.save()
         res.status(200).send("delete successfuly")
       }else{
-        res.status(400).send({message:'worker not found'})
+        res.status(400).send({message:"فشل في العثور على العامل"})
 
       }
 

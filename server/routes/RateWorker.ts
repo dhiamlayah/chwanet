@@ -78,7 +78,7 @@ router.put("/",auth,asyncMiddleware(
                     await worker?.save()
                 }
             }else{
-                res.status(400).send({message:"faild to find worker"})
+                res.status(400).send({message:"لم يتم العثور على العامل"})
             }
         } 
 )) 
