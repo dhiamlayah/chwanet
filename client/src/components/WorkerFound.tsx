@@ -19,9 +19,6 @@ type Props = {
 
 function WorkerFound({ workers }: Props) {
   const { error, setError } = useContext(globalSearchComponent);
-
-  console.log("workers ==========>", workers);
-
   const url: string | undefined = process.env.REACT_APP_port;
   return (
     <Row
@@ -103,7 +100,7 @@ function WorkerFound({ workers }: Props) {
                     to={`/profile/${worker._id}`}
                     className="btn btn-outline-warning"
                   >
-                    Take a look
+                        انتقل إلى الملف الشخصي
                   </Link>
                 </Card.Body>
               </Card>

@@ -12,7 +12,6 @@ const ChooseDomain = ({ workName, handleChange }: Props) => {
   const getDomains = async () => {
     try {
       await axios.get(url + "/workNameList").then((res: any) => {
-        console.log("work name list ", location.pathname);
         setWorkNameList(res.data.workNames);
       });
     } catch (error: any) {
@@ -47,7 +46,7 @@ const ChooseDomain = ({ workName, handleChange }: Props) => {
               </option>
             );
           })}
-        {location.pathname === "/register/info" && (
+        {window.location.pathname === "/register/info" && (
           <option
             className="list-group-item text-dark"
             value={"أخرى (أريد إضافة عملي)"}

@@ -12,7 +12,7 @@ import "../StyleDesign/register.css";
 
 const Register = () => {
 
-  const queryParams = new URLSearchParams(location.search);
+  const queryParams = new URLSearchParams(window.location.search);
 
   const url: string = process.env.REACT_APP_port + "/register";
   const redirectPath=queryParams.get("redirectPath")

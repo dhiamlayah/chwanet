@@ -1,7 +1,9 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
 function Footer() {
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+
   return (
     <div style={{ backgroundColor: "#385470e6", padding: "1px" }}>
       <footer>
@@ -14,9 +16,9 @@ function Footer() {
             />
           </div>
           <div className=" d-sm-flex justify-content-between  pt-5 row " style={{minWidth:"50%"}}>
-            <div className=" text-end col mw">
-              <h4>اتصل بنا</h4>
-               <p > info@example.com: البريد الإلكتروني</p>
+            <div className=" text-end col mw ">
+              <h4>البريد الإلكتروني</h4>
+               <p > mlayahdhia8@example.com</p>
             </div>
             <div className="col border-left">
          </div>
@@ -62,7 +64,7 @@ function Footer() {
         <div style={{ marginTop: "" }}>
           <hr className="mx-5  d-flex justify-content-center  " />
           <p className="copyright text-center fs-5">
-            all rights are save Chwanett © 2023
+            all rights are save Chwanett © {currentYear}
           </p>
         </div>
       </footer>

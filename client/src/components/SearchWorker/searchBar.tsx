@@ -2,7 +2,7 @@ import "../../StyleDesign/searchPage.css";
 import { useContext, useState } from "react";
 import { globalSearchComponent } from "../../pages/SearchWorker";
 const SearchBar = () => {
-  const queryParams = new URLSearchParams(location.search);
+  const queryParams = new URLSearchParams(window.location.search);
   const { numberOfWorkers, setSearchParams, setSortBy } = useContext(
     globalSearchComponent
   );

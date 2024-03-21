@@ -1,4 +1,4 @@
-import {useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
@@ -24,19 +24,17 @@ const NavBar = ({ user }: any) => {
 
   const handleClick = () => {
     setShow((prev) => !prev);
-    setShowProfile(false)
+    setShowProfile(false);
   };
 
-  const navColor = ()=>{
-    console.log('paaaaaaaaaath ',location.pathname)
-    if(/^\/profile\//.test(location.pathname))return { backgroundColor: "rgba(0, 0, 0)" }
-    return { backgroundColor: "rgba(0, 0, 0, 0.8)" }
-  
-  }
+  const navColor = () => {
+    if (/^\/profile\//.test(location.pathname))
+      return { backgroundColor: "rgba(0, 0, 0)" };
+  };
 
   return (
     <nav
-      className="navbar navbar-expand-lg border-bottom border-dark fixed-top "
+      className="navbar navbar-expand-lg border-bottom border-dark fixed-top color "
       style={navColor()}
       id={navbarDesign()}
     >
@@ -47,23 +45,23 @@ const NavBar = ({ user }: any) => {
           alt="logo"
         />
 
-
         <button
           className="navbar-toggler btn bg-warning"
           type="button"
           onClick={handleClick}
         >
-          <FontAwesomeIcon icon={faBars} rotation={show? 90 : 180 }/>
+          <FontAwesomeIcon icon={faBars} rotation={show ? 90 : 180} />
         </button>
 
-
-        <NavbarForBigScreen user={user}/>
-        <NavBarForSmallScreen user={user} show={show} setShowProfile={setShowProfile} showProfile={showProfile} setShow={setShow}/>
-        
- 
+        <NavbarForBigScreen user={user} />
+        <NavBarForSmallScreen
+          user={user}
+          show={show}
+          setShowProfile={setShowProfile}
+          showProfile={showProfile}
+          setShow={setShow}
+        />
       </div>
-      
-      
     </nav>
   );
 };

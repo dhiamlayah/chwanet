@@ -77,7 +77,6 @@ const WorkerInformation = () => {
   /*to show the image to the client  */
   const handleChangeFile = (event: any) => {
     const file = event.target.files[0];
-    console.log("file", file);
     if (file !== undefined) {
       setUserFile(file);
       const imagesUploded = (

@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const asyncMiddleware = require("../middelwares/asyncMiddleware");
-const resizeImages = require("../middelwares/resizeImages");
 const resizeBg = require("../middelwares/resizeBg");
 const resizeProfilePicture = require("../middelwares/resizeProfilePicture");
 const upload = require("../middelwares/multer");

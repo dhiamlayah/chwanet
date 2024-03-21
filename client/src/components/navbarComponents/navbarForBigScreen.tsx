@@ -54,9 +54,9 @@ const NavbarForBigScreen = ({user}:Props) => {
           }
         </ul>
         
-        { location.pathname !== "/register" &&
-          location.pathname !== "/register/info" &&
-          location.pathname !== "/login" &&
+        { window.location.pathname !== "/register" &&
+          window.location.pathname !== "/register/info" &&
+          window.location.pathname !== "/login" &&
           !user && (
             <>
             <Link

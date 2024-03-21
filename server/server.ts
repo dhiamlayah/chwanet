@@ -12,7 +12,7 @@ app.use(cors());
 app.use(cors(corsOptions));
 
 //-----------------------dependency-------------------------------------------//
-const PORT = process.env.PORT || 3000;
+const PORT = 8000;
 
 
 //-----------------------middelwares-------------------------------------------//

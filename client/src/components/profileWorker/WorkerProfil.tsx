@@ -41,7 +41,6 @@ const WorkerProfil = ({
           },
         })
         .then((res) => {
-          console.log("successfuly", res.data);
           setUser(res.data.user);
         });
     } catch (err: any) {

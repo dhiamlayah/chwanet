@@ -24,11 +24,6 @@ const WorkerImages = () => {
   const [userFile, setUserFile] = useState<any>(null);
   const [open, setOpen] = useState<boolean>(false);
   const [open2, setOpen2] = useState<boolean>(false);
-
-
-  console.log("file",userFile)
-  console.log("userPhoto",userPhoto)
-
   const handleChangeFile = (event: any) => {
     const file = event.target.files[0];
     if (file !== undefined) {

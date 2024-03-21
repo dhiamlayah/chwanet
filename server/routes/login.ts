@@ -25,7 +25,7 @@ router.post(
           res.status(400).json({ message: "كلمة المرور أو الهاتف غير صحيحة" });
         const token = jwt.sign(
           { _id: worker._id, isAdmin: worker.isAdmin },
-          process.env.access_token_secret
+         '9b666d7e937f5ac99ad723920168d2a06b471a1a0cd8be6cd145451118b1180b538249fece1643e7faf75f52c84efac18430e2008f60ee36c772aa923c3a06b6'
         ); // two parameters worker id and secrete
         res.setHeader("token", token);
         res.status(200).json({ message: "تسجيل دخول المستخدم بنجاح" ,user: "Worker"});
@@ -36,8 +36,8 @@ router.post(
         res.status(400).json({ message: "كلمة المرور أو الهاتف غير صحيحة" });
       const token = jwt.sign(
         { _id: user._id, isAdmin: user.isAdmin },
-        process.env.access_token_secret
-      ); // two parameters user id and secrete
+        "9b666d7e937f5ac99ad723920168d2a06b471a1a0cd8be6cd145451118b1180b538249fece1643e7faf75f52c84efac18430e2008f60ee36c772aa923c3a06b6"
+        ); // two parameters user id and secrete
       res.setHeader("token", token);
       res.status(200).json({ message: "تسجيل دخول المستخدم بنجاح" ,user: "Client" });
     }

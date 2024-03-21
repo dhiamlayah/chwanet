@@ -32,8 +32,8 @@ const NavBarForSmallScreen = ({
       <div
         className={showProfile ? "d-none" : "list-group w-100 d-lg-none pt-2 "}
       >
-        {location.pathname !== "/register" &&
-          location.pathname !== "/login" &&
+        {window.location.pathname !== "/register" &&
+          window.location.pathname !== "/login" &&
           !user && (
             <>
               <Link

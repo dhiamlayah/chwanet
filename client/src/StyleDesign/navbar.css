@@ -18,7 +18,7 @@
 }
 @media (max-width : 720px)  {
       #specialNav {
-        background-color: red;
+        background-color:rgb(0, 0, 0);
         position: relative;
         top: 0;
         right: 0;
@@ -33,3 +33,16 @@
       left: 22%;
     }
   }
+
+  @media (min-width : 575px) {
+    .color{
+     background-color:rgb(0, 0, 0,0.8);
+    }
+  }
+
+  @media (max-width : 575px) {
+    .color{
+      background-color:rgb(0, 0, 0,0.8);
+    }
+  }
+

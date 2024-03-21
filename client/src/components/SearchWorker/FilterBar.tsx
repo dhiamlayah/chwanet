@@ -5,7 +5,7 @@ import ChooseState from "../ChooseState";
 import ChooseDelegation from "../ChooseDelegation";
 
 const FilterBar = () => {
-  const queryParams = new URLSearchParams(location.search);
+  const queryParams = new URLSearchParams(window.location.search);
   const { domain, handleChange, state, delegation, search,setSearch,setSearchParams } =
     useContext(globalSearchComponent);
   return (

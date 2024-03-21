@@ -55,8 +55,8 @@ router.post(
     await newUser.save();
     const token = jwt.sign(
       { _id: newUser._id, isAdmin: newUser.isAdmin },
-      process.env.access_token_secret
-    );
+      "9b666d7e937f5ac99ad723920168d2a06b471a1a0cd8be6cd145451118b1180b538249fece1643e7faf75f52c84efac18430e2008f60ee36c772aa923c3a06b6"
+      );
     res.setHeader("token", token);
     return res
       .status(200)
