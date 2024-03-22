@@ -64,7 +64,7 @@ function Footer() {
         <div style={{ marginTop: "" }}>
           <hr className="mx-5  d-flex justify-content-center  " />
           <p className="copyright text-center fs-5">
-            all rights are save Chwanett © {currentYear}
+            all rights are save Chwanet © {currentYear}
           </p>
         </div>
       </footer>
