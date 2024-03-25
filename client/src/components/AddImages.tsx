@@ -38,6 +38,8 @@ const AddImages = ({ back }: any) => {
     const jsonWorkerDescription = JSON.stringify(descreption);
     formData.append("file", userFile);
     formData.append("discreption", jsonWorkerDescription);
+    toast.info("قد يستغرق تحميل الصورة بعض الوقت من فضلك إنتظر قليلا")
+
     try {
       await axios
         .post(url + "/workerPictures", formData, {
@@ -47,7 +49,7 @@ const AddImages = ({ back }: any) => {
         })
         .then(() => {
           setWait(false);
-          toast.success("تم إنشاؤه بنجاح");
+          toast.success("تم اظافة الصورة بنجاح ");
           redirectUser();
         });
     } catch (error: any) {

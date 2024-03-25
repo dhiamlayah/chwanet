@@ -25,6 +25,7 @@ const AcceptNewImag = ({open,setOpen,setUserPhoto,imgPDPUrl,setUserFile,userFile
   const sendPictureToServer = async () => {
     const formData = new FormData();
     formData.append("file", userFile);
+    setSuccess("قد يستغرق تحميل الصورة بعض الوقت من فضلك إنتظر قليلا")
     try {
       await axios
         .put(url + "/meAsWorker/"+path, formData, {

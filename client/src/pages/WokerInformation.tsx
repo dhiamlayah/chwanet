@@ -86,7 +86,6 @@ const WorkerInformation = () => {
     }
   };
 
-
   // if all worker want to add new work name  we send his request to server with different route  
   const sendForAddingNewDomain = async () => {
     try {
@@ -122,6 +121,7 @@ const WorkerInformation = () => {
     const formData = new FormData();
     formData.append("file", userFile);
     formData.append("document", jsonWorkerInformations);
+    toast.info("قد يستغرق تحميل الصورة بعض الوقت من فضلك إنتظر قليلا")
 
     try {
       await axios
@@ -138,7 +138,7 @@ const WorkerInformation = () => {
           ) {
             sendForAddingNewDomain();
           } else {
-            toast.success("تم إنشاؤه بنجاح");
+            toast.success("تم إنشاء ملفك الشخصي بنجاح  ");
             redirectUser();
           }
         });

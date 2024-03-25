@@ -122,7 +122,7 @@ const NavBarForSmallScreen = ({
           >
             <FontAwesomeIcon icon={faLeftLong} />
           </div>
-          <UserInformations user={user} />
+          <UserInformations user={user} setShow={setShow} />
         </ul>
       </div>
     </div>

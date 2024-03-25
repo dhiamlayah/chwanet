@@ -105,7 +105,7 @@ const SearchWorker = () => {
       >
         <FilterBar />
 
-        <div className="mt-5 w-100">
+        <div className="mt-5 w-100 ">
           <SearchBar />
           <WorkerFound workers={workers} />
 

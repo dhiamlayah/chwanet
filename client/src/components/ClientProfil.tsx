@@ -26,7 +26,7 @@ function ClientProfil({ user }: Props) {
         className="dropdown-menu ms-5 mt-2 p-5"
         style={{ position: "absolute",left: "auto", right: "-2vh",width: "max-content",backgroundColor:'#607D8B' }}
       >
-        {user && <UserInformations user={user}/>}
+        {user && <UserInformations user={user} setShow={null} />}
        
       </ul>
     </div>

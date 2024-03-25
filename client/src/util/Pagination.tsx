@@ -50,7 +50,7 @@ const Pagination = ({ numberPages }: Props) => {
 
   const pages = paginationStyle();
   return (
-    <nav>
+    <nav className="py-2">
       <ul className="pagination  justify-content-center">
         {pages.length > 0 &&
           pages.map((page) => {
