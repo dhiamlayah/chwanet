@@ -26,7 +26,7 @@ WORKDIR /app
 COPY --from=build /app/package*.json ./
 COPY --from=build /app/dist /app/dist
 COPY --from=build /app/userPicture /app/dist/userPicture
-COPY --from=build /app/userPictureBeforResizing /app/dist/userPictureBeforResizing
+COPY --from=build /app/dist/userPictureBeforResizing /app/dist/userPictureBeforResizing
 
 # Install production dependencies
 RUN npm install --production
