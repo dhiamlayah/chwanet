@@ -4,6 +4,8 @@ const connectWithDataBase = require("./connectDataBase/connectWithDataBase");
 const cors = require("cors");
 const path = require("path");
 
+import { NextFunction, Request ,Response} from "express";
+
 const corsOptions = {
   exposedHeaders: "Token",
 };
@@ -45,6 +47,7 @@ const RateWoker = require("./routes/RateWorker");
 const CommentWorker = require("./routes/CommentWorkers");
 const WorkerPictures = require("./routes/workerPictures");
 const Admin = require("./routes/Admin");
+
 app.use("/register", Register);
 app.use("/login", Login);
 app.use("/meAsClient", MeAsClient);
@@ -61,8 +64,8 @@ app.use("/commentWorker", CommentWorker);
 app.use("/workerPictures", WorkerPictures);
 app.use("/Admin", Admin);
 //----------------static file containe all workers pictures -------------------------------------------//
-app.use("/userPicture/:id", (req: any, res: any, next: any) => {
-  const userId = req.params.id;
+app.use("/userPicture/:id", (req: Request, res: Response, next: NextFunction) => {
+  const userId = req.params.od;
   // Construct the path to the user-specific directory
   const userDirectory = path.join(__dirname, "userPicture", userId);
    // Use express.static middleware to serve files from the user-specific directory

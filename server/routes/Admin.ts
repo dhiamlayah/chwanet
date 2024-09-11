@@ -1,4 +1,5 @@
 export {};
+import { Request,Response } from "express";
 const express = require("express");
 const router = express.Router();
 const auth = require("../middelwares/authorization");
@@ -15,9 +16,9 @@ import WorkerModel from "../models/worker";
 router.post(
   "/newDomain",
   auth,
-  asyncMiddleware(async (req: any, res: any) => {
+  asyncMiddleware(async (req: any, res: Response) => {
     const { newDomain } = req.body;
-    const WorkerId = req.user;
+    const WorkerId = req.user ;
     const UpdateWorkNameReport = await NewWorkNameModel.findOne({
       _id: WorkerId,
     });
