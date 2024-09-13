@@ -14,7 +14,7 @@ app.use(cors());
 app.use(cors(corsOptions));
 
 //-----------------------dependency-------------------------------------------//
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 
 
 //-----------------------middelwares-------------------------------------------//
@@ -63,9 +63,10 @@ app.use("/rateWorker", RateWoker);
 app.use("/commentWorker", CommentWorker);
 app.use("/workerPictures", WorkerPictures);
 app.use("/Admin", Admin);
+
 //----------------static file containe all workers pictures -------------------------------------------//
 app.use("/userPicture/:id", (req: Request, res: Response, next: NextFunction) => {
-  const userId = req.params.od;
+  const userId = req.params.id;
   // Construct the path to the user-specific directory
   const userDirectory = path.join(__dirname, "userPicture", userId);
    // Use express.static middleware to serve files from the user-specific directory

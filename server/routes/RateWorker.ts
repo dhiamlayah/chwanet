@@ -1,3 +1,5 @@
+import { Request,Response } from "express";
+
 const express = require("express");
 const router = express.Router();
 const auth = require("../middelwares/authorization");
@@ -23,8 +25,8 @@ const calcRate  = (Client:ClientRateAndComments[])=>{
 
 // this path inisilize a schema  for the new Worker when he create a new account
 router.get ("/",auth,asyncMiddleware(
-    async (req:any,res:any)=>{
-        const id=req.user._id
+    async (req:Request,res:Response)=>{
+        const id=res.locals.user._id
         const idWorker = await WorkerRatingsAndCommentsModel.findOne({_id:id})
         if(idWorker===null){
             const AddWorkerRate = new WorkerRatingsAndCommentsModel({
@@ -41,9 +43,9 @@ router.get ("/",auth,asyncMiddleware(
 
 // this path fo client to make a rate 
 router.put("/",auth,asyncMiddleware(
-    async(req:any,res:any)=>{
+    async(req:Request,res:Response)=>{
             const clientRate=req.body.Rate
-            const clientId : string = req.user._id
+            const clientId : string = res.locals.user._id
             const workerId = req.body.workerId
             const worker = await WorkerRatingsAndCommentsModel.findOne({_id:workerId})
             const workerModel = await WorkerModel.findOne({_id:workerId})

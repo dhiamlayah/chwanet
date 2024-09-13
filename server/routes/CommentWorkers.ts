@@ -1,4 +1,5 @@
-import { Comment } from './../models/RatingsAndComments';
+import { Request, Response } from "express";
+
 const express = require("express");
 const router = express.Router();
 const auth = require("../middelwares/authorization");
@@ -45,13 +46,13 @@ const sortClientsCommentByDate = (
 };
 
 
-// this path fo client to make a Comments
+// this path for client to make a Comments
 router.put(
   "/",
   auth,
-  asyncMiddleware(async (req: any, res: any) => {
+  asyncMiddleware(async (req: Request, res: Response) => {
     const clientComment = req.body.Comment;
-    const clientId: string = req.user._id;
+    const clientId: string = res.locals.user._id;
     const workerId = req.body.workerId;
     const worker = await WorkerRatingsAndCommentsModel.findOne({
       _id: workerId,
@@ -95,7 +96,7 @@ router.put(
 //this path to get worker Comments
 router.get(
   "/:id",
-  asyncMiddleware(async (req: any, res: any) => {
+  asyncMiddleware(async (req: Request, res: Response) => {
     const id = req.params.id;
     const idWorker = await WorkerRatingsAndCommentsModel.findOne({ _id: id });
     if (idWorker) {
@@ -119,13 +120,13 @@ router.get(
 );
 
 router.delete("/:id",auth,asyncMiddleware(
-  async(req:any ,res:any)=>{
+  async(req:Request ,res:Response)=>{
         const workerId = req.params.id
         const worker = await WorkerRatingsAndCommentsModel.findById(workerId)
       if (worker && worker.Clients) {
         const newClientsComment : ClientRateAndComments[]  = worker?.Clients.map(
           (client) => {
-            if (client._id === req.user._id){
+            if (client._id === res.locals.user._id){
               return {_id : client._id ,Comment:null , Rate :client.Rate}
             }else{
               return client

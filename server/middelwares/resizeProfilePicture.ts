@@ -1,4 +1,7 @@
 export{}
+
+import { Response, NextFunction } from "express";
+
 const sharp = require('sharp');
 const fs  = require('fs')
 
@@ -25,16 +28,16 @@ interface ResizedImage {
 }
 
 
-const asyncMiddleware = (fn : Function ) => (req:any, res:any, next:any) => {
+const asyncMiddleware = (fn : Function ) => (req:any, res:Response, next:NextFunction) => {
     Promise.resolve(fn(req, res, next)).catch(next);
   };
   
 
 
-const resizeProfilePicture= asyncMiddleware( async( req:any,res:any,next:any)=>{
+const resizeProfilePicture= asyncMiddleware( async( req:any,res:Response,next:NextFunction)=>{
     const file : File = req.file;    
     // Assuming req.user._id is the user's ID
-    const userFolder = `./userPicture/${req.user._id}/`;
+    const userFolder = `./userPicture/${res.locals.user._id}/`;
 
 
     if (!fs.existsSync(userFolder)) {
@@ -59,7 +62,7 @@ const resizeProfilePicture= asyncMiddleware( async( req:any,res:any,next:any)=>{
             fs.rmSync(req.file.path, { force: true }); // delete the tmp file as now have buffer
             data.filename = "ProfileImage/"+file.originalname
             data.destination= userFolder+"ProfileImage/"
-            req.imageResized = data
+            res.locals.imageResized = data
             next()
         });  
      

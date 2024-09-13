@@ -1,3 +1,5 @@
+import { Request, Response } from "express";
+
 const express = require("express");
 const router = express.Router();
 const asyncMiddleware = require("../middelwares/asyncMiddleware");
@@ -11,11 +13,11 @@ interface WorkerInformation {
 
 router.post(
   "/",
-  asyncMiddleware(async (req: any, res: any) => {
-    const page = req.query.page;
+  asyncMiddleware(async (req: Request, res: Response) => {
+    const page = req.query.page  ;
     let sortBy : "null" |   "Rate.length" |   "Rate.rate"  ="null"
     const limit = req.query.limit;
-    const startIndex = (page - 1) * limit;
+    const startIndex = (Number(page) - 1) * Number(limit);
     const filterBy = req.body;
     let sendFilter: WorkerInformation = {};
     let sortQuery :any = {};
@@ -76,7 +78,7 @@ router.post(
     ).sort(sortQuery)
 
     
-     const newTable=  await Workers.slice(startIndex,page * limit)
+     const newTable=  await Workers.slice(startIndex,Number(page) * Number(limit))
     res.status(200).send({ Workers:newTable, numberOfWorkers: allWorkers });
   })
 );
@@ -84,7 +86,7 @@ router.post(
 
 //this route to get the length of workers,workName and users models
 router.get('/length',asyncMiddleware(
-  async(req:any,res:any)=>{
+  async(req:Request,res:Response)=>{
     const lengthWorkers = await WorkerModel.countDocuments()
     const lengthClients = await UserModel.countDocuments()
     const lengthWorkNames = await WorkNameModel.countDocuments()
