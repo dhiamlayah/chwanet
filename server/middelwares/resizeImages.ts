@@ -1,3 +1,4 @@
+import { Response, NextFunction } from "express";
 
 const sharp = require('sharp');
 const fs  = require('fs')
@@ -25,16 +26,16 @@ interface ResizedImage {
 }
 
 
-const asyncMiddleware = (fn : Function ) => (req:any, res:any, next:any) => {
+const asyncMiddleware = (fn : Function ) => (req:any, res:Response, next:NextFunction) => {
     Promise.resolve(fn(req, res, next)).catch(next);
   };
   
 
 
-const resizeImages = asyncMiddleware( async( req:any,res:any,next:any)=>{
+const resizeImages = asyncMiddleware( async( req:any,res:Response,next:NextFunction)=>{
     const file : File = req.file;    
     // Assuming req.user._id is the user's ID
-    const userFolder = `./userPicture/${req.user._id}/`;
+    const userFolder = `./userPicture/${res.locals.user._id}/`;
     // Create the user folder if it doesn't exist
     if (!fs.existsSync(userFolder)) {
      fs.mkdirSync(userFolder, { recursive: true });
@@ -54,8 +55,8 @@ const resizeImages = asyncMiddleware( async( req:any,res:any,next:any)=>{
         }).then((data:ResizedImage)=>{
             fs.rmSync(req.file.path, { force: true }); // delete the tmp file as now have buffer
             data.filename = file.originalname
-            data.destination=`./userPicture/${req.user._id}`
-            req.imageResized = data
+            data.destination=`./userPicture/${res.locals.user._id}`
+            res.locals.imageResized = data
             next()
         });  
      

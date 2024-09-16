@@ -1,3 +1,4 @@
+import { Request,Response } from "express";
 const express = require('express')
 const router = express.Router()
 const asyncMiddleware = require("../middelwares/asyncMiddleware");
@@ -5,7 +6,7 @@ const asyncMiddleware = require("../middelwares/asyncMiddleware");
 import WorkerModel from "../models/worker";
 
 router.get("/:id",asyncMiddleware(
-    async (req: any, res: any) => {
+    async (req: Request, res: Response) => {
         const id = req.params.id
         if(id === "me"){
            return res.status(400).json({message : "current worker"})
@@ -21,7 +22,7 @@ router.get("/:id",asyncMiddleware(
 
 
 router.get("/:id/Rate",asyncMiddleware(
-  async (req: any, res: any) => {
+  async (req: Request, res: Response) => {
       const id = req.params.id
       const user = await WorkerModel.findById(id).select("Rate");
      if(user === null){

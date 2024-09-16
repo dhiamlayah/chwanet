@@ -27,10 +27,13 @@ COPY --from=build /app/package*.json ./
 COPY --from=build /app/dist /app/dist
 COPY --from=build /app/userPicture /app/dist/userPicture
 
+COPY --from=build /app/dist/userPictureBeforResizing /app/dist/userPictureBeforResizing
+
+
 # Install production dependencies
 RUN npm install --production
 
-# Expose the port your app runs on (replace 3000 with your actual port if different)
+# Expose the port your app runs on (replace 8000 with your actual port if different)
 EXPOSE 8000
 
 # Start the application

@@ -1,4 +1,6 @@
-export {};
+export { };
+
+import { Request, Response } from "express";
 
 const express = require("express");
 const router = express.Router();
@@ -39,11 +41,11 @@ router.post(
   auth,
   upload.single("file"),
   resizeImages,
-  asyncMiddelware(async (req: any, res: any) => {
+  asyncMiddelware(async (req: Request, res: Response) => {
     const discreption = JSON.parse(req.body.discreption);
-    const imageResized = req.imageResized;
+    const imageResized = res.locals.imageResized;
     const date = new Date();
-    const workerId = req.user._id;
+    const workerId = res.locals.user._id;
     const worker = await ProfilesModels.findById({ _id: workerId });
     if (!worker) {
       const FirstWorkerPicture = new ProfilesModels({
@@ -89,18 +91,18 @@ router.post(
 
 router.get(
   "/:id",
-  asyncMiddelware(async (req: any, res: any) => {
+  asyncMiddelware(async (req: Request, res: Response) => {
     const workerId = req.params.id;
-    const startFrom = req.query.startFrom | 0;
-    const endIn = req.query.endIn | 0;
+    const startFrom = req.query.startFrom || 0;
+    const endIn = req.query.endIn || 0;
 
     const worker = await ProfilesModels.findById({ _id: workerId });
     if (!worker) {
       res.status(400).json({ message: "لا توجد صور بعد" });
     } else {
       const sortPictuers = sortPicturesByDate(worker.pictuers);
-      if(sortPictuers.length===0){
-        return  res.status(400).json({ message:  "لا توجد صور بعد" });
+      if (sortPictuers.length === 0) {
+        return res.status(400).json({ message: "لا توجد صور بعد" });
       }
       res
         .status(200)
@@ -115,8 +117,8 @@ router.get(
 router.delete(
   "/",
   auth,
-  asyncMiddelware(async (req: any, res: any) => {
-    const workerId = req.user._id;
+  asyncMiddelware(async (req: Request, res: Response) => {
+    const workerId = res.locals.user._id;
     const ImageFileName = req.body.fileName;
     const findWorker = await ProfilesModels.findById({ _id: workerId });
     if (!findWorker) {
@@ -125,8 +127,8 @@ router.delete(
     const newPicturesList = findWorker.pictuers?.filter(
       (p) => p.picture.filename !== ImageFileName
     );
-    if(newPicturesList?.length === findWorker.pictuers?.length ){
-        return res.status(400).send({message:"الصورة غير موجودة"})
+    if (newPicturesList?.length === findWorker.pictuers?.length) {
+      return res.status(400).send({ message: "الصورة غير موجودة" })
     }
     fs.rmSync(`userPicture/${workerId}/${ImageFileName}`, {
       force: true,

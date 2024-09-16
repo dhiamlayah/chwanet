@@ -1,3 +1,5 @@
+import  {Response , Request} from 'express'
+
 const express = require("express");
 const router = express.Router();
 const asyncMiddleware = require("../middelwares/asyncMiddleware");
@@ -13,8 +15,8 @@ import WorkerModel from "../models/worker";
 router.get(
   "/",
   auth,
-  asyncMiddleware(async (req: any, res: any) => {
-    const user = await WorkerModel.findById(req.user._id).select("-password "); //select that mean exclude
+  asyncMiddleware(async (_: any, res: Response) => {
+    const user = await WorkerModel.findById(res.locals.user._id).select("-password "); //select that mean exclude
     if(user){
       res.status(200).json({ user: user });
     }else{
@@ -28,7 +30,7 @@ router.get(
 router.put(
   "/update",
   auth,
-  asyncMiddleware(async (req: any, res: any) => {
+  asyncMiddleware(async (req: Request, res: Response) => {
     if (req.body.phone) {
       const phoneExistInWorkerModel = await WorkerModel.findOne({ phone: req.body.phone });
       const phoneExistInClientModel = await UserModel.findOne({ phone: req.body.phone });
@@ -37,7 +39,7 @@ router.put(
         return res.status(400).json({ message: "هذا الرقم موجود بالفعل في مكان آخر، اكتب رقم آخر" });
       }
     }
-    const user = await WorkerModel.findByIdAndUpdate(req.user._id, req.body);
+    const user = await WorkerModel.findByIdAndUpdate(res.locals.user._id, req.body);
     await user?.save();
     res.send("success");
   })
@@ -48,10 +50,10 @@ router.put(
   auth,
   upload.single("file"),
   resizeProfilePicture,
-  asyncMiddleware(async (req: any, res: any) => {
-    const imageResized = req.imageResized;
+  asyncMiddleware(async (req: Request, res: Response) => {
+    const imageResized = res.locals.imageResized;
     const { workName, discreption, experience } = JSON.parse(req.body.document);
-    const user = await WorkerModel.findByIdAndUpdate(req.user._id, {
+    const user = await WorkerModel.findByIdAndUpdate(res.locals.user._id, {
       workName: workName,
       discreption: discreption.trim(),
       photo: {filename:imageResized.filename,destination:imageResized.destination},
@@ -73,17 +75,17 @@ router.put(
   auth,
   upload.single("file"),
   resizeProfilePicture,
-  asyncMiddleware(async (req: any, res: any) => {
-    const imageResized = req.imageResized;
-    const findWorker = await WorkerModel.findById(req.user._id);
+  asyncMiddleware(async (req: Request, res: Response) => {
+    const imageResized = res.locals.imageResized;
+    const findWorker = await WorkerModel.findById(res.locals.user._id);
     if (findWorker) {
-      fs.rmSync(`userPicture/${req.user._id}/${findWorker.photo.filename}`, {
+      fs.rmSync(`userPicture/${res.locals.user._id}/${findWorker.photo.filename}`, {
         force: true,
       }); // delete the tmp file as now have buffer
     } else {
       res.status(400).send({ message: "لم يتم العثور على العامل" });
     }
-    const user = await WorkerModel.findByIdAndUpdate(req.user._id, {
+    const user = await WorkerModel.findByIdAndUpdate(res.locals.user._id, {
       photo: imageResized,
     });
     if (user) {
@@ -100,9 +102,9 @@ router.put(
   auth,
   upload.single("file"),
   resizeBg,
-  asyncMiddleware(async (req: any, res: any) => {
-    const imageResized = req.imageResized;
-    const findWorker = await WorkerModel.findById(req.user._id);
+  asyncMiddleware(async (_: any, res: Response) => {
+    const imageResized = res.locals.imageResized;
+    const findWorker = await WorkerModel.findById(res.locals.user._id);
     if (findWorker) {
       if(findWorker.backgroundImage.filename!=="communBackground.jpg"){
         fs.rmSync(`userPicture/${findWorker.backgroundImage.filename}`, {
@@ -112,8 +114,8 @@ router.put(
     } else {
        return res.status(400).send({ message: "لم يتم العثور على العامل" });
     }
-    const user = await WorkerModel.findByIdAndUpdate(req.user._id, {
-      backgroundImage: {filename:req.user._id+"/bgImage/"+imageResized.filename},
+    const user = await WorkerModel.findByIdAndUpdate(res.locals.user._id, {
+      backgroundImage: {filename:res.locals.user._id+"/bgImage/"+imageResized.filename},
     });
     if (user) {
       await user.save();
